@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\User\EditUser\icons\cloud.png" />
+    <Content Remove="wwwroot\User\EditUser\icons\image.png" />
+    <Content Remove="wwwroot\User\EditUser\icons\pdf.png" />
+    <Content Remove="wwwroot\User\EditUser\icons\video.png" />
+    <Content Remove="wwwroot\User\icons\cloud.png" />
+    <Content Remove="wwwroot\User\icons\image.png" />
+    <Content Remove="wwwroot\User\icons\pdf.png" />
+    <Content Remove="wwwroot\User\icons\video.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.Identity.EntityFramework" Version="2.2.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\ImagesUpload\" />
+    <Folder Include="wwwroot\FilesUpload\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\User\EditUser\icons\cloud.png" />
+    <None Include="wwwroot\User\EditUser\icons\image.png" />
+    <None Include="wwwroot\User\EditUser\icons\pdf.png" />
+    <None Include="wwwroot\User\EditUser\icons\video.png" />
+    <None Include="wwwroot\User\icons\cloud.png" />
+    <None Include="wwwroot\User\icons\image.png" />
+    <None Include="wwwroot\User\icons\pdf.png" />
+    <None Include="wwwroot\User\icons\video.png" />
+  </ItemGroup>
+
+</Project>

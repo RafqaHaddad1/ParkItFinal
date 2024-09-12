@@ -1,0 +1,676 @@
+﻿    @model ParkIt.ViewModel.UserZonesSubzones
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - YourAppName</title>
+ 
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+
+        .form-container {
+            display: flex;
+            justify-content: space-between;
+            width: 90%;
+            background-color: #e0e0e0;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-left, .form-right {
+            display: flex;
+            flex-direction: column;
+            width: 48%;
+        }
+
+            .form-left input, .form-right input, .form-right textarea, .form-left select {
+                margin-bottom: 10px;
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+            .form-right textarea {
+                height: 150px;
+            }
+
+            .form-left input[type="file"] {
+                padding: 3px;
+            }
+
+        .save-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            background-color: #F3BC12;
+            color: #23282B;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .profile-pic {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #F3BC12;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            color: #23282B;
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        .radio-group label {
+            margin-right: 20px;
+        }
+
+        .drop-section {
+            border: 2px dashed #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .drag-over-effect {
+            border-color: #F3BC12;
+        }
+
+        .file-list {
+            margin-top: 20px;
+        }
+
+            .file-list ul {
+                list-style-type: none;
+                padding: 0;
+            }
+
+            .file-list li {
+                margin-bottom: 5px;
+                position: relative;
+                padding: 10px;
+                background: #f9f9f9;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                display: flex;
+                align-items: center;
+            }
+
+            .file-list img {
+                width: 50px;
+                height: 50px;
+                margin-right: 10px;
+            }
+
+            .file-list .remove-button {
+                position: absolute;
+                right: 0;
+                top: 0;
+                background: red;
+                color: white;
+                border: none;
+                border-radius: 3px;
+                cursor: pointer;
+                padding: 3px 8px;
+                font-size: 12px;
+                margin-left: 10px;
+            }
+
+            .file-list .remove-button2 {
+                position: absolute;
+                right: 0;
+                top: 0;
+                background: red;
+                color: white;
+                border: none;
+                border-radius: 3px;
+                cursor: pointer;
+                padding: 3px 8px;
+                font-size: 12px;
+                margin-left: 10px;
+            }
+
+        .form-control {
+            display: block;
+            width: 100%;
+            height: 34px;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+            -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
+        }
+
+        .form-control {
+            border-radius: 0;
+            box-shadow: none;
+            border-color: #d2d6de
+        }
+
+        .select2-hidden-accessible {
+            border: 0 !important;
+            clip: rect(0 0 0 0) !important;
+            height: 1px !important;
+            margin: -1px !important;
+            overflow: hidden !important;
+            padding: 0 !important;
+            position: absolute !important;
+            width: 1px !important
+        }
+
+        .select2-container--default .select2-selection--single,
+        .select2-selection .select2-selection--single {
+            border: 1px solid #d2d6de;
+            border-radius: 5px;
+            padding: 6px 12px;
+            height: 34px;
+            margin-bottom: 10px
+        }
+
+        .select2-container--default .select2-selection--single {
+            background-color: #fff;
+            border: 1px solid #aaa;
+            border-radius: 5px
+        }
+
+        .select2-container .select2-selection--single {
+            box-sizing: border-box;
+            cursor: pointer;
+            display: block;
+            height: 28px;
+            user-select: none;
+            -webkit-user-select: none
+        }
+
+            .select2-container .select2-selection--single .select2-selection__rendered {
+                padding-right: 10px
+            }
+
+            .select2-container .select2-selection--single .select2-selection__rendered {
+                padding-left: 0;
+                padding-right: 0;
+                height: auto;
+                margin-top: -3px
+            }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 28px
+        }
+
+        .select2-container--default .select2-selection--single,
+        .select2-selection .select2-selection--single {
+            border: 1px solid #d2d6de;
+            border-radius: 5px !important;
+            padding: 6px 12px;
+            height: 40px !important
+        }
+
+            .select2-container--default .select2-selection--single .select2-selection__arrow {
+                height: 26px;
+                position: absolute;
+                top: 6px !important;
+                right: 1px;
+                width: 20px
+            }
+
+        .select2-container--default .select2-results__option {
+            padding: 8px 12px;
+            font-size: 14px;
+            border-bottom: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .select2-container--default .select2-results__option--highlighted {
+            background-color: #F3BC12 !important;
+            color: white !important;
+        }
+        /* Style the search box container */
+        .select2-container--default .select2-search--dropdown .select2-search__field {
+            padding: 8px;
+            border: 1px solid #d2d6de;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+            /* Style the search box input */
+            .select2-container--default .select2-search--dropdown .select2-search__field:focus {
+                border-color: #F3BC12;
+                outline: none;
+                box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+                border-radius: 5px;
+            }
+
+        .select2-container--default .select2-dropdown {
+            border: 1px solid #d2d6de;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            max-height: 200px; /* Adjust as needed */
+            overflow-y: auto; /* Enable scrolling if options overflow */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Create New User</h1>
+
+        <form asp-action="SavePostEdit" asp-controller="User" method="post" enctype="multipart/form-data" onsubmit="return validateAndRedirect()" class="container" id="Employee-Form">
+            <div class="form-container">
+                <div class="form-left">
+                    <div class="profile-pic">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <input type="hidden" id="Employee_ID" name="Employee_ID" value="@Model.Employee.Employee_ID" />
+                    <input type="text" name="Name" placeholder="Name" value="@Model.Employee.Name" required />
+                    <input type="password" name="Password" placeholder="Password" value="@Model.UnHashedPassword" required />
+                    <div class="form-group radio-group">
+                        <label>Title</label>
+                        <div>
+                            <input type="radio" id="Runner" name="Title" value="Runner" @(Model.Employee.Title == "Runner" ? "checked" : "")>
+                            <label for="Runner">Runner</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="Supervisor" name="Title" value="Supervisor" @(Model.Employee.Title == "Supervisor" ? "checked" : "")>
+                            <label for="Supervisor">Supervisor</label>
+                        </div>
+                        <div id="additionalInputContainer" class="additionalInputContainer"></div>
+                        <input type="number" id="Supervisor_ID" name="Supervisor_ID" value="@Model.Employee.Supervisor_ID" hidden />
+                    </div>
+                    <label>
+                        <input type="checkbox" name="Active" value="true" id="active-checkbox" @(Model.Employee.Active ? "checked" : "")>
+                        Active
+                    </label>
+                    <input type="text" name="PhoneNumber" placeholder="Phone" value="@Model.Employee.PhoneNumber" required />
+                    <input type="text" name="Address" placeholder="Address" value="@Model.Employee.Address" required />
+                    <input type="text" name="NfcCode" placeholder="NFC Code" value="@Model.Employee.NFCCode" />
+                    <select name="zones" id="zones" class="zones" onchange="setSubzones()">
+                        @if (Model?.Zones != null && Model.Zones.Any())
+                        {
+                            foreach (var z in Model.Zones)
+                            {
+                                <option value="@z.Zone_Name" data-zone-id="@z.Zone_ID">@z.Zone_Name</option>
+                            }
+                        }
+                        else
+                        {
+                            <option value="">No zones available</option>
+                        }
+
+                    </select>
+                    <input type="number" name="Zone_ID" id="Zone_ID" placeholder="Zone_ID" value="@Model.Employee.Zone_ID" hidden />
+                    <select name="subzones" id="subzones" class="subzones" onchange="updateSubzoneID()"
+                    </select>
+                    <input type="number" name="Subzone_ID" placeholder="Subzone_ID" id="Subzone_ID" value="@Model.Employee.Subzone_ID" hidden />
+                </div>
+                <div class="form-right">
+                    <!-- Dropzone for file upload -->
+                    <div class="drop-section" id="dropzone">
+                        <h3>Drag and Drop Files Here</h3>
+                        <p>or <button type="button" id="browse-files">Browse Files</button></p>
+                        <input type="file" name="Files" id="file-input" multiple style="display:none" />
+                        <div id="file-list" class="file-list">
+                            <h5>Uploaded Files</h5>
+                            <ul id="file-items">
+                                @if (!string.IsNullOrEmpty(Model.Employee.Files))
+                                {
+                                    var filePaths = Model.Employee.Files.Split(';');
+                                    foreach (var filePath in filePaths)
+                                    {
+                                        var trimmedPath = filePath.Trim();
+                                        if (!string.IsNullOrEmpty(trimmedPath))
+                                        {
+                                            <li>
+                                                <a href="@Url.Content(trimmedPath)" target="_blank">@System.IO.Path.GetFileName(trimmedPath)</a>
+                                                <button class="remove-button2" data-file-path="@Url.Content(trimmedPath)">Remove</button>
+                                            </li>
+                                        }
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="form-group radio-group">
+                        <label>Employment Type:</label>
+                        <div>
+                            <input type="radio" id="partTime" name="EmploymentType" value="PartTime" @(Model.Employee.EmploymentType == "PartTime" ? "checked" : "")>
+                            <label for="partTime">Part Time</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="fullTime" name="EmploymentType" value="FullTime" @(Model.Employee.EmploymentType == "FullTime" ? "checked" : "")>
+                            <label for="fullTime">Full Time</label>
+                        </div>
+                    </div>
+
+                    <input type="text" name="Kafeel" placeholder="Kafeel" value="@Model.Employee.Kafeel" />
+                    <input type="text" name="AdditionalNotes" placeholder="Additional Notes" value="@Model.Employee.AdditionalNotes" required></input>
+                </div>
+            </div>
+            <button type="submit" class="save-button" onclick="return confirm('Are you sure you want to save these changes?');">Save</button>
+        </form>
+    </div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.10.2/dropzone.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.10.2/dropzone.min.js"></script>
+    <script>
+        $('.zones').select2();
+        $('.subzones').select2();
+        $(document).ready(function () {
+            initializeZone();
+            initializeSubzone();
+            handleRunnerSelection();
+            setupRunnerRadioChangeHandler();
+            // Use event delegation to handle click events on dynamically added "Remove" buttons
+            $(document).on('click', '.remove-button2', function () {
+                var button = $(this);
+                var filePath = button.data('file-path');
+
+                if (confirm('Are you sure you want to delete this file?')) {
+                    $.ajax({
+                        url: '/User/DeleteFiles', // Adjust the URL if necessary
+                        type: 'DELETE',
+                        data: { filePath: filePath },
+                        success: function (response) {
+                            if (response.success) {
+                                button.closest('li').remove();
+                                alert('File deleted successfully');
+                            } else {
+                                alert('Failed to delete file: ' + response.message);
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            alert('Error: ' + error);
+                        }
+                    });
+                }
+            });
+        });
+       
+
+        const dropzone = document.getElementById('dropzone');
+        const fileInput = document.getElementById('file-input');
+        const fileItems = document.getElementById('file-items');
+        const browseFilesBtn = document.getElementById('browse-files');
+        const filenameinput = document.querySelector('input[name="Files"]');
+
+        const filenames = [];
+
+        // Show file input when 'Browse Files' button is clicked
+        browseFilesBtn.onclick = () => fileInput.click();
+
+        // Handle file input change
+        fileInput.onchange = () => {
+            [...fileInput.files].forEach(file => {
+                if (typeValidation(file.type)) {
+                    console.log(file);
+                    filenames.push(file);
+                    handleFile(file);
+                }
+            });
+
+            filenameinput.value = filenames.join('; ');
+            console.log(filenames.join('; '));
+            console.log(filenameinput);
+        };
+
+        // Handle drag over
+        dropzone.ondragover = (e) => {
+            e.preventDefault();
+            dropzone.classList.add('drag-over-effect');
+        };
+
+        // Handle drag leave
+        dropzone.ondragleave = () => {
+            dropzone.classList.remove('drag-over-effect');
+        };
+
+        // Handle drop
+        dropzone.ondrop = (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('drag-over-effect');
+            if (e.dataTransfer.files) {
+                [...e.dataTransfer.files].forEach(file => {
+                    if (typeValidation(file.type)) {
+                        handleFile(file);
+                    }
+                });
+            }
+        };
+
+        // Validate file type
+        function typeValidation(type) {
+            const splitType = type.split('/')[0];
+            return type === 'application/pdf' || splitType === 'image' || splitType === 'video';
+        }
+
+        // Handle file
+        function handleFile(file) {
+            const li = document.createElement('li');
+            li.classList.add('file-item');
+            li.innerHTML = `
+                        <div class="col">
+                            <img src="icons/${iconSelector(file.type)}" alt="">
+                        </div>
+                        <div class="col">
+                            <div class="file-name">
+                                <div class="name">${file.name}</div>
+                                <span>0%</span>
+                            </div>
+                            <div class="file-progress">
+                                <span></span>
+                            </div>
+                            <div class="file-size">${(file.size / (1024 * 1024)).toFixed(2)} MB</div>
+                        </div>
+                        <div class="col">
+                            <button class="remove-button">Remove</button>
+                        </div>
+                    `;
+            fileItems.appendChild(li);
+
+            // Simulate file upload progress
+            simulateUploadProgress(file, li);
+
+            // Add event listener to remove file
+            li.querySelector('.remove-button').onclick = () => li.remove();
+        }
+
+        // Simulate upload progress
+        function simulateUploadProgress(file, li) {
+            const progressBar = li.querySelector('.file-progress span');
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 10;
+                progressBar.style.width = `${progress}%`;
+                li.querySelector('.file-name span').textContent = `${progress}%`;
+                if (progress >= 100) {
+                    clearInterval(interval);
+                }
+            }, 200);
+        }
+
+        // Determine file icon based on file type
+        function iconSelector(fileType) {
+            if (fileType === 'application/pdf') return 'pdf.png';
+            if (fileType.startsWith('image')) return 'image.png';
+            if (fileType.startsWith('video')) return 'video.png';
+            return 'file.png';
+        }
+
+        function validateAndRedirect() {
+            // Get all required fields
+            const requiredFields = document.querySelectorAll('input[required]');
+            // Check if all required fields are filled
+            for (let field of requiredFields) {
+                if (!field.value) {
+                    alert('Please fill in all required fields.');
+                    return false;
+                }
+            }
+
+            // Redirect or submit the form
+            return true; // Proceed with form submission
+        }
+    
+
+        //Select zone and Subzone
+        function initializeZone() {
+            const zoneId = $("#Zone_ID").val();
+            if (zoneId) {
+                $("#zones option").each(function () {
+                    if ($(this).data("zone-id") == zoneId) {
+                        $(this).prop("selected", true);
+                        setSubzones(); 
+                    }
+                });
+            }
+        }
+        function initializeSubzone() {
+            const subzoneId = $("#Subzone_ID").val();
+            if (subzoneId) {
+                $("#subzones option").each(function () {
+                    if ($(this).data("subzone-id") == subzoneId) {
+                        $(this).prop("selected", true);
+                    }
+                });
+            }
+        }
+        function updateZoneID() {
+            var selectedOption = document.getElementById("zones").selectedOptions[0];
+            var zoneID = selectedOption.getAttribute("data-zone-id");
+            document.getElementById("Zone_ID").value = zoneID;
+        }
+
+        function updateSubzoneID() {
+            var selectedOption = document.getElementById("subzones").selectedOptions[0];
+            var subzoneID = selectedOption.getAttribute("data-subzone-id");
+            document.getElementById("Subzone_ID").value = subzoneID;
+        }
+
+        function setSubzones() {
+            var selectElement = document.getElementById("zones");
+            var selectedOption = selectElement.options[selectElement.selectedIndex];
+            var zoneId = selectedOption.getAttribute("data-zone-id");
+            document.getElementById("Zone_ID").value = zoneId;
+            updateSubzones(zoneId);
+        }
+
+        function updateSubzones(zoneId) {
+            $.ajax({
+                url: '/Zone/GetSubzonesByZoneId',
+                type: 'GET',
+                data: { zoneId: zoneId },
+                success: function (response) {
+                    console.log(response); 
+
+                    if (response.success) {
+                        var subzoneDropdown = document.getElementById("subzones");
+                        subzoneDropdown.innerHTML = ""; // Clear existing options
+
+                        // Populate the subzone dropdown with the new options
+                        response.subzones.forEach(function (subzone) {
+                            var option = document.createElement("option");
+                            option.value = subzone.subzone_Name;
+                            option.text = subzone.subzone_Name;
+                            option.setAttribute("data-subzone-id", subzone.subzone_ID);
+                            subzoneDropdown.appendChild(option);
+                        });
+                        initializeSubzone();
+                    } else {
+                        alert('Failed to retrieve subzones: ' + response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Error: ' + error);
+                }
+            });
+        }
+
+        //add supervisor
+        function handleRunnerSelection() {
+            const runnerRadio = document.getElementById('Runner');
+            const inputContainer = document.getElementById('additionalInputContainer');
+
+            if (runnerRadio.checked) {
+                createSupervisorDropdown();
+            } else {
+                inputContainer.innerHTML = '';
+            }
+        }
+
+        function setupRunnerRadioChangeHandler() {
+            $('input[name="Title"]').on('change', function () {
+                handleRunnerSelection();
+            });
+        }
+
+        function createSupervisorDropdown() {
+            const inputContainer = document.getElementById('additionalInputContainer');
+            inputContainer.innerHTML = ''; // Clear any previous input
+
+            const selectElement = document.createElement('select');
+            selectElement.id = 'runnerOptions';
+            selectElement.name = 'RunnerOptions';
+
+            // Create and append default option
+            const defaultOption = document.createElement('option');
+            defaultOption.textContent = 'Select a Supervisor';
+            defaultOption.value = '';
+            selectElement.appendChild(defaultOption);
+
+            // Fetch options from the server
+            fetch('/User/GetSupervisor') // Adjust URL as needed
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(option => {
+                        const optionElement = document.createElement('option');
+                        optionElement.value = option.supervisor_ID; // Assuming ID is used as value
+                        optionElement.textContent = option.supervisor_Name; // Display name
+                        selectElement.appendChild(optionElement);
+                    });
+
+                    // Set the selected option if Supervisor_ID is available
+                    const supervisorId = $("#Supervisor_ID").val();
+                    if (supervisorId) {
+                        selectElement.value = supervisorId;
+                    }
+
+                    inputContainer.appendChild(selectElement);
+
+                    // Add event listener to update hidden input field
+                    selectElement.addEventListener('change', () => {
+                        const selectedValue = selectElement.value;
+                        document.getElementById('Supervisor_ID').value = selectedValue;
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching options:', error);
+                    // Optionally handle errors, e.g., show a message to the user
+                });
+        }
+
+    </script>
+  
+</body>
+</html>

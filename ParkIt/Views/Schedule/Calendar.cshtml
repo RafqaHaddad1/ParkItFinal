@@ -1,0 +1,568 @@
+﻿@model ParkIt.Models.Data.Event
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        
+        $(document).ready(function () {
+            setZones();
+            const calendarEl = document.getElementById('calendar');
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                timeZone: 'local',
+                customButtons: {
+                    myCustomButton: {
+                        text: 'Add Event',
+                        click: function () {
+                            var zoneId = $('#Zone_ID').val();
+                            $('#addEventModal').modal('show');
+                            setEmployeeByZone(zoneId);
+                            
+                            console.log("Employee ID:", $('#Employee_ID').val());
+                            console.log("Zone ID:", $('#Zone_ID').val());
+                           
+                        }
+                    }
+                },
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'myCustomButton dayGridMonth timeGridWeek timeGridDay'
+                },
+                dateClick: function (info) {
+                    calendar.changeView('timeGridDay', info.dateStr);
+                },
+                events: function (fetchInfo, successCallback, failureCallback) {
+                    const zoneid = $("#Zone_ID2").val();
+                    $.ajax({
+                        url: '/Calendar/GetEventsFromZone',
+                        method: 'GET',
+                        data: { zoneID: zoneid },
+                        success: function (data) {
+                            successCallback(data);
+                        },
+                        error: function () {
+                            failureCallback();
+                        }
+                    });
+                },
+                eventContent: function (arg) {
+                    const event = arg.event;
+                    const title = event.title || 'No Title';
+                    const startTime = event.start ? formatTime(event.start) : '';
+                    const endTime = event.end ? formatTime(event.end) : '';
+                    const description = event.extendedProps.description || 'No Description';
+
+                    return {
+                        html:
+                            `<div>
+                                <b>${title}</b><br>
+                                ${startTime} - ${endTime}<br>
+                                ${description}
+                            </div>`
+                    };
+                },
+                eventClick: function (info) {
+                    $('#editEventModal #EventID').val(info.event.id);
+                    $('#editEventModal #Zone_Name1').val(info.event.extendedProps.zone_name);
+                    $('#editEventModal #Zone_ID1').val(info.event.extendedProps.zone_id);
+                    $('#editEventModal #Description1').val(info.event.extendedProps.description);
+                    $('#editEventModal #Employee_Name1').val(info.event.title);
+                    $('#editEventModal #Employee_ID1').val(info.event.extendedProps.empid);
+                    // Convert to local time and format as YYYY-MM-DDTHH:MM
+                    let startTime = info.event.start ? formatDate(info.event.start) : '';
+                    $('#editEventModal #Start1').val(startTime);
+
+                    let endTime = info.event.end ? formatDate(info.event.end) : '';
+                    $('#editEventModal #End1').val(endTime);
+
+                    $('#editEventModal #ThemeColor1').val(info.event.backgroundColor);
+                    $('#editEventModal #IsFullDay1').prop('checked', info.event.extendedProps.isFullDay);
+                  
+                    $('#editEventModal').modal('show');
+                },
+
+            });
+
+            calendar.render();
+            $('#zones').change(function () {
+                calendar.refetchEvents(); // Refresh events based on selected zone
+            });
+          
+            function formatDate(date) {
+                // Convert to local time and format as YYYY-MM-DDTHH:MM
+                let localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+                return localDate.toISOString().slice(0, 16);
+            }
+
+            function formatTime(date) {
+                // Format time as HH:MM
+                return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            }
+            $('#submitButton').click(function () {
+                const zoneId = $('#addEventModal #Zone_ID').val();
+                console.log('Zone_ID in JS:', zoneId); // Check the value in the console
+
+                const formData = {
+                    Employee_ID: $('#addEventModal #Employee_ID').val(),
+                    Zone_ID: zoneId, // Ensure this is the correct value
+                    Description: $('#addEventModal #Description').val(),
+                    Start: $('#addEventModal #Start').val(),
+                    End: $('#addEventModal #End').val(),
+                    ThemeColor: $('#addEventModal #ThemeColor').val(),
+                    IsFullDay: $('#addEventModal #IsFullDay').is(':checked')
+                };
+
+                console.log('FormData:', formData); // Check the complete form data
+
+                $.ajax({
+                    url: '/Calendar/AddEvent',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(formData),
+                    success: function (response) {
+                        console.log(response);
+                        if (response.success) {
+                            $('#addEventModal').modal('hide');
+                            calendar.refetchEvents();
+                        } else {
+                            alert('Error: ' + response.errorMessage);
+                        }
+                    },
+                    error: function (error) {
+                        console.log('AJAX Error:', error);
+                        alert('Error adding event.');
+                    }
+                });
+            });
+
+
+            $('#updateButton').click(function () {
+                const formData = {
+                    Employee_ID: $("#editEventModal #Employee_ID1").val(),
+                    EventID: parseInt($('#editEventModal #EventID').val(), 10),
+                    Zone_ID: $('#editEventModal #Zone_ID1').val(),
+                    Description: $('#editEventModal #Description1').val(),
+                    Start: $('#editEventModal #Start1').val(),
+                    End: $('#editEventModal #End1').val(),
+                    ThemeColor: $('#editEventModal #ThemeColor1').val(),
+                    IsFullDay: $('#editEventModal #IsFullDay1').is(':checked')
+                };
+                console.log(formData);
+                $.ajax({
+                    url: '/Calendar/UpdateEvent',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(formData),
+                    success: function (response) {
+                        console.log(response);
+                        if (response.success) {
+                            $('#editEventModal').modal('hide');
+                            calendar.refetchEvents();
+                        } else {
+                            alert('Error: ' + response.errorMessage);
+                        }
+                    },
+                    error: function (error) {
+                        console.log('AJAX Error:', error);
+                        alert('Error updating event.');
+                    }
+                });
+            });
+
+            $('#deleteButton').click(function () {
+                const id = $('#editEventModal #EventID').val();
+                $.ajax({
+                    url: '/Calendar/DeleteEvent/' + id,
+                    method: 'DELETE',
+                    success: function () {
+                        $('#editEventModal').modal('hide');
+                        calendar.refetchEvents();
+                    },
+                    error: function () {
+                        alert('Error deleting event.');
+                    }
+                });
+            });
+
+            $('#closeAddModal').click(function () {
+                $('#addEventModal').modal('hide');
+            });
+
+            $('#closeEditModal').click(function () {
+                $('#editEventModal').modal('hide');
+            });
+        });
+        function setZones() {
+            $.ajax({
+                url: '/Zone/GetZones',
+                type: 'GET',
+                success: function (response) {
+                    console.log(response); // Log the response object
+
+                    if (Array.isArray(response) && response.length > 0) {
+                        var ZoneDropdown = document.getElementById("zones");
+                        ZoneDropdown.innerHTML = ""; // Clear existing options
+                        var defaultOption = document.createElement("option");
+                        defaultOption.value = "";
+                        defaultOption.text = "Select a Zone";
+                        defaultOption.disabled = true;
+                        defaultOption.selected = true;
+                        ZoneDropdown.appendChild(defaultOption);
+
+                        response.forEach(function (zone) {
+                            var option = document.createElement("option");
+                            option.value = zone.zone_Name;
+                            option.text = zone.zone_Name;
+                            option.setAttribute("data-zone-id", zone.zone_ID);
+                            ZoneDropdown.appendChild(option);
+                        });
+
+                    } else {
+                        // Log the whole response for debugging
+                        console.log('Failed to retrieve zones, response:', response);
+                        // If response.message is undefined, provide a default message
+                        var errorMessage = response.message || "Unknown error occurred";
+                        alert('Failed to retrieve zones: ' + errorMessage);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Error: ' + error);
+                }
+            });
+        }
+      
+        function setEmployeeByZone(zoneId) {
+            $.ajax({
+                url: '/User/GetEmployeeByZone',
+                type: 'GET',
+                data: { id: zoneId },
+                success: function (response) {
+                    console.log(response); // Log the response object
+
+                    if (Array.isArray(response) && response.length > 0) {
+                        var EmployeeDropdown = document.getElementById("Employee_Name");
+                        EmployeeDropdown.innerHTML = ""; // Clear existing options
+                        var defaultOption = document.createElement("option");
+                        defaultOption.value = "";
+                        defaultOption.text = "Select an Employee";
+                        defaultOption.disabled = true;
+                        defaultOption.selected = true;
+                        EmployeeDropdown.appendChild(defaultOption);
+
+                        response.forEach(function (employee) {
+                            var option = document.createElement("option");
+                            option.value = employee.employee_Name;
+                            option.text = employee.employee_Name;
+                            option.setAttribute("data-employee-id", employee.employee_ID);
+                            EmployeeDropdown.appendChild(option);
+                        });
+                       
+                    } else {
+                        console.log('Failed to retrieve employees, response:', response);
+                        var errorMessage = response.message || "Unknown error occurred";
+                        alert('Failed to retrieve employees: ' + errorMessage);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Error: ' + error);
+                }
+            });
+        }
+       
+        function updateZoneID() {
+            // Get the selected option
+            var selectedOption = document.getElementById("zones").selectedOptions[0];
+            // Get the Zone_ID from the data attribute
+            var zoneID = selectedOption.getAttribute("data-zone-id");
+            // Set the Zone_ID input field value
+            document.getElementById("Zone_ID").value = zoneID;
+            document.getElementById("Zone_ID2").value = zoneID;
+            document.getElementById("Zone_Name").value = selectedOption.textContent;;
+        }
+        function updateEmployeeID(){
+            var selectedOption = document.getElementById("Employee_Name").selectedOptions[0];
+            var employeeID = selectedOption.getAttribute("data-employee-id");
+            document.getElementById("Employee_ID").value = employeeID;
+        }
+     
+    </script>
+
+    <style>
+        .fc-col-header-cell-cushion  {
+            color: #23282B !important;
+        }
+
+        .fc-daygrid-day-number{
+            color: #23282B !important;
+        }
+        button{
+            background-color: #F3BC12 !important;
+            border-color: #F3BC12 !important;
+            color: #23282B !important;
+        }
+        .form-control {
+            display: block;
+            width: 100%;
+            height: 34px;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+            -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
+        }
+
+        .form-control {
+            border-radius: 0;
+            box-shadow: none;
+            border-color: #d2d6de
+        }
+
+        .select2-hidden-accessible {
+            border: 0 !important;
+            clip: rect(0 0 0 0) !important;
+            height: 1px !important;
+            margin: -1px !important;
+            overflow: hidden !important;
+            padding: 0 !important;
+            position: absolute !important;
+            width: 1px !important
+        }
+
+        .select2-container--default .select2-selection--single,
+        .select2-selection .select2-selection--single {
+            border: 1px solid #d2d6de;
+            border-radius: 5px;
+            padding: 6px 12px;
+            height: 34px
+        }
+
+        .select2-container--default .select2-selection--single {
+            background-color: #fff;
+            border: 1px solid #aaa;
+            border-radius: 5px
+        }
+
+        .select2-container .select2-selection--single {
+            box-sizing: border-box;
+            cursor: pointer;
+            display: block;
+            height: 28px;
+            user-select: none;
+            -webkit-user-select: none
+        }
+
+            .select2-container .select2-selection--single .select2-selection__rendered {
+                padding-right: 10px
+            }
+
+            .select2-container .select2-selection--single .select2-selection__rendered {
+                padding-left: 0;
+                padding-right: 0;
+                height: auto;
+                margin-top: -3px
+            }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 28px
+        }
+
+        .select2-container--default .select2-selection--single,
+        .select2-selection .select2-selection--single {
+            border: 1px solid #d2d6de;
+            border-radius: 5px !important;
+            padding: 6px 12px;
+            height: 40px !important
+        }
+
+            .select2-container--default .select2-selection--single .select2-selection__arrow {
+                height: 26px;
+                position: absolute;
+                top: 6px !important;
+                right: 1px;
+                width: 20px
+            }
+
+        .select2-container--default .select2-results__option {
+            padding: 8px 12px;
+            font-size: 14px;
+            border-bottom: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .select2-container--default .select2-results__option--highlighted {
+            background-color: #F3BC12 !important;
+            color: white !important;
+        }
+        /* Style the search box container */
+        .select2-container--default .select2-search--dropdown .select2-search__field {
+            padding: 8px;
+            border: 1px solid #d2d6de;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+            /* Style the search box input */
+            .select2-container--default .select2-search--dropdown .select2-search__field:focus {
+                border-color: #F3BC12;
+                outline: none;
+                box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+                border-radius: 5px;
+            }
+
+        .select2-container--default .select2-dropdown {
+            border: 1px solid #d2d6de;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            max-height: 200px; /* Adjust as needed */
+            overflow-y: auto; /* Enable scrolling if options overflow */
+        }
+
+
+    </style>
+</head>
+<body>
+    <select name="zones" id="zones" class="zones form-control select2-hidden-accessible" data-placeholder="Select a Zone" style="width: 100%;" tabindex="-1" aria-hidden="true" onchange="updateZoneID()">
+        <option value="" selected disabled>Select a Zone</option>
+
+    </select>
+    <input type="number" name="Zone_ID2" id="Zone_ID2" hidden /> 
+    <div id='calendar'></div>
+
+    <!-- Add Event Modal -->
+    <div class="modal fade" id="addEventModal" tabindex="-1" aria-labelledby="addEventModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="addEventModalLabel">Add Event</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeAddModal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addEventForm">
+
+                        <div class="mb-3">
+                            <label for="Zone_Name" class="control-label">Zone Name</label><br />
+                            <input id="Zone_Name" name="Zone_Name" type="text" class="form-control" readonly />
+                            <input id="Zone_ID" name="Zone_ID" type="number" class="form-control" hidden />
+                        </div>
+                        <div class="mb-3"> 
+                            <label for="Employee_Name" class="control-label">Employee Name</label><br />
+                            <select name="Employee_Name" id="Employee_Name" class="Employee_Name form-control select2-hidden-accessible" data-placeholder="Select an Employee" style="width: 100%;" tabindex="-1" aria-hidden="true" onchange="updateEmployeeID()">
+                                <option value="" selected disabled>Select an Employee</option>
+                            </select>
+                           
+                            <input id="Employee_ID" name="Employee_ID" type="number" class="form-control" hidden />
+
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="Description" class="control-label">Description</label>
+                            <input id="Description" name="Description" type="text" class="form-control" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="Start" class="control-label">Start</label>
+                            <input id="Start" name="Start" type="datetime-local" class="form-control" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="End" class="control-label">End</label>
+                            <input id="End" name="End" type="datetime-local" class="form-control" required />
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label for="ThemeColor" class="control-label">Theme Color</label>
+                            <input id="ThemeColor" name="ThemeColor" type="color" class="form-control" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="submitButton" class="btn btn-primary" style="background-color: #f44336;">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <!-- Edit Event Modal -->
+    <div class="modal fade" id="editEventModal" tabindex="-1" aria-labelledby="editEventModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="editEventModalLabel">Edit Event</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeEditModal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editEventForm">
+                            <div class="mb-3">
+                                <label for="EventID" class="control-label">Event ID</label>
+                                <input id="EventID" name="EventID" type="number" class="form-control" readonly />
+                            </div>
+                        <div class="mb-3">
+                            <label for="Zone_Name1" class="control-label">Zone Name</label><br />
+                            <input id="Zone_Name1" name="Zone_Name1" type="text" class="form-control" readonly />
+                            <input id="Zone_ID1" name="Zone_ID1" type="number" class="form-control" hidden />
+                        </div>
+                        <div class="mb-3">
+                            <label for="Employee_Name1" class="control-label">Employee Name</label><br />
+                            <input id="Employee_Name1" name="Employee_Name1" type="text" class="form-control" readonly />
+                            <input id="Employee_ID1" name="Employee_ID1" type="number" class="form-control" readonly />
+                        </div>
+                            <div class="mb-3">
+                                <label for="Description1" class="control-label">Description</label>
+                                <input id="Description1" name="Description1" type="text" class="form-control"  />
+                            </div>
+                        <div class="mb-3">
+                                <label for="Start1" class="control-label">Start</label>
+                                <input id="Start1" name="Start1" type="datetime-local" class="form-control"  />
+                            </div>
+                        <div class="mb-3">
+                                <label for="End1" class="control-label">End</label>
+                                <input id="End1" name="End1" type="datetime-local" class="form-control"  />
+                            </div>
+
+                        <div class="mb-3">
+                                <label for="ThemeColor1" class="control-label">Theme Color</label>
+                                <input id="ThemeColor1" name="ThemeColor1" type="color" class="form-control" />
+                            </div>
+                      
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="updateButton" class="btn btn-primary" style="background-color: #f44336;">Update</button>
+                    <button type="button" id="deleteButton" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    <script>
+        $('#zones').select2();
+       $('#Employee_Name').select2({
+                dropdownParent: $('#addEventModal .modal-content')
+       })
+    </script>
+</body>
+</html>

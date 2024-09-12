@@ -1,0 +1,602 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parking Lot Form</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.4/css/dataTables.dataTables.css" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.4/js/dataTables.js"></script>
+   
+
+    <style>
+        /* General Container Styles */
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+      
+        /* Form Left and Right Sections */
+        .form-left, .form-right {
+            display: flex;
+            flex-direction: column;
+            width: 48%;
+        }
+
+            .form-left input, .form-right input, .form-right textarea, .form-left select {
+                margin-bottom: 10px;
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+            .form-right textarea {
+                height: 150px;
+            }
+
+            .form-left input[type="file"] {
+                padding: 3px;
+            }
+    
+        /* Save Button Styling */
+        .save-button {
+            align-self: flex-end;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #F3BC12;
+            color: #23282B;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Table Container Styles */
+        .table-container {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+            .table-container table {
+                width: 100%;
+                border-collapse: collapse;
+                background-color: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+
+            .table-container th, .table-container td {
+                padding: 8px 20px;
+                border: 1px solid #ccc;
+                text-align: center;
+                min-height: 40px;
+            }
+
+            .table-container th {
+                background-color: #A9A9A9;
+                color: #23282B;
+            }
+
+            .table-container tr:nth-child(even) {
+                background-color: #ddd;
+            }
+
+            .table-container tr:nth-child(odd) {
+                background-color: #ffffff;
+            }
+
+        /* Map Container Styles */
+        .map-container {
+            position: relative; /* This allows the #info div to be positioned within .map-container */
+            width: 100%;
+            height: 500px; /* Adjust as needed */
+        }
+
+
+            .map-container #myDiv {
+                width: 100%;
+                height: 500px;
+            }
+
+        /* Grid Container Styles */
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        /* Add Button Styling */
+        .add-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #F3BC12;
+            color: #23282B;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-danger {
+            background-color: #23282B;
+            border-color: #23282B;
+            color: #F3BC12
+        }
+
+        .form-control {
+            display: block;
+            width: 100%;
+            height: 34px;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+            -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
+        }
+
+        .form-control {
+            border-radius: 0;
+            box-shadow: none;
+            border-color: #d2d6de
+        }
+
+        .select2-hidden-accessible {
+            border: 0 !important;
+            clip: rect(0 0 0 0) !important;
+            height: 1px !important;
+            margin: -1px !important;
+            overflow: hidden !important;
+            padding: 0 !important;
+            position: absolute !important;
+            width: 1px !important
+        }
+
+        .select2-container--default .select2-selection--single,
+        .select2-selection .select2-selection--single {
+            border: 1px solid #d2d6de;
+            border-radius: 5px;
+            padding: 6px 12px;
+            height: 34px
+        }
+
+        .select2-container--default .select2-selection--single {
+            background-color: #fff;
+            border: 1px solid #aaa;
+            border-radius: 5px
+        }
+
+        .select2-container .select2-selection--single {
+            box-sizing: border-box;
+            cursor: pointer;
+            display: block;
+            height: 28px;
+            user-select: none;
+            -webkit-user-select: none
+        }
+
+            .select2-container .select2-selection--single .select2-selection__rendered {
+                padding-right: 10px
+            }
+
+            .select2-container .select2-selection--single .select2-selection__rendered {
+                padding-left: 0;
+                padding-right: 0;
+                height: auto;
+                margin-top: -3px
+            }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+           
+            line-height: 28px
+        }
+
+        .select2-container--default .select2-selection--single,
+        .select2-selection .select2-selection--single {
+            border: 1px solid #d2d6de;
+            border-radius: 5px !important;
+            padding: 6px 12px;
+            height: 40px !important
+        }
+
+            .select2-container--default .select2-selection--single .select2-selection__arrow {
+                height: 26px;
+                position: absolute;
+                top: 6px !important;
+                right: 1px;
+                width: 20px
+            }
+
+        .select2-container--default .select2-results__option {
+            padding: 8px 12px;
+            font-size: 14px;
+            border-bottom: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .select2-container--default .select2-results__option--highlighted {
+            background-color: #F3BC12 !important;
+            color: white !important;
+        }
+        /* Style the search box container */
+        .select2-container--default .select2-search--dropdown .select2-search__field {
+            padding: 8px;
+            border: 1px solid #d2d6de;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
+
+        }
+
+            /* Style the search box input */
+            .select2-container--default .select2-search--dropdown .select2-search__field:focus {
+                border-color: #F3BC12;
+                outline: none;
+                box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+                border-radius: 5px;
+            }
+
+        .select2-container--default .select2-dropdown {
+            border: 1px solid #d2d6de;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            max-height: 200px; /* Adjust as needed */
+            overflow-y: auto; /* Enable scrolling if options overflow */
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Table Container -->
+        <div class="table-container">
+            <form asp-action="AddZoneWithSubzones" asp-controller="Zone" method="post" enctype="multipart/form-data" class="form-container" id="Zone-Form">
+                <!-- Zone fields -->
+                <div class="form-left">
+                    <input type="text" name="Zone_Name" placeholder="Zone Name" required />
+                    <input type="text" name="Area" placeholder="Area" required />
+                    <input type="text" name="Street" placeholder="Street" required />
+                    <select name="supervisor" id="supervisor" class="supervisor form-control select2-hidden-accessible" data-placeholder="Select a Supervisor" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                        <option value="" selected disabled>Select a Supervisor</option>
+                    </select>
+                    <input type="number" id="Supervisor_ID" name="Supervisor_ID" hidden />
+                    <br/>
+                    <label>
+                        <input type="checkbox" name="Active" value="true" id="active-checkbox">
+                        Active
+                    </label>
+                </div>
+                
+                <div class="form-right">
+                    <!-- Subzone fields -->
+                    <input type="text" id="subzone-name" name="Subzone_Name" placeholder="Subzone Name" />
+                    <input type="number" id="subzone-capacity" name="Capacity" placeholder="Capacity" />
+                    <button type="button" id="add-subzone-button" class="add-button">+ Add Subzone</button>
+                </div>
+                <input type="hidden" id="coordinates-data" name="AllCoordinates" />
+
+                <!-- Hidden field for subzones data -->
+                <input type="hidden" id="subzones-data" name="subzonesData" />
+       
+                <!-- Save Button -->
+         
+                <input type="submit" class="save-button" value="Save" />
+                <div id="info" name="AllCoordinates" style="position:absolute; color: red; font-family: Arial, Helvetica, sans-serif; height: 200px; font-size: 12px"></div>
+            </form>
+            <br/>
+            <table id="subzone-table">
+                <thead>
+                    <tr>
+                        <th>Subzone</th>
+                        <th>Capacity</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                   
+                </tbody>
+            </table>
+        </div>
+        <div class="form-right">
+            <!-- Map Container -->
+            <div class="map-container">
+                <div id="myDiv"></div>
+            </div>
+            <div id="info" style="position:absolute; color: red; font-family: Arial, Helvetica, sans-serif; height: 200px; font-size: 12px"></div>
+        </div>
+    </div>
+
+    <!-- Google Maps API -->
+    <script async defer type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBiyENFIL4UsKCGGbXh3-nASJIMeJmpmYU&libraries=drawing"></script>
+
+    <script type="text/javascript">
+      
+        function DisplayGoogleMap() {
+            InitMap();
+        }
+        var map;
+        var mapcanvas;
+
+        let coordinates = [];
+
+        function InitMap() {
+            var location = new google.maps.LatLng(33.888630, 35.495480);
+            var mapOptions = {
+                zoom: 12,
+                center: location,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+
+            map = new google.maps.Map(document.getElementById('myDiv'), mapOptions);
+            var all_overlays = [];
+            var selectedShape;
+            var drawingManager = new google.maps.drawing.DrawingManager({
+                drawingControlOptions: {
+                    position: google.maps.ControlPosition.TOP_CENTER,
+                    drawingModes: [
+                        google.maps.drawing.OverlayType.POLYGON,
+                    ]
+                },
+                markerOptions: {},
+               
+                polygonOptions: {
+                    clickable: true,
+                    draggable: false,
+                    editable: true,
+                    fillColor: "#F3BC12",
+                    fillOpacity: 0.5
+                }
+            });
+
+            drawingManager.setMap(map);
+
+            function getPolygonCoords(newShape) {
+                coordinates.splice(0, coordinates.length);
+                var len = newShape.getPath().getLength();
+                for (var i = 0; i < len; i++) {
+                    coordinates.push(newShape.getPath().getAt(i).toUrlValue(5));
+                }
+                document.getElementById('info').innerHTML = coordinates;
+                return coordinates;
+            }
+
+            function clearSelection() {
+                if (selectedShape) {
+                    selectedShape.setEditable(false);
+                    selectedShape = null;
+                }
+            }
+
+            function stopDrawing() {
+                drawingManager.setMap(null);
+            }
+
+            function setSelection(shape) {
+                clearSelection();
+                stopDrawing();
+                selectedShape = shape;
+                shape.setEditable(true);
+            }
+
+            function deleteSelectedShape() {
+                if (selectedShape) {
+                    selectedShape.setMap(null);
+                    drawingManager.setMap(map);
+                    coordinates.splice(0, coordinates.length);
+                    document.getElementById('info').innerHTML = "";
+                }
+            }
+
+            function CenterControl(controlDiv, map) {
+                // set CSS for the control border
+                var controlUI = document.createElement('div');
+                controlUI.style.backgroundColor = "#fff";
+                controlUI.style.border = '2px solid #fff';
+                controlUI.style.borderRadius = '3px';
+                controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+                controlUI.style.cursor = 'pointer';
+                controlUI.style.marginBottom = '22px';
+                controlUI.style.textAlign = 'center';
+                controlUI.title = 'Select to delete the shape';
+                controlDiv.appendChild(controlUI);
+
+                // set CSS for the control interior
+                var controlText = document.createElement('div');
+                controlText.style.color = 'rgb(25,25,25)';
+                controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+                controlText.style.fontSize = '16px';
+                controlText.style.lineHeight = '38px';
+                controlText.style.paddingLeft = '5px';
+                controlText.style.paddingRight = '5px';
+                controlText.innerHTML = "Delete Selected Area";
+                controlUI.appendChild(controlText);
+
+                // setup click event listener to delete the selected shape
+                controlUI.addEventListener('click', function () {
+                    deleteSelectedShape();
+                });
+            }
+
+            google.maps.event.addListener(drawingManager, 'polygoncomplete', function (event) {
+                event.getPath().getLength();
+                google.maps.event.addListener(event, "dragend", getPolygonCoords(event));
+                google.maps.event.addListener(event.getPath(), "insert_at", function () {
+                    coordinates.splice(0, coordinates.length);
+                    var len = event.getPath().getLength();
+                    for (var i = 0; i < len; i++) {
+                        coordinates.push(event.getPath().getAt(i).toUrlValue(5));
+                    }
+                    document.getElementById('info').innerHTML = coordinates;
+                    console.log(coordinates);
+                });
+                google.maps.event.addListener(event.getPath(), 'set_at', function () {
+                    coordinates.splice(0, coordinates.length);
+                    var len = event.getPath().getLength();
+                    for (var i = 0; i < len; i++) {
+                        coordinates.push(event.getPath().getAt(i).toUrlValue(5));
+                    }
+                    document.getElementById('info').innerHTML = coordinates;
+                });
+            });
+
+            google.maps.event.addListener(drawingManager, 'overlaycomplete', function (event) {
+                all_overlays.push(event);
+                if (event.type !== google.maps.drawing.OverlayType.MARKER) {
+                    drawingManager.setDrawingMode(null);
+
+                    var newShape = event.overlay;
+                    newShape.type = event.type;
+                    google.maps.event.addListener(newShape, 'click', function () {
+                        setSelection(newShape);
+                    });
+                    setSelection(newShape);
+                }
+            });
+
+            var centerControlDiv = document.createElement('div');
+            var centerControl = new CenterControl(centerControlDiv, map);
+
+            centerControlDiv.index = 1;
+            map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(centerControlDiv);
+        }
+        function collectCoordinatesData() {
+            const infoDiv = document.getElementById('info');
+            // Assuming the data in the info div is in a specific format you can parse
+            const coordinatesData = infoDiv.innerText; // or infoDiv.textContent
+            document.getElementById('coordinates-data').value = coordinatesData;
+        }
+
+        document.getElementById('Zone-Form').addEventListener('submit', function (event) {
+            collectCoordinatesData();
+        });
+        // Call DisplayGoogleMap on page load
+        window.onload = function () {
+            DisplayGoogleMap();
+            setSupervisors();
+            $('#subzone-table').DataTable();
+        };
+        $('.supervisor').select2();
+          let subzones = [];
+        document.getElementById("add-subzone-button").onclick = function () {
+            var subzoneName = document.getElementById("subzone-name").value;
+            var capacity = document.getElementById("subzone-capacity").value;
+
+            if (subzoneName && capacity) {
+                var tableBody = document.getElementById("subzone-table").querySelector('tbody');
+                var newRow = document.createElement('tr');
+
+                // Create cells for subzone name and capacity
+                var subZoneCell = document.createElement('td');
+                var capacityCell = document.createElement('td');
+                subZoneCell.textContent = subzoneName;
+                capacityCell.textContent = capacity;
+
+                // Create delete button
+                var deleteCell = document.createElement('td');
+                var deleteButton = document.createElement('button');
+                deleteButton.className = 'btn btn-danger';
+                deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
+                deleteButton.onclick = function () { DeleteSubzone(deleteButton); }; // Pass the button itself
+
+                deleteCell.appendChild(deleteButton);
+
+                // Append cells to row
+                newRow.appendChild(subZoneCell);
+                newRow.appendChild(capacityCell);
+                newRow.appendChild(deleteCell);
+
+                // Append row to table
+                tableBody.appendChild(newRow);
+
+                // Clear input fields after adding
+                document.getElementById("subzone-name").value = '';
+                document.getElementById("subzone-capacity").value = '';
+            } else {
+                alert("Please fill in both fields.");
+            }
+        };
+
+        document.getElementById("Zone-Form").onsubmit = function () {
+            var subzones = [];
+            var rows = document.querySelectorAll("#subzone-table tbody tr");
+
+            rows.forEach(function (row) {
+                var cells = row.getElementsByTagName("td");
+                if (cells.length > 0) {
+                    subzones.push({
+                        Subzone_Name: cells[0].textContent,
+                        Capacity: cells[1].textContent
+                    });
+                }
+            });
+
+            document.getElementById("subzones-data").value = JSON.stringify(subzones);
+        };
+
+        function DeleteSubzone(button) {
+            var row = button.closest('tr'); // Get the row of the button
+            if (confirm('Are you sure you want to delete this subzone?')) {
+                // Remove the row from the table
+                row.remove();
+            }
+        }
+
+        function setSupervisors() {
+            $.ajax({
+                url: '/User/GetSupervisor',
+                type: 'GET',
+                success: function (response) {
+                    console.log("AJAX call succeeded, response:", response); // Log the response
+
+                    var supervisorDropdown = document.getElementById("supervisor");
+                    supervisorDropdown.innerHTML = ""; // Clear existing options
+
+                    // Add a default "Select a Supervisor" option
+                    var defaultOption = document.createElement("option");
+                    defaultOption.value = "";
+                    defaultOption.text = "Select a Supervisor";
+                    defaultOption.disabled = true;
+                    defaultOption.selected = true;
+                    supervisorDropdown.appendChild(defaultOption);
+
+                    // Populate the supervisor dropdown with the new options
+                    response.forEach(function (supervisor) {
+                        console.log("Adding supervisor:", supervisor); // Log each supervisor
+                        var option = document.createElement("option");
+                        option.value = supervisor.supervisor_ID;
+                        option.text = supervisor.supervisor_Name;
+                        supervisorDropdown.appendChild(option);
+                    });
+
+                    // Update the hidden Supervisor_ID input when a supervisor is selected
+                    supervisorDropdown.addEventListener('change', function () {
+                        var selectedSupervisorID = this.value;
+                        document.getElementById("Supervisor_ID").value = selectedSupervisorID;
+                        console.log("Selected Supervisor ID:", selectedSupervisorID); // Log selected ID
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.log('Error:', error); // Log any error
+                    alert('Error: ' + error);
+                }
+            });
+        }
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+﻿@model ParkIt.ViewModel.DashboardModel
+@{
+    var username = ViewBag.Username ?? "Guest";
+}
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+<style>
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #e0e0e0;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    th, td {
+        padding: 10px;
+        border: 1px solid #ccc;
+        text-align: left;
+    }
+
+    th {
+        background-color: #A9A9A9;
+        color: #23282B;
+    }
+
+    tr:nth-child(even) {
+        background-color: #ddd;
+    }
+
+    tr:nth-child(odd) {
+        background-color: #ffffff;
+    }
+
+    .table-wrapper {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        gap: 20px; /* Space between tables */
+    }
+
+    .table-container.left {
+        flex: 3; /* Makes tables take equal width */
+    }
+
+    .table-container.right {
+        flex: 1; /* Makes tables take equal width */
+    }
+
+    .table-title {
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+</style>
+
+<h1>Hello @username</h1>
+<br />
+<section class="content">
+    <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>@Model.InactiveZoneCount</h3>
+                        <p>Active Zones</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
+                    <a href="@Url.Action("CoveredZones", "Zone")" " class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>@Model.ActiveRunners</h3>
+                        <p>Active Runners</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                    <a href="@Url.Action("Users", "User")" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>@Model.NumberOfCars</h3>
+                        <p>Cars in hand</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                    <a href="@Url.Action("TransactionTable", "Transaction")" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>285$</h3>
+                        <p><br /></p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+        </div>
+
+        <h5>TRANSACTIONS OVERVIEW</h5>
+        <div class="table-wrapper">
+            <div class="table-container left">
+                <div class="table-title">Transaction Details</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Zone</th>
+                            <th>Runner</th>
+                            <th>Active</th>
+                            <th>Status</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Antelies</td>
+                            <td>Samer</td>
+                            <td>Yes</td>
+                            <td>Parked</td>
+                            <td>12:22 pm</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-container right">
+                <div class="table-title">Zone Ranking</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Zone</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Antelies</td>
+                            <td>19</td>
+                        </tr>
+                        <tr>
+                            <td>Baabda</td>
+                            <td>15</td>
+                        </tr>
+                        <tr>
+                            <td>Hamra</td>
+                            <td>12</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

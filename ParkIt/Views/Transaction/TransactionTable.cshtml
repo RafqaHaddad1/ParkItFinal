@@ -1,0 +1,401 @@
+﻿@model ParkIt.ViewModel.TransactionsListViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.4/js/dataTables.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" />
+
+    <title>@ViewData["Title"]</title>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        table {
+            width: 100%; /* Adjusted to use full width of container */
+            border-collapse: collapse;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            table-layout: fixed; /* Ensures columns take up the full width */
+        }
+
+        th, td {
+            padding: 25px; /* Increased padding for wider cells */
+            border: 1px solid #ccc;
+            text-align: left;
+            word-wrap: break-word; /* Allows long words to break and wrap */
+        }
+
+        th {
+            background-color: #A9A9A9;
+            color: #23282B;
+        }
+
+        tr:nth-child(even) {
+            background-color: #ddd !important;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #ffffff !important;
+        }
+
+        .save-button2 {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #F3BC12;
+            color: #23282B;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .modal .form-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            background-color: #e0e0e0;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+
+        .modal .form-left,
+        .modal .form-right {
+            display: flex;
+            flex-direction: column;
+            width: 48%;
+        }
+
+            .modal .form-left input,
+            .modal .form-left select,
+            .modal .form-right input {
+                margin-bottom: 10px;
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+
+        .modal .save-button {
+            align-self: flex-end;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #F3BC12;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>@ViewData["Title"]</h1>
+        <button onclick="$('#FilterModal').modal('show');">Filter</button>
+        <table id="Transaction-Table" class="display">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>CAR_ID</th>
+                    <th>RUNNER_NAME</th>
+                    <th>ZONE</th>
+                    <th>TYPE</th>
+                    <th>STATUS</th>
+                    <th>LOT</th>
+                    <th>CAR_MODEL</th>
+                    <th>TIME_ARRIVED</th>
+                    <th>FEE</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model?.Transaction == null || !Model.Transaction.Any())
+                {
+                    <tr><td colspan="10">No Data Available</td></tr>
+                }
+                else
+                {
+                    @foreach (var t in Model.Transaction)
+                    {
+                        <tr onclick="$('#editEventModal').modal('show');" data-transaction-id="@t.Transaction_ID">
+                            <td><img src="@Url.Content("~/Images/UserIcon.png")" style="width: 35px; height: 35px;background-color: transparent;display: block;" alt="Icon" /></td>
+                            <td>@t.Transaction_ID</td>
+                            <td id="runnerName_@t.Transaction_ID">Loading...</td>
+                            <td id="zoneName_@t.Transaction_ID">-</td>
+                            <td>@t.Type</td>
+                            <td>@t.Status</td>
+                            <td>@t.ParkingSpot_ID</td>
+                            <td>@t.CarModel</td>
+                            <td>@t.ArrivalTime</td>
+                            <td>@t.Fee</td>
+                        </tr>
+                        <script>
+                            $(document).ready(function () {
+                                GetRunnerName(@t.Transaction_ID);
+                                GetZoneName(@t.Transaction_ID)
+                            });
+                        </script>
+                    }
+                }
+            </tbody>
+        </table>
+        <button onclick="location.href='@Url.Action("AddTransaction", "Transaction")'" class="save-button2">Add</button>
+    </div>
+
+
+
+
+
+
+
+    <div class="modal fade" id="editEventModal" tabindex="-1" aria-labelledby="editEventModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="editEventModalLabel">Transaction Info</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeEditModal" onclick=" $('#editEventModal').modal('hide');"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-container">
+                        <div class="form-left">
+                            <label for="Trnasaction_ID">Transaction ID</label>
+                            <input type="number" name="Transaction_ID" placeholder="Transaction ID" id="Transaction_ID" readonly />
+                            <label for="CarModel">Car Model</label>
+                            <input type="text" name="CarModel" placeholder="Car Model" maxlength="100" id="CarModel" readonly />
+                            <label for="PhoneNumber">Phone Number</label>
+                            <input type="text" name="PhoneNumber" placeholder="Customer Number" maxlength="15"  id="PhoneNumber" readonly />
+                            <label for="ArrivalTime">Arrival Time</label>
+                            <input type="datetime-local" name="ArrivalTime" placeholder="Arrival Time" id="ArrivalTime" readonly />
+                            <label for="DispatchTime">Dispatch Time</label>
+                            <input type="datetime-local" name="DispatchTime" placeholder="Dispatch Time" id="DispatchTime" readonly />
+                            <label for="Runner_Collect_ID">Runner Collect Name</label>
+                            <input type="text" name="Runner_Collect_ID" id="Runner_Collect_ID"  placeholder="Runner on Collect" maxlength="50" readonly />
+                            <label for="Runner_Dispatch_ID">Runner Dispatch Name</label>
+                            <input type="text" name="Runner_Dispatch_ID" id="Runner_Dispatch_ID" placeholder="Runner on Dispatch" maxlength="50" readonly />
+                            <label for="Zone_ID">Zone Name</label>
+                            <input type="text" name="Zone_ID" placeholder="Zone ID" id="Zone_ID" readonly />
+                            <label for="ParkingSpot_ID">Parking Spot</label>
+                            <input type="number" name="ParkingSpot_ID" placeholder="Parking Spot ID" id="ParkingSpot_ID" readonly />
+                        </div>
+                        <div class="form-right">
+                            <div class="form-group radio-group">
+                                <label>Guest Type:</label>
+                                <div>
+                                    <input type="radio" id="VIP" name="Type" value="VIP" disabled>
+                                    <label for="VIP">VIP</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="Normal" name="Type" value="Normal" disabled>
+                                    <label for="Normal">Normal</label>
+                                </div>
+                            </div>
+                            <label for="TicketNumber">Ticket Number</label>
+                            <input type="number" name="TicketNumber" id="TicketNumber" placeholder="Car Ticket Number" maxlength="50" readonly />
+                            <label for="Fee">Fee</label>
+                            <input type="number" name="Fee" placeholder="Fee" id="Fee" readonly />
+                            <div class="form-group radio-group">
+                                <label>Status:</label>
+                                <div>
+                                    <input type="radio" id="Parked" name="Status" value="Parked" disabled>
+                                    <label for="Parked">Parked</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="Dispatched" name="Status" value="Dispatched" disabled>
+                                    <label for="Dispatched">Dispatched</label>
+                                </div>
+                            </div>
+                            <label for="Note">Notes</label>
+                            <input type="text" name="Note" placeholder="Additional Notes" maxlength="1000" id="Note" readonly/>
+                           <label>Customer Rating</label>
+                          <input type="text" name="Rating" id="rating_val" value="0" readonly/>
+                               
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="FilterModal" tabindex="-1" aria-labelledby="FilterModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="editEventModalLabel">Transaction Info</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeEditModal" onclick=" $('#editEventModal').modal('hide');"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-container">
+                        <div class="form-left">
+                            <label for="CarModel">Car Model</label>
+                            <select data-placeholder="Select Car Model" name="Carmodel" id="carmodel" >
+                                <option disabled>Select Car Model</option>
+                                <option>Mercedes-Benz</option>
+                                <option>LandRover</option>
+                                <option>BMW</option>
+                                <option>Nissan</option>
+                                <option>Toyota</option>
+                                <option>Jeep</option>
+                                <option>Honda</option>
+                                <option>VolksWagen</option>
+                                <option>Hyundai</option>
+                                 <option>Audi</option>
+                                <option>Kia</option>
+                            </select>
+                            <label for="PhoneNumber">Phone Number</label>
+                            <input type="text" name="PhoneNumber" placeholder="Customer Number" maxlength="15" id="PhoneNumber" />
+                            <label for="ArrivalTime">Arrival Time</label>
+                            <input type="datetime-local" name="ArrivalTime" placeholder="Arrival Time" id="ArrivalTime"  />
+                            <label for="DispatchTime">Dispatch Time</label>
+                            <input type="datetime-local" name="DispatchTime" placeholder="Dispatch Time" id="DispatchTime"  />
+                            <label for="Runner_Collect_ID">Runner Collect Name</label>
+                            <input type="text" name="Runner_Collect_ID" id="Runner_Collect_ID" placeholder="Runner on Collect" maxlength="50"  />
+                            <label for="Runner_Dispatch_ID">Runner Dispatch Name</label>
+                            <input type="text" name="Runner_Dispatch_ID" id="Runner_Dispatch_ID" placeholder="Runner on Dispatch" maxlength="50"  />
+                            <label for="Zone_ID">Zone Name</label>
+                            <input type="text" name="Zone_ID" placeholder="Zone ID" id="Zone_ID"  />
+                            <label for="ParkingSpot_ID">Parking Spot</label>
+                            <input type="number" name="ParkingSpot_ID" placeholder="Parking Spot ID" id="ParkingSpot_ID"  />
+                        </div>
+                        <div class="form-right">
+
+                            <select data-placeholder="Select Customer Type">
+                                <option disbaled>Select Customer Type</option>
+                                <option>VIP</option>
+                                <option>Normal</option>
+                            </select>
+                          
+                            <label for="TicketNumber">Ticket Number</label>
+                            <input type="number" name="TicketNumber" id="TicketNumber" placeholder="Car Ticket Number" maxlength="50"  />
+                            <label for="Fee">Fee</label>
+                            <input type="number" name="Fee" placeholder="Fee" id="Fee"  />
+                            <div class="form-group radio-group">
+                                <select data-placeholder="Select One">
+                                    <option disabled>Select One</option>
+                                    <option>Parked</option>
+                                    <option>Dispatched</option>
+                                </select>
+                                
+                            </div>
+                            <label>Customer Rating</label>
+                            <input type="text" name="Rating" id="rating_val" value="0" readonly />
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    // $('#Table').DataTable();
+    $(document).on('click', 'tr[data-transaction-id]', function () {
+        var userId = $(this).data('transaction-id');
+        fetchTransactionDetails(userId);
+        $('#editEventModal').modal('show');
+    });
+    function GetRunnerName(transactionId) {
+        $.ajax({
+            url: '/User/GetRunnerCollectByTransactionId',
+            type: 'GET',
+            data: { id: transactionId },
+            success: function (response) {
+                console.log(response); // Log the entire response object
+
+                if (response.success) {
+                    var runnerNameElement = document.getElementById("runnerName_" + transactionId);
+                    if (runnerNameElement) {
+                        runnerNameElement.innerHTML = response.runner_Name;
+                    } else {
+                        console.warn('Element not found for transaction ID:', transactionId);
+                    }
+                } else {
+                    alert('Failed to retrieve runner information: ' + (response.message || 'Unknown error'));
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log('AJAX Error:', xhr.responseText); // Log full error response
+                alert('Error: ' + xhr.responseText);
+            }
+        });
+    }
+    function GetZoneName(transactionId) {
+        $.ajax({
+            url: '/Zone/GetZoneByTransactionId', // Ensure this URL matches your route
+            type: 'GET',
+            data: { id: transactionId },
+            success: function (response) {
+                console.log(response); // Log the entire response object
+                if (response.success) {
+                    var zoneNameElement = document.getElementById("zoneName_" + transactionId);
+                    if (zoneNameElement) {
+                        zoneNameElement.innerHTML = response.zone_Name;
+                    } else {
+                        console.warn('Element not found for transaction ID:', transactionId);
+                    }
+                } else {
+                    alert('Failed to retrieve zone information: ' + (response.message || 'Unknown error'));
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log('AJAX Error:', xhr.responseText); // Log full error response
+                alert('Error: ' + xhr.responseText);
+            }
+        });
+    }
+    $(document).ready(function () {
+        $('#Transaction-Table').DataTable();
+    });
+
+    function fetchTransactionDetails(transactionId) {
+        $.ajax({
+            url: '/Transaction/GetTransactionDetails',
+            type: 'GET',
+            data: { id: transactionId },
+            success: function (result) {
+                if (result.success) {
+                    console.log(result);
+                    populateModal(result.data);
+                    $('#editEventModal').modal('show');
+                } else {
+                    alert('Error fetching zone details');
+                }
+            },
+            error: function (err) {
+                console.error(err);
+                alert('Error fetching zone details');
+            }
+        });
+    }
+
+    function populateModal(transaction) {
+        $('#Transaction_ID').val(transaction.transaction_ID);
+        $('input[name="CarModel"]').val(transaction.carModel);
+        $('input[name="PhoneNumber"]').val(transaction.phone);
+        $('input[name="ArrivalTime"]').val(transaction.arrivalTime);
+        $('input[name="DispatchTime"]').val(transaction.dispatchTime);
+        $('input[name="Runner_Collect_ID"]').val(transaction.runnerCollect);
+        $('input[name="Runner_Dispatch_ID"]').val(transaction.runnerDispatch);
+        $('input[name="ParkingSpot_ID"]').val(transaction.parking);
+        $('input[name="TicketNumber"]').val(transaction.ticketNumber);
+        $('input[name="Fee"]').val(transaction.fee);
+        $('input[name="Note"]').val(transaction.note);
+        $('input[name="Zone_ID"]').val(transaction.zone_Name);
+        $('input[name="Rating"]').val(transaction.rating);
+        $('input[name="Type"][value="' + transaction.type+ '"]').prop('checked', true);
+        $('input[name="Status"][value="' + transaction.status    + '"]').prop('checked', true);
+
+       
+
+    }
+</script>
+</html>

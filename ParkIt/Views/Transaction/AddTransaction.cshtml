@@ -1,0 +1,606 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - YourAppName</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" />
+    <style>
+        .rating_stars {
+            margin-top: 15px;
+            display: inline-block;
+            font-size: 20px;
+            font-weight: 200;
+            color: #918f8f;
+            position: relative;
+        }
+
+            .rating_stars span .fa, .rating_stars span.active-low .fa-star-o, .rating_stars span.active-high .fa-star-o {
+                display: none;
+            }
+
+            .rating_stars span .fa-star-o {
+                display: inline-block;
+            }
+
+            .rating_stars span.s.active-high .fa-star {
+                display: inline-block;
+                color: #feb645;
+            }
+
+            .rating_stars span.s.active-low .fa-star-half-o {
+                display: inline-block;
+                color: #feb645;
+            }
+
+            .rating_stars span.r {
+                position: absolute;
+                top: 0;
+                height: 20px;
+                width: 10px;
+                left: 0;
+            }
+
+                .rating_stars span.r.r0_5 {
+                    left: 0px;
+                }
+
+                .rating_stars span.r.r1 {
+                    left: 10px;
+                    width: 11px;
+                }
+
+                .rating_stars span.r.r1_5 {
+                    left: 21px;
+                    width: 13px;
+                }
+
+                .rating_stars span.r.r2 {
+                    left: 34px;
+                    width: 12px;
+                }
+
+                .rating_stars span.r.r2_5 {
+                    left: 46px;
+                    width: 12px;
+                }
+
+                .rating_stars span.r.r3 {
+                    left: 58px;
+                    width: 11px;
+                }
+
+                .rating_stars span.r.r3_5 {
+                    left: 69px;
+                    width: 12px;
+                }
+
+                .rating_stars span.r.r4 {
+                    left: 81px;
+                    width: 12px;
+                }
+
+                .rating_stars span.r.r4_5 {
+                    left: 93px;
+                    width: 12px;
+                }
+
+                .rating_stars span.r.r5 {
+                    left: 105px;
+                    width: 12px;
+                }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            max-width: 1500px; /* Adjust max width as needed */
+            margin: 0 auto;
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: row; /* Change to row direction */
+            justify-content: space-between;
+            width: 90%;
+            background-color: #e0e0e0;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            column-gap: 20px; /* Add space between columns */
+        }
+
+        .form-left, .form-middle, .form-right {
+            display: flex;
+            flex-direction: column;
+            width: 30%; /* Adjust width for three columns */
+        }
+
+        .form-middle {
+            display: flex;
+            flex-direction: column;
+            width: 50%; /* Adjust width to make space for the image */
+        }
+
+            .form-left input, .form-middle input, .form-right input, .form-middle textarea, .form-left select {
+                margin-bottom: 10px;
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+        .form-right textarea {
+            height: 150px;
+        }
+
+        .save-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #F3BC12;
+            color: #23282B;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .profile-pic {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #F3BC12;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            color: white;
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        .radio-group label {
+            margin-right: 20px;
+        }
+
+        .car-photo {
+            width: 250px; /* Adjust width as needed */
+            height: 105px; /* Adjust height as needed */
+            object-fit: cover; /* Ensure the image covers the area */
+            border-radius: 10px;
+            background-color: #ccc; /* Placeholder background color */
+        }
+
+        .form-control {
+            display: block;
+            width: 100%;
+            height: 34px;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+            -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
+        }
+
+        .form-control {
+            border-radius: 0;
+            box-shadow: none;
+            border-color: #d2d6de
+        }
+
+        .select2-hidden-accessible {
+            border: 0 !important;
+            clip: rect(0 0 0 0) !important;
+            height: 1px !important;
+            margin: -1px !important;
+            overflow: hidden !important;
+            padding: 0 !important;
+            position: absolute !important;
+            width: 1px !important
+        }
+
+        .select2-container--default .select2-selection--single,
+        .select2-selection .select2-selection--single {
+            border: 1px solid #d2d6de;
+            border-radius: 5px;
+            padding: 6px 12px;
+            height: 34px;
+            margin-bottom: 10px
+        }
+
+        .select2-container--default .select2-selection--single {
+            background-color: #fff;
+            border: 1px solid #aaa;
+            border-radius: 5px
+        }
+
+        .select2-container .select2-selection--single {
+            box-sizing: border-box;
+            cursor: pointer;
+            display: block;
+            height: 28px;
+            user-select: none;
+            -webkit-user-select: none
+        }
+
+            .select2-container .select2-selection--single .select2-selection__rendered {
+                padding-right: 10px
+            }
+
+            .select2-container .select2-selection--single .select2-selection__rendered {
+                padding-left: 0;
+                padding-right: 0;
+                height: auto;
+                margin-top: -3px
+            }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 28px
+        }
+
+        .select2-container--default .select2-selection--single,
+        .select2-selection .select2-selection--single {
+            border: 1px solid #d2d6de;
+            border-radius: 5px !important;
+            padding: 6px 12px;
+            height: 40px !important
+        }
+
+            .select2-container--default .select2-selection--single .select2-selection__arrow {
+                height: 26px;
+                position: absolute;
+                top: 6px !important;
+                right: 1px;
+                width: 20px
+            }
+
+        .select2-container--default .select2-results__option {
+            padding: 8px 12px;
+            font-size: 14px;
+            border-bottom: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .select2-container--default .select2-results__option--highlighted {
+            background-color: #F3BC12 !important;
+            color: white !important;
+        }
+        /* Style the search box container */
+        .select2-container--default .select2-search--dropdown .select2-search__field {
+            padding: 8px;
+            border: 1px solid #d2d6de;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+            /* Style the search box input */
+            .select2-container--default .select2-search--dropdown .select2-search__field:focus {
+                border-color: #F3BC12;
+                outline: none;
+                box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+                border-radius: 5px;
+            }
+
+        .select2-container--default .select2-dropdown {
+            border: 1px solid #d2d6de;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            max-height: 200px; /* Adjust as needed */
+            overflow-y: auto; /* Enable scrolling if options overflow */
+        }
+
+       
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Create New Transaction</h1>
+
+        <form asp-action="AddTransaction" asp-controller="Transaction" method="post" enctype="multipart/form-data" onsubmit="return validateAndRedirect()" class="container" id="Employee-Form">
+            <div class="form-container">
+                <div class="form-left">
+                   @* <input type="number" name="" placeholder="Transaction ID" required readonly />  *@
+                    <input type="text" name="CarModel" placeholder="Car Model" maxlength="100" required />
+                    <input type="datetime-local" name="ArrivalTime" placeholder="Arrival Time" required />
+                    <input type="datetime-local" name="DispatchTime" placeholder="Dispatch Time"  />
+                   
+                    <select name="zones" id="zones" class="zones form-control select2-hidden-accessible" data-placeholder="Select a Zone" style="width: 100%;" tabindex="-1" aria-hidden="true" onchange="updateZoneID()">
+                        <option value="" selected disabled>Select a Zone</option>
+
+                    </select>
+                    <input type="number" name="Zone_ID" placeholder="Zone ID" id="Zone_ID" hidden />
+
+                    <input type="number" name="ParkingSpot_ID" placeholder="Parking Spot ID" required />
+                    <select name="runnerCollect" id="runnerCollect" class="runnerCollect form-control select2-hidden-accessible" data-placeholder="Select a Runner on Collect" style="width: 100%;" tabindex="-1" aria-hidden="true" onchange="updateRunnerCollectID() ">
+                        <option value="" selected disabled>Select the Runner on Collect</option>
+
+                    </select>
+                    <input type="number" name="Runner_Collect_ID" id="Runner_Collect_ID" placeholder="Runner on Collect" maxlength="50" hidden />
+
+
+                    <select name="runnerDispatch" id="runnerDispatch" class="runnerDispatch form-control select2-hidden-accessible" data-placeholder="Select a Select a Runner on Dispatch" style="width: 100%;" tabindex="-1" aria-hidden="true" onchange="updateRunnerCollectID()">
+                        <option value="" selected disabled>Select the Runner on Dispatch</option>
+
+                    </select>
+                    <input type="number" name="Runner_Dispatch_ID" id="Runner_Dispatch_ID" placeholder="Runner on Dispatch" maxlength="50" hidden />
+                </div>
+                <div class="form-middle">
+                    <div class="form-group radio-group">
+                        <label>Guest Type:</label>
+                        <div>
+                            <input type="radio" id="VIP" name="Type" value="VIP">
+                            <label for="VIP">VIP</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="Normal" name="Type" value="Normal">
+                            <label for="Normal">Normal</label>
+                        </div>
+                    </div>
+                    <input type="number" name="TicketNumber" placeholder="Car Ticket Number" maxlength="50" required />
+                    <input type="number" name="Fee" placeholder="Fee" required />
+                    <div class="form-group radio-group">
+                        <label>Status:</label>
+                        <div>
+                            <input type="radio" id="Parked" name="Status" value="Parked" >
+                            <label for="Parked">Parked</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="Dispatched" name="Status" value="Dispatched">
+                            <label for="Dispatched">Dispatched</label>
+                        </div>
+                    </div>
+                    <input type="text" name="PhoneNumber" placeholder="Customer Number" maxlength="15" required />
+                    <textarea name="Note" placeholder="Additional Notes" maxlength="1000" required></textarea>
+                    <div>
+                        <label>Customer Rating</label>
+                        <span class="rating_stars rating_0">
+                            <span class='s' data-low='0.5' data-high='1'><i class="fa fa-star-o"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star"></i></span>
+                            <span class='s' data-low='1.5' data-high='2'><i class="fa fa-star-o"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star"></i></span>
+                            <span class='s' data-low='2.5' data-high='3'><i class="fa fa-star-o"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star"></i></span>
+                            <span class='s' data-low='3.5' data-high='4'><i class="fa fa-star-o"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star"></i></span>
+                            <span class='s' data-low='4.5' data-high='5'><i class="fa fa-star-o"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star"></i></span>
+
+                            <span class='r r0_5' data-rating='1' data-value='0.5'></span>
+                            <span class='r r1' data-rating='1' data-value='1'></span>
+                            <span class='r r1_5' data-rating='15' data-value='1.5'></span>
+                            <span class='r r2' data-rating='2' data-value='2'></span>
+                            <span class='r r2_5' data-rating='25' data-value='2.5'></span>
+                            <span class='r r3' data-rating='3' data-value='3'></span>
+                            <span class='r r3_5' data-rating='35' data-value='3.5'></span>
+                            <span class='r r4' data-rating='4' data-value='4'></span>
+                            <span class='r r4_5' data-rating='45' data-value='4.5'></span>
+                            <span class='r r5' data-rating='5' data-value='5'></span>
+                        </span>
+
+                        <div class="values">
+                            <div>
+                              <input type="text" name="Rating" id="rating_val" value="0" />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-right">
+                    <div class="form-group">
+                        <label for="car-photo">Upload Car Photo:</label>
+                        <input type="file" id="car-photo" name="carPhoto" class="car-photo" />
+                    </div>
+                    <img id="car-photo-preview" src="#" alt="Car Photo" style="display:none; width:100px; height:100px; object-fit:cover;" />
+                </div>
+            
+            </div>
+            <input type="submit" onclick="validateAndRedirect()" class="save-button" value="Submit" />
+        </form>
+
+    </div>
+    <script>
+        $('.zones').select2();
+      
+    </script>
+    <script>
+        document.getElementById('car-photo').addEventListener('change', function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.getElementById('car-photo-preview');
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        function validateAndRedirect() {
+            // Get all required fields
+            const requiredFields = document.querySelectorAll('input[required], textarea[required]');
+            let allFilled = true;
+            // Check if all required fields are filled
+            requiredFields.forEach(field => {
+                if (!field.value.trim() && field.type !== 'radio' || (field.type === 'radio' && !document.querySelector('input[name="EmploymentType"]:checked'))) {
+                    allFilled = false;
+                    field.style.borderColor = 'red'; // Highlight empty fields
+                } else {
+                    field.style.borderColor = '#ccc'; // Reset border color for filled fields
+                }
+            });
+            if (allFilled) {
+                // Redirect if all fields are filled
+                window.location.href = '@Url.Action("TransactionTable", "Transaction")';
+            } else {
+                alert('Please fill all required fields.');
+            }
+        }
+        
+        function StarRating() {
+            jQuery(document).ready(function ($) {
+                $('.rating_stars span.r').hover(function () {
+                    // get hovered value
+                    var rating = $(this).data('rating');
+                    var value = $(this).data('value');
+                    $(this).parent().attr('class', '').addClass('rating_stars').addClass('rating_' + rating);
+                    highlight_star(value);
+                }, function () {
+                    // get hidden field value
+                    var rating = $("#rating").val();
+                    var value = $("#rating_val").val();
+                    $(this).parent().attr('class', '').addClass('rating_stars').addClass('rating_' + rating);
+                    highlight_star(value);
+                }).click(function () {
+                    // Set hidden field value
+                    var value = $(this).data('value');
+                    $("#rating_val").val(value);
+
+                    var rating = $(this).data('rating');
+                    $("#rating").val(rating);
+
+                    highlight_star(value);
+                });
+
+                var highlight_star = function (rating) {
+                    $('.rating_stars span.s').each(function () {
+                        var low = $(this).data('low');
+                        var high = $(this).data('high');
+                        $(this).removeClass('active-high').removeClass('active-low');
+                        if (rating >= high) $(this).addClass('active-high');
+                        else if (rating == low) $(this).addClass('active-low');
+                    });
+                }
+            });
+        }
+
+        function setZones() {
+            $.ajax({
+                url: '/Zone/GetZones',
+                type: 'GET',
+                success: function (response) {
+                    console.log(response); // Log the response object
+
+                    if (Array.isArray(response) && response.length > 0) {
+                        var ZoneDropdown = document.getElementById("zones");
+                        ZoneDropdown.innerHTML = ""; // Clear existing options
+                        var defaultOption = document.createElement("option");
+                        defaultOption.value = "";
+                        defaultOption.text = "Select a Zone";
+                        defaultOption.disabled = true;
+                        defaultOption.selected = true;
+                        ZoneDropdown.appendChild(defaultOption);
+
+                        response.forEach(function (zone) {
+                            var option = document.createElement("option");
+                            option.value = zone.zone_Name;
+                            option.text = zone.zone_Name;
+                            option.setAttribute("data-zone-id", zone.zone_ID);
+                            ZoneDropdown.appendChild(option);
+                        });
+
+                    } else {
+                        // Log the whole response for debugging
+                        console.log('Failed to retrieve zones, response:', response);
+                        // If response.message is undefined, provide a default message
+                        var errorMessage = response.message || "Unknown error occurred";
+                        alert('Failed to retrieve zones: ' + errorMessage);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Error: ' + error);
+                }
+            });
+        }
+        function updateZoneID() {
+            // Get the selected option
+            var selectedOption = document.getElementById("zones").selectedOptions[0];
+            // Get the Zone_ID from the data attribute
+            var zoneID = selectedOption.getAttribute("data-zone-id");
+            // Set the Zone_ID input field value
+            document.getElementById("Zone_ID").value = zoneID;
+            updateRunners(zoneID);
+        }
+
+        function updateRunners(zoneId) {
+            $.ajax({
+                url: '/User/GetRunnerByZone',
+                type: 'GET',
+                data: { id: zoneId }, // Ensure the parameter name matches what the server expects
+                success: function (response) {
+                    console.log('Server response:', response);
+
+                    if (response && Array.isArray(response)) {
+                        var runnerDropdown = document.getElementById("runnerCollect");
+                        runnerDropdown.innerHTML = ""; // Clear existing options
+                        var runnerDropdown2 = document.getElementById("runnerDispatch");
+                        runnerDropdown2.innerHTML = "";
+
+                        if (response.length > 0) {
+                            // Populate the runner dropdowns with the new options
+                            response.forEach(function (runner) {
+                                var option = document.createElement("option");
+                                option.value = runner.runner_Name;
+                                option.text = runner.runner_Name;
+                                option.setAttribute("data-runner-collect-id", runner.runner_ID); // Specific to runnerCollect
+                                runnerDropdown.appendChild(option);
+
+                                var option2 = document.createElement("option");
+                                option2.value = runner.runner_Name;
+                                option2.text = runner.runner_Name;
+                                option2.setAttribute("data-runner-dispatch-id", runner.runner_ID); // Specific to runnerDispatch
+                                runnerDropdown2.appendChild(option2);
+                            });
+                            updateRunnerCollectID(); // Call function to set the Runner_Collect_ID
+                        } else {
+                            alert('No runners found for the selected zone.');
+                        }
+                    } else {
+                        alert('Failed to retrieve runners: Invalid response format.');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error occurred:', error);
+                    alert('Error: ' + error);
+                }
+            });
+        }
+
+        function updateRunnerCollectID() {
+            // Get the selected option from runnerCollect
+            var selectedOption = document.getElementById("runnerCollect").selectedOptions[0];
+            if (selectedOption) {
+                var runnerID = selectedOption.getAttribute("data-runner-collect-id");
+                document.getElementById("Runner_Collect_ID").value = runnerID;
+            } else {
+                document.getElementById("Runner_Collect_ID").value = ""; // Clear if no selection
+            }
+
+            // Get the selected option from runnerDispatch
+            var selectedOption2 = document.getElementById("runnerDispatch").selectedOptions[0];
+            if (selectedOption2) {
+                var runnerID2 = selectedOption2.getAttribute("data-runner-dispatch-id");
+                document.getElementById("Runner_Dispatch_ID").value = runnerID2;
+            } else {
+                document.getElementById("Runner_Dispatch_ID").value = ""; // Clear if no selection
+            }
+        }
+
+            $(document).ready(function () {
+                StarRating();
+                setZones();
+             
+            });
+
+        $('.runnerCollect').select2();
+        $('.runnerDispatch').select2();
+    </script>
+</body>
+</html>

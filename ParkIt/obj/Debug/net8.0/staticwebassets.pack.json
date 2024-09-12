@@ -1,0 +1,409 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\ParkIt.bundle.scp.css",
+      "PackagePath": "staticwebassets\\ParkIt.bundle.scp.css"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\4968abbe-258c-48cb-bdd7-2fe185256f24_pSone7j.webp",
+      "PackagePath": "staticwebassets\\4968abbe-258c-48cb-bdd7-2fe185256f24_pSone7j.webp"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\5f95caf7-489a-40a8-918f-54aa55681ae9_1600w-ZUhLCj-GzIc.webp",
+      "PackagePath": "staticwebassets\\5f95caf7-489a-40a8-918f-54aa55681ae9_1600w-ZUhLCj-GzIc.webp"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\631f5317-cf9f-47de-b581-0fded5038565_desktop-wallpaper-organised-office-room.jpg",
+      "PackagePath": "staticwebassets\\631f5317-cf9f-47de-b581-0fded5038565_desktop-wallpaper-organised-office-room.jpg"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\84d2663d-9e6e-4fe3-9a58-1379f5acbad4_1600w-poDQUzjtn9w.webp",
+      "PackagePath": "staticwebassets\\84d2663d-9e6e-4fe3-9a58-1379f5acbad4_1600w-poDQUzjtn9w.webp"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\Content\\ImagesUpload\\b06ec399-bd38-485d-8010-31588491e6aa_Screenshot 2024-08-09 102833.png",
+      "PackagePath": "staticwebassets\\Content\\ImagesUpload\\b06ec399-bd38-485d-8010-31588491e6aa_Screenshot 2024-08-09 102833.png"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\Content\\img\\1b381401-87d4-4f06-a20d-68c258c797a8_Screenshot 2024-06-27 165906.png",
+      "PackagePath": "staticwebassets\\Content\\img\\1b381401-87d4-4f06-a20d-68c258c797a8_Screenshot 2024-06-27 165906.png"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\Content\\img\\d38423c5-1f34-4f97-8427-e4151c9a0a63_Screenshot 2024-08-07 104952.png",
+      "PackagePath": "staticwebassets\\Content\\img\\d38423c5-1f34-4f97-8427-e4151c9a0a63_Screenshot 2024-08-07 104952.png"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\Content\\img\\ddbeca72-ec20-435f-8d23-f3398588fb88_Screenshot 2024-08-05 154821.png",
+      "PackagePath": "staticwebassets\\Content\\img\\ddbeca72-ec20-435f-8d23-f3398588fb88_Screenshot 2024-08-05 154821.png"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\FilesUpload\\0cad3eaf-733b-4cc8-8da3-442e45b4f3c6_WhatsApp Image 2023-02-19 at 1.03.38 PM.jpeg",
+      "PackagePath": "staticwebassets\\FilesUpload\\0cad3eaf-733b-4cc8-8da3-442e45b4f3c6_WhatsApp Image 2023-02-19 at 1.03.38 PM.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\FilesUpload\\16e3ad76-2e84-471d-8434-46399c82ce00_1600w-poDQUzjtn9w.webp",
+      "PackagePath": "staticwebassets\\FilesUpload\\16e3ad76-2e84-471d-8434-46399c82ce00_1600w-poDQUzjtn9w.webp"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\FilesUpload\\46ea277d-5b50-4b3d-80ee-31d114802b42_1600w-ZUhLCj-GzIc.webp",
+      "PackagePath": "staticwebassets\\FilesUpload\\46ea277d-5b50-4b3d-80ee-31d114802b42_1600w-ZUhLCj-GzIc.webp"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\FilesUpload\\58ba1dca-1779-43f9-9bd9-3c3e23ab07e4_desktop-wallpaper-organised-office-room.jpg",
+      "PackagePath": "staticwebassets\\FilesUpload\\58ba1dca-1779-43f9-9bd9-3c3e23ab07e4_desktop-wallpaper-organised-office-room.jpg"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\FilesUpload\\5fa4e517-1883-46bb-a8d8-1d4ec5892a3b_desktop-wallpaper-organised-office-room.jpg",
+      "PackagePath": "staticwebassets\\FilesUpload\\5fa4e517-1883-46bb-a8d8-1d4ec5892a3b_desktop-wallpaper-organised-office-room.jpg"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\FilesUpload\\6a6f7053-b974-4d34-82fe-d9017b856662_WhatsApp Image 2023-02-19 at 1.03.38 PM.jpeg",
+      "PackagePath": "staticwebassets\\FilesUpload\\6a6f7053-b974-4d34-82fe-d9017b856662_WhatsApp Image 2023-02-19 at 1.03.38 PM.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\FilesUpload\\f76c7c7c-d671-4e58-9421-97a4b7c7ffc9_Screenshot 2024-06-27 165906.png",
+      "PackagePath": "staticwebassets\\FilesUpload\\f76c7c7c-d671-4e58-9421-97a4b7c7ffc9_Screenshot 2024-06-27 165906.png"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\ImagesUpload\\022783ad-d958-4e75-a5eb-50a2d7199bcd_Screenshot 2024-08-12 124115.png",
+      "PackagePath": "staticwebassets\\ImagesUpload\\022783ad-d958-4e75-a5eb-50a2d7199bcd_Screenshot 2024-08-12 124115.png"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\ImagesUpload\\1bca39b2-afb7-4ead-93b9-0af9c2df5b63_Screenshot 2024-06-27 165906.png",
+      "PackagePath": "staticwebassets\\ImagesUpload\\1bca39b2-afb7-4ead-93b9-0af9c2df5b63_Screenshot 2024-06-27 165906.png"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\ImagesUpload\\1e0dfb51-e1b5-4afc-b0fc-ad13aa01ea21_Screenshot 2024-08-07 104952.png",
+      "PackagePath": "staticwebassets\\ImagesUpload\\1e0dfb51-e1b5-4afc-b0fc-ad13aa01ea21_Screenshot 2024-08-07 104952.png"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\ImagesUpload\\4b349b4d-28e5-4534-bd82-bec40091083c_Screenshot 2024-08-08 155011.png",
+      "PackagePath": "staticwebassets\\ImagesUpload\\4b349b4d-28e5-4534-bd82-bec40091083c_Screenshot 2024-08-08 155011.png"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\ImagesUpload\\5d7e7001-e6e0-4d09-9cd9-7eaabdc5f178_Screenshot 2024-08-09 102833.png",
+      "PackagePath": "staticwebassets\\ImagesUpload\\5d7e7001-e6e0-4d09-9cd9-7eaabdc5f178_Screenshot 2024-08-09 102833.png"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\ImagesUpload\\658fb857-d25d-4e4c-adbf-ab40a5a5ee29_Screenshot 2024-08-12 124115.png",
+      "PackagePath": "staticwebassets\\ImagesUpload\\658fb857-d25d-4e4c-adbf-ab40a5a5ee29_Screenshot 2024-08-12 124115.png"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\ImagesUpload\\6e5f5006-44e6-48c6-a5e9-503deed3cee6_Screenshot 2024-08-08 155256.png",
+      "PackagePath": "staticwebassets\\ImagesUpload\\6e5f5006-44e6-48c6-a5e9-503deed3cee6_Screenshot 2024-08-08 155256.png"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\ImagesUpload\\72efcab0-1c2a-450e-abb8-092f45c24f4e_Screenshot 2024-08-08 155011.png",
+      "PackagePath": "staticwebassets\\ImagesUpload\\72efcab0-1c2a-450e-abb8-092f45c24f4e_Screenshot 2024-08-08 155011.png"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\ImagesUpload\\9d9ec787-f555-44d3-97df-fbe1bc56635c_Screenshot 2024-08-07 104952.png",
+      "PackagePath": "staticwebassets\\ImagesUpload\\9d9ec787-f555-44d3-97df-fbe1bc56635c_Screenshot 2024-08-07 104952.png"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\ImagesUpload\\9df93a1d-077c-4aa6-9e7c-b81db29325bb_Screenshot 2024-08-07 104952.png",
+      "PackagePath": "staticwebassets\\ImagesUpload\\9df93a1d-077c-4aa6-9e7c-b81db29325bb_Screenshot 2024-08-07 104952.png"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\ImagesUpload\\a51d1353-5a78-4584-aa47-cc34bdc74883_Screenshot 2024-08-08 155256.png",
+      "PackagePath": "staticwebassets\\ImagesUpload\\a51d1353-5a78-4584-aa47-cc34bdc74883_Screenshot 2024-08-08 155256.png"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\Images\\420bd4e1-41f6-4ab7-b098-0ba7d1a8dc98_Screenshot 2024-08-08 155256.png",
+      "PackagePath": "staticwebassets\\Images\\420bd4e1-41f6-4ab7-b098-0ba7d1a8dc98_Screenshot 2024-08-08 155256.png"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\Images\\UserIcon.png",
+      "PackagePath": "staticwebassets\\Images\\UserIcon.png"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\Images\\nav_logo-removebg-preview.png",
+      "PackagePath": "staticwebassets\\Images\\nav_logo-removebg-preview.png"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\Images\\nav_logo.png",
+      "PackagePath": "staticwebassets\\Images\\nav_logo.png"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\Images\\parkit_logo_white.png",
+      "PackagePath": "staticwebassets\\Images\\parkit_logo_white.png"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\a5284744-1b66-46b2-887e-42f090c2a831_desktop-wallpaper-organised-office-room.jpg",
+      "PackagePath": "staticwebassets\\a5284744-1b66-46b2-887e-42f090c2a831_desktop-wallpaper-organised-office-room.jpg"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\c2c1ccaf-5ce7-4058-8907-23b59c97334c_R.jpeg",
+      "PackagePath": "staticwebassets\\c2c1ccaf-5ce7-4058-8907-23b59c97334c_R.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\e8b3ccd4-70f5-4cc6-99c9-2e4968383af2_WhatsApp Image 2023-02-18 at 4.45.48 PM.jpeg",
+      "PackagePath": "staticwebassets\\e8b3ccd4-70f5-4cc6-99c9-2e4968383af2_WhatsApp Image 2023-02-18 at 4.45.48 PM.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\f4099568-a8a0-4d1a-8df3-de5588d37e6a_WhatsApp Image 2023-02-19 at 1.03.38 PM.jpeg",
+      "PackagePath": "staticwebassets\\f4099568-a8a0-4d1a-8df3-de5588d37e6a_WhatsApp Image 2023-02-19 at 1.03.38 PM.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\fac83dc4-3360-41e4-b5b8-3bd4d5a76a55_1600w-ZUhLCj-GzIc.webp",
+      "PackagePath": "staticwebassets\\fac83dc4-3360-41e4-b5b8-3bd4d5a76a55_1600w-ZUhLCj-GzIc.webp"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\favicon.ico",
+      "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\js\\site.js",
+      "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "PackagePath": "staticwebassets\\lib\\bootstrap"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.ParkIt.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.ParkIt.props",
+      "PackagePath": "build\\ParkIt.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.ParkIt.props",
+      "PackagePath": "buildMultiTargeting\\ParkIt.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.ParkIt.props",
+      "PackagePath": "buildTransitive\\ParkIt.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

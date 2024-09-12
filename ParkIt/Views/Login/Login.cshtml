@@ -1,0 +1,187 @@
+﻿@{
+    Layout = null;
+}
+<html>
+<head>
+   
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0">
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(135deg, #23282B 0%, #F3BC12 100%);
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            text-align: center;
+            width: 100%;
+        }
+
+        .logo {
+            display: block;
+            margin: 0 auto; 
+            max-width: 200px; 
+            padding-bottom: 20px; 
+        }
+
+
+        .login {
+            display: inline-block;
+            width: 100%;
+            max-width: 350px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+           
+        }
+
+            .login h1 {
+                color: #fff;
+                margin-bottom: 20px;
+                letter-spacing: 1px;
+                font-size: 24px;
+                text-align: center;
+            }
+
+        input {
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 12px;
+            font-size: 14px;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            outline: none;
+            transition: box-shadow 0.3s ease;
+        }
+
+            input:focus {
+                box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            }
+
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #fff;
+            background-color: #23282B;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .LoginFailed {
+            margin-top: 20px;
+            padding: 10px;
+            background: red;
+            color: white;
+            border-radius: 4px;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .message {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            display: none;
+        }
+
+            .message.success {
+                background-color: #d4edda;
+                color: #155724;
+                border: 1px solid #c3e6cb;
+            }
+
+            .message.error {
+                background-color: #f8d7da;
+                color: #721c24;
+                border: 1px solid #f5c6cb;
+            }
+    </style>
+</head>
+<body>
+ 
+     <div class="login">
+        <img src="@Url.Content("~/Images/nav_logo.png")" alt="ParkIt logo" class="logo" />
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @if (@ViewBag.Message != null)
+            {
+                <div style="border: 1px solid red">
+                    @ViewBag.Message
+                </div>
+            }
+            <h1>Login</h1>
+        <form id="loginForm" onsubmit="return handleSubmit();">
+            <input id="username" name="Name" type="text" placeholder="Username" required="required" />
+            <input id="password" name="Password" type="password" placeholder="Password" autocomplete="new-password" required="required" />
+            <button type="submit" class="btn btn-primary btn-block btn-large">Sign In</button>
+            <div id="message" class="message"></div>
+            @if (TempData["Message"] != null)
+            {
+                <div class="LoginFailed">
+                    @TempData["Message"].ToString()
+                </div>
+            }
+        </form>
+           
+        </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function handleSubmit(event) {
+       
+
+            var user = $('#username').val();
+            var pass = $('#password').val();
+
+            $.ajax({
+                url: '/Login/CheckUsernameAndPassword',
+                type: 'POST',
+                data: { username: user, password: pass },
+                success: function (response) {
+                    var messageElement = $('#message');
+
+                    if (response.success) {
+                        // Redirect to the URL provided in the response (if needed)
+                        window.location.href = '/Home/Index';
+                    } else {
+                        // Display error message on the same page
+                        messageElement.removeClass('success').addClass('error')
+                            .text(response.message)
+                            .show(); // Show the message
+                    }
+                },
+                error: function (xhr, status, error) {
+                    $('#message').removeClass('success').addClass('error')
+                        .text('An unexpected error occurred: ' + error)
+                        .show(); // Show the message
+                }
+            });
+
+            return false; // Ensure form does not submit traditionally
+        }
+
+        $(document).ready(function () {
+            // Ensure the form submission is handled by handleSubmit
+            $('#loginForm').on('submit', handleSubmit);
+        });
+        </script>
+</body>
+</html>
