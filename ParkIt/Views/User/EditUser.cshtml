@@ -1,5 +1,4 @@
-﻿    @model ParkIt.ViewModel.UserZonesSubzones
-
+﻿
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -272,7 +271,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Create New User</h1>
+        <h1>Edit User</h1>
 
         <form asp-action="SavePostEdit" asp-controller="User" method="post" enctype="multipart/form-data" onsubmit="return validateAndRedirect()" class="container" id="Employee-Form">
             <div class="form-container">
@@ -280,31 +279,31 @@
                     <div class="profile-pic">
                         <i class="fas fa-user"></i>
                     </div>
-                    <input type="hidden" id="Employee_ID" name="Employee_ID" value="@Model.Employee.Employee_ID" />
-                    <input type="text" name="Name" placeholder="Name" value="@Model.Employee.Name" required />
-                    <input type="password" name="Password" placeholder="Password" value="@Model.UnHashedPassword" required />
+                    <input type="number" id="Employee_ID" name="Employee_ID" readonly/>
+                    <input type="text" name="Name" placeholder="Name"  required />
+                    <input type="password" name="Password" placeholder="Password" required />
                     <div class="form-group radio-group">
                         <label>Title</label>
                         <div>
-                            <input type="radio" id="Runner" name="Title" value="Runner" @(Model.Employee.Title == "Runner" ? "checked" : "")>
+                            <input type="radio" id="Runner" name="Title" value="Runner">
                             <label for="Runner">Runner</label>
                         </div>
                         <div>
-                            <input type="radio" id="Supervisor" name="Title" value="Supervisor" @(Model.Employee.Title == "Supervisor" ? "checked" : "")>
+                            <input type="radio" id="Supervisor" name="Title" value="Supervisor">
                             <label for="Supervisor">Supervisor</label>
                         </div>
                         <div id="additionalInputContainer" class="additionalInputContainer"></div>
-                        <input type="number" id="Supervisor_ID" name="Supervisor_ID" value="@Model.Employee.Supervisor_ID" hidden />
+                        <input type="number" id="Supervisor_ID" name="Supervisor_ID"  hidden />
                     </div>
                     <label>
-                        <input type="checkbox" name="Active" value="true" id="active-checkbox" @(Model.Employee.Active ? "checked" : "")>
+                        <input type="checkbox" name="Active" value="true" id="active-checkbox" >
                         Active
                     </label>
-                    <input type="text" name="PhoneNumber" placeholder="Phone" value="@Model.Employee.PhoneNumber" required />
-                    <input type="text" name="Address" placeholder="Address" value="@Model.Employee.Address" required />
-                    <input type="text" name="NfcCode" placeholder="NFC Code" value="@Model.Employee.NFCCode" />
+                    <input type="text" name="PhoneNumber" placeholder="Phone"  required />
+                    <input type="text" name="Address" placeholder="Address" required />
+                    <input type="text" name="NfcCode" placeholder="NFC Code" />
                     <select name="zones" id="zones" class="zones" onchange="setSubzones()">
-                        @if (Model?.Zones != null && Model.Zones.Any())
+                       @*  @if (Model?.Zones != null && Model.Zones.Any())
                         {
                             foreach (var z in Model.Zones)
                             {
@@ -314,13 +313,13 @@
                         else
                         {
                             <option value="">No zones available</option>
-                        }
+                        } *@
 
                     </select>
-                    <input type="number" name="Zone_ID" id="Zone_ID" placeholder="Zone_ID" value="@Model.Employee.Zone_ID" hidden />
-                    <select name="subzones" id="subzones" class="subzones" onchange="updateSubzoneID()"
+                    <input type="number" name="Zone_ID" id="Zone_ID" placeholder="Zone_ID" hidden />
+                    <select name="subzones" id="subzones" class="subzones" onchange="updateSubzoneID()">
                     </select>
-                    <input type="number" name="Subzone_ID" placeholder="Subzone_ID" id="Subzone_ID" value="@Model.Employee.Subzone_ID" hidden />
+                    <input type="number" name="Subzone_ID" placeholder="Subzone_ID" id="Subzone_ID" hidden />
                 </div>
                 <div class="form-right">
                     <!-- Dropzone for file upload -->
@@ -331,7 +330,7 @@
                         <div id="file-list" class="file-list">
                             <h5>Uploaded Files</h5>
                             <ul id="file-items">
-                                @if (!string.IsNullOrEmpty(Model.Employee.Files))
+                            @*     @if (!string.IsNullOrEmpty(Model.Employee.Files))
                                 {
                                     var filePaths = Model.Employee.Files.Split(';');
                                     foreach (var filePath in filePaths)
@@ -345,7 +344,7 @@
                                             </li>
                                         }
                                     }
-                                }
+                                } *@
                             </ul>
                         </div>
                     </div>
@@ -353,17 +352,17 @@
                     <div class="form-group radio-group">
                         <label>Employment Type:</label>
                         <div>
-                            <input type="radio" id="partTime" name="EmploymentType" value="PartTime" @(Model.Employee.EmploymentType == "PartTime" ? "checked" : "")>
+                            <input type="radio" id="partTime" name="EmploymentType" value="PartTime" >
                             <label for="partTime">Part Time</label>
                         </div>
                         <div>
-                            <input type="radio" id="fullTime" name="EmploymentType" value="FullTime" @(Model.Employee.EmploymentType == "FullTime" ? "checked" : "")>
+                            <input type="radio" id="fullTime" name="EmploymentType" value="FullTime" >
                             <label for="fullTime">Full Time</label>
                         </div>
                     </div>
 
-                    <input type="text" name="Kafeel" placeholder="Kafeel" value="@Model.Employee.Kafeel" />
-                    <input type="text" name="AdditionalNotes" placeholder="Additional Notes" value="@Model.Employee.AdditionalNotes" required></input>
+                    <input type="text" name="Kafeel" placeholder="Kafeel" />
+                    <input type="text" name="AdditionalNotes" placeholder="Additional Notes" required></input>
                 </div>
             </div>
             <button type="submit" class="save-button" onclick="return confirm('Are you sure you want to save these changes?');">Save</button>
@@ -374,7 +373,7 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.10.2/dropzone.min.js"></script>
-    <script>
+    <script >
         $('.zones').select2();
         $('.subzones').select2();
         $(document).ready(function () {
@@ -382,6 +381,49 @@
             initializeSubzone();
             handleRunnerSelection();
             setupRunnerRadioChangeHandler();
+            var employeeID = document.getElementById("Employee_ID").value;
+            console.log(employeeID);
+            $.ajax({
+                url: 'EditUser',
+                type: 'GET',
+                data: { id: employeeID },
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest' // Ensure the header is set for AJAX requests
+                },
+                success: function (response) {
+                    console.log(response);
+                    console.log(response.employee);
+                    if (response.success) {
+
+                        $('#Employee_ID').val(response.employee.employee_ID);
+                        $('input[name="Name"]').val(response.employee.name);
+                        $('input[name="PhoneNumber"]').val(response.employee.phone);
+                        $('input[name="Address"]').val(response.employee.address);
+                        $('input[name="NfcCode"]').val(response.employee.nfcCode);
+                        $('input[name="Zone_Name"]').val(response.employee.zone_Name);
+                        $('input[name="Subzone_Name"]').val(response.employee.subzone_Name);
+                        $('input[name="Kafeel"]').val(response.employee.kafeel);
+                        $('input[name="AdditionalNotes"]').val(response.employee.additionalNotes);
+                        $('#supervisor').val(response.employee.supervisor);
+                        $('#active-checkbox').prop('checked', response.employee.active);
+                        $('input[name="Title"][value="' + response.employee.title + '"]').prop('checked', true);
+                        $('input[name="EmploymentType"][value="' + response.employee.type + '"]').prop('checked', true);
+
+                        if (response.employee.title === "Runner") {
+                            // Show the supervisor input and set it as readonly
+                            $('#supervisor-container').show();
+                            $('#supervisor').val(response.employee.supervisor).prop('readonly', true);
+                        } else {
+                            // Hide the supervisor input
+                            $('#supervisor-container').hide();
+                        }
+
+                    }
+
+                }
+            });
+
+            // fillInfo(employeeID);
             // Use event delegation to handle click events on dynamically added "Remove" buttons
             $(document).on('click', '.remove-button2', function () {
                 var button = $(this);
@@ -669,7 +711,49 @@
                     // Optionally handle errors, e.g., show a message to the user
                 });
         }
+        function fillInfo(userId) {
+            // $.ajax({
+            //     url: 'User/EditUser',
+            //     type: 'GET',
+            //     data: { id: userId },
+            //     headers: {
+            //         'X-Requested-With': 'XMLHttpRequest' // Ensure the header is set for AJAX requests
+            //     },
+            //     success: function (response) {
+            //         console.log(response);
+            //         console.log(response.employee);
+            //         if (response.success) {
+            //             console.log(response);
+            //             console.log(response.employee);
+            //             $('#Employee_ID').val(response.employee.employee_ID);
+            //             $('input[name="Name"]').val(response.employee.name);
+            //             $('input[name="PhoneNumber"]').val(response.employee.phone);
+            //             $('input[name="Address"]').val(response.employee.address);
+            //             $('input[name="NfcCode"]').val(response.employee.nfcCode);
+            //             $('input[name="Zone_Name"]').val(response.employee.zone_Name);
+            //             $('input[name="Subzone_Name"]').val(response.employee.subzone_Name);
+            //             $('input[name="Kafeel"]').val(response.employee.kafeel);
+            //             $('input[name="AdditionalNotes"]').val(response.employee.additionalNotes);
+            //             $('#supervisor').val(response.employee.supervisor);
+            //             $('#active-checkbox').prop('checked', response.employee.active);
+            //             $('input[name="Title"][value="' + response.employee.title + '"]').prop('checked', true);
+            //             $('input[name="EmploymentType"][value="' + response.employee.type + '"]').prop('checked', true);
 
+            //             if (user.title === "Runner") {
+            //                 // Show the supervisor input and set it as readonly
+            //                 $('#supervisor-container').show();
+            //                 $('#supervisor').val(response.employee.supervisor).prop('readonly', true);
+            //             } else {
+            //                 // Hide the supervisor input
+            //                 $('#supervisor-container').hide();
+            //             }
+
+            //         }
+
+            //     }
+            // });
+        }
+       
     </script>
   
 </body>

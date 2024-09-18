@@ -53,40 +53,24 @@ namespace Calendar.Controllers
         }
                 [HttpPost("AddEvent")]
                public async Task<IActionResult> AddEvent([FromBody]Event newEvent)
-        {
-            try
-            {
-                Console.WriteLine(newEvent);
-                Console.WriteLine($"Event #{newEvent.EventID},#{ newEvent.Description},#{newEvent.Start}, #{newEvent.End}, #{newEvent.ThemeColor}, #{newEvent.Zone_ID}, #n{newEvent.Employee_ID}");
-                Console.WriteLine($"Received Zone_ID: {newEvent.Zone_ID}");
-
-                        // Validate the Zone_ID
-                        var zoneExists = _context.Zone.Any(z => z.Zone_ID == newEvent.Zone_ID);
-                        var zoneId = newEvent.Zone_ID;
-                        Console.WriteLine($"Checking Zone_ID: {zoneId}");
-
-                        if (!zoneExists)
                 {
-                    // Return a detailed error response
-                    return Json(new { success = false, errorMessage = "Invalid Zone_ID" });
+                    try
+                    {
+                        _context.Event.Add(newEvent);
+                        await _context.SaveChangesAsync();
+
+                        // Return a success response
+                        return Json(new { success = true });
+                    }
+                    catch (Exception ex)
+                    {
+                        // Log the exception
+                        Console.WriteLine(ex.Message);
+
+                        // Return an error response
+                        return Json(new { success = false, errorMessage = "An error occurred while adding the event." });
+                    }
                 }
-
-                // If validation passes, save the event
-                _context.Event.Add(newEvent);
-                await _context.SaveChangesAsync();
-
-                // Return a success response
-                return Json(new { success = true });
-            }
-            catch (Exception ex)
-            {
-                // Log the exception
-                Console.WriteLine(ex.Message);
-
-                // Return an error response
-                return Json(new { success = false, errorMessage = "An error occurred while adding the event." });
-            }
-        }
 
 
         [HttpGet("EditEvent/{id}")]
@@ -102,6 +86,8 @@ namespace Calendar.Controllers
                 }
 
                 _logger.LogInformation("Event with ID {Id} retrieved successfully.", id);
+                
+                
                 return View(model); // Return the view with the event model
             }
             catch (Exception ex)

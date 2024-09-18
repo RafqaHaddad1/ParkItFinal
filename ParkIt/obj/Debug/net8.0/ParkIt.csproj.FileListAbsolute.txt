@@ -256,3 +256,4 @@ C:\Users\test1\source\repos\ParkIt\ParkIt\obj\Debug\net8.0\refint\ParkIt.dll
 C:\Users\test1\source\repos\ParkIt\ParkIt\obj\Debug\net8.0\ParkIt.pdb
 C:\Users\test1\source\repos\ParkIt\ParkIt\obj\Debug\net8.0\ParkIt.genruntimeconfig.cache
 C:\Users\test1\source\repos\ParkIt\ParkIt\obj\Debug\net8.0\ref\ParkIt.dll
+C:\Users\test1\source\repos\ParkIt\ParkIt\obj\Debug\net8.0\ParkIt.sourcelink.json

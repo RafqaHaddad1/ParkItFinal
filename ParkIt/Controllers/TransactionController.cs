@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
+using NuGet.Common.Migrations;
 
 namespace ParkIt.Controllers
 {
@@ -22,24 +23,54 @@ namespace ParkIt.Controllers
             _logger = logger;
             _dbContext = dbContext;
         }
-
+        [HttpGet]
         public async Task<IActionResult> TransactionTable()
         {
-            
-            var model = new TransactionsListViewModel
+            // Step 1: Retrieve all transactions, employees, and zones in advance
+            var transactionTable = await _dbContext.Transactions.ToListAsync();
+            var runners = await _dbContext.Employee.ToListAsync();
+            var zones = await _dbContext.Zone.ToListAsync(); // Assuming Zones is the DbSet for Zone
+
+            // Step 2: Initialize a list to hold the transaction and runner/zone data
+            var transactionsWithRunners = new List<object>();
+
+            if (transactionTable.Any())
             {
-                Transaction = await _dbContext.Transactions.ToListAsync(),
-            };
+                // Step 3: Loop through each transaction and match with runner and zone
+                foreach (var t in transactionTable)
+                {
+                    // Fetch the runner based on Runner_Collect_ID
+                    var runner = runners.FirstOrDefault(e => e.Employee_ID == t.Runner_Collect_ID);
 
-            // Debugging line to ensure data is present
-            Console.WriteLine($"Number of transactions: {model.Transaction.Count()}");
+                    // Fetch the zone based on Zone_ID
+                    var zone = zones.FirstOrDefault(z => z.Zone_ID == t.Zone_ID);
 
-            return View(model);
+                    // Add each transaction with its corresponding runner's and zone's name to the list
+                    transactionsWithRunners.Add(new
+                    {
+                        
+                        Transactioninfo = t,
+                        RunnerName = runner?.Name ?? "No Runner",
+                        ZoneName = zone?.Zone_Name ?? "No Zones"
+                    });
+                }
+            }
+
+            // Step 4: Check if the request is an AJAX request
+            if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                // Return the transaction data along with the runner and zone names as a JSON response
+                return Json(new
+                {
+                    success = true,
+                    tableinfo = transactionsWithRunners
+                });
+            }
+
+            // If it's not an AJAX request, return a view (you can modify this based on your needs)
+            return View();
         }
-        //public IActionResult Transaction()
-        //{
-        //    return View("TransactionTable");
-        //}
+
 
         public IActionResult AddTransaction()
         {
@@ -60,6 +91,7 @@ namespace ParkIt.Controllers
 
             try
             {
+
                 if (carPhoto != null && carPhoto.Length > 0)
                 {
                     // Specify the directory path
@@ -88,7 +120,16 @@ namespace ParkIt.Controllers
                 _dbContext.Transactions.Add(model);
                 await _dbContext.SaveChangesAsync();
                 _logger.LogInformation("Transaction added successfully.");
-                return RedirectToAction("TransactionTable");
+
+               
+                if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                {
+                    return Json(new { success = true, model = model, redirectTo = "Transaction/TransactionTable" });
+                }
+
+                // Return the view for normal (non-AJAX) requests
+                return View("TransactionTable");
+
             }
             catch (Exception ex)
             {
@@ -97,92 +138,6 @@ namespace ParkIt.Controllers
             }
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var transaction = await _dbContext.Transactions.FindAsync(id);
-            if (transaction == null)
-            {
-                return NotFound();
-            }
-            _dbContext.Transactions.Remove(transaction);
-            await _dbContext.SaveChangesAsync();
-            return Json(new { success = true });
-        }
-
-        public IActionResult EditTransaction(int id)
-        {
-            try
-            {
-                var model = _dbContext.Transactions.Find(id);
-                _logger.LogInformation("Info sent Successfully");
-                return View(model);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while retrieving the transaction with ID {Id}", id);
-                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
-            }
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> SavePostEdit(Transactions model, IFormFile carPhoto)
-        {
-            if (!ModelState.IsValid)
-            {
-                return Json(new { success = false, message = "Invalid data" });
-            }
-
-            try
-            {
-                _logger.LogInformation($"Trying to find transaction with ID: {model.Transaction_ID}");
-
-                var existingTransaction = await _dbContext.Transactions.FindAsync(model.Transaction_ID);
-
-                if (existingTransaction == null)
-                {
-                    return Json(new { success = false, message = "Transaction not found" });
-                }
-
-                // Handle the image upload if a new image is provided
-                if (carPhoto != null && carPhoto.Length > 0)
-                {
-                    // Specify the directory path
-                    string uploadsDirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "ImagesUpload");
-
-                    // Ensure directory exists
-                    if (!Directory.Exists(uploadsDirectoryPath))
-                    {
-                        Directory.CreateDirectory(uploadsDirectoryPath);
-                    }
-
-                    var fileName = Path.GetFileName(carPhoto.FileName);
-                    var uniqueFileName = $"{Guid.NewGuid()}_{fileName}";
-                    var fullPath = Path.Combine(uploadsDirectoryPath, uniqueFileName);
-
-                    using (var stream = new FileStream(fullPath, FileMode.Create))
-                    {
-                        await carPhoto.CopyToAsync(stream);
-                    }
-
-                    // Update the model with the new relative path
-                    var relativePath = $"/ImagesUpload/{uniqueFileName}";
-                    model.FileName = relativePath;
-                }
-
-                // Update existing transaction with new values (including the image path if updated)
-                _dbContext.Entry(existingTransaction).CurrentValues.SetValues(model);
-                await _dbContext.SaveChangesAsync();
-
-                _logger.LogInformation("Transaction updated successfully");
-                return RedirectToAction("TransactionTable");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error updating transaction");
-                return Json(new { success = false, message = "Error updating transaction", exception = ex.Message });
-            }
-        }
         [HttpGet]
         public IActionResult GetTransactionDetails(int id)
         {
@@ -191,10 +146,10 @@ namespace ParkIt.Controllers
 
             if (transaction == null)
             {
-                return Json(new { success = false, message = "user not found" });
+                return Json(new { success = false, message = "transaction not found" });
             }
-            var result = new
-            {
+           
+            return Json(new {
                 success = true,
                 data = new
                 {
@@ -206,7 +161,7 @@ namespace ParkIt.Controllers
                     RunnerDispatch = _dbContext.Employee.Where(e => e.Employee_ID == transaction.Runner_Dispatch_ID).Select(e => e.Name).FirstOrDefault(),
                     Zone_Name = _dbContext.Zone.Where(z => z.Zone_ID == transaction.Zone_ID).Select(z => z.Zone_Name).FirstOrDefault(),
                     Type = transaction.Type,
-                    TicketNumber  = transaction.TicketNumber,
+                    TicketNumber = transaction.TicketNumber,
                     Fee = transaction.Fee,
                     status = transaction.Status,
                     Phone = transaction.PhoneNumber,
@@ -215,10 +170,78 @@ namespace ParkIt.Controllers
                     FileName = transaction.FileName,
                     Parking = transaction.ParkingSpot_ID,
                 }
-            };
-
-            return Json(result);
+            });
         }
+        
+        [HttpGet]
+        public async Task<IActionResult> GetFilteredTransactions(string type, string status, int? start = null, DateTime? startDate = null, DateTime? endDate = null, int? length = null)
+        {
 
+            var runners = await _dbContext.Employee.ToListAsync();
+            var zones = await _dbContext.Zone.ToListAsync();
+
+
+            var query = _dbContext.Transactions.AsQueryable();
+        
+
+            // Apply type filter
+            if (!string.IsNullOrEmpty(type) && type != "All")
+            {
+                query = query.Where(t => t.Type == type);
+            }
+
+            // Apply status filter
+            if (!string.IsNullOrEmpty(status) && status != "All")
+            {
+                query = query.Where(t => t.Status == status);
+            }
+
+            // Apply date filters
+            if (startDate.HasValue)
+            {
+                query = query.Where(t => t.ArrivalTime >= startDate.Value);
+            }
+
+            if (endDate.HasValue)
+            {
+                // Adding end of day to include the entire day in filtering
+                var endOfDay = endDate.Value.AddDays(1).AddTicks(-1);
+                query = query.Where(t => t.ArrivalTime <= endOfDay);
+            }
+
+            var totalRecords = await query.CountAsync();
+
+            // Pagination
+            var data = await query
+                .Skip(start ?? 0)
+                .Take(length ?? int.MaxValue)
+                .ToListAsync();
+
+            var FiltererdTransactions = new List<object>();
+            foreach (var d in data)
+            {
+                // Fetch the runner based on Runner_Collect_ID
+                var runner = runners.FirstOrDefault(e => e.Employee_ID == d.Runner_Collect_ID);
+
+                // Fetch the zone based on Zone_ID
+                var zone = zones.FirstOrDefault(z => z.Zone_ID == d.Zone_ID);
+
+                // Add each transaction with its corresponding runner's and zone's name to the list
+                FiltererdTransactions.Add(new
+                {
+
+                    Transactioninfo = d,
+                    RunnerName = runner?.Name ?? "No Runner",
+                    ZoneName = zone?.Zone_Name ?? "No Zones"
+                });
+            }
+            return Ok(new
+            {
+                recordsTotal = totalRecords,
+                recordsFiltered = totalRecords, // Update if applying filters dynamically
+                data = FiltererdTransactions
+            });
+        }
     }
 }
+

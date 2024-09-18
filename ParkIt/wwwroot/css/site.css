@@ -1,22 +1,293 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
-body {
-  margin-bottom: 60px;
+.user-panel {
+    height: 100px; /* Adjust this height to fit your layout */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+    .user-panel img.logo {
+        width: 100%;
+        height: 100%;
+        object-fit: contain; /* This will make sure the image scales to fit without distortion */
+    }
+
+.active-status {
+    background-color: #F3BC12 !important;
+    color: #000000 !important;
+}
+
+.nav-link:hover {
+    background-color: #F3BC12 !important;
+}
+
+.user-panel img {
+    height: 40px;
+    width: 180px;
+}
+
+.logo-White {
+    height: 40px;
+    width: 180px;
+}
+
+/* Style for all buttons */
+.btn {
+    background-color: #23282B; /* Dark background */
+    color: #fff; /* White text */
+    border: 1px solid #23282B; /* Dark border */
+}
+
+    .btn:hover,
+    .btn:focus {
+        background-color: #1d1f1f; /* Slightly darker on hover/focus */
+        color: #fff;
+        border-color: #1d1f1f;
+    }
+
+/* Style for primary buttons */
+.btn-primary {
+    background-color: #F3BC12; /* Yellow background */
+    color: #23282B; /* Dark text */
+    border: 1px solid #F3BC12; /* Yellow border */
+    margin-bottom: 10px;
+}
+
+    .btn-primary:hover,
+    .btn-primary:focus {
+        background-color: #e0a900; /* Slightly darker yellow on hover/focus */
+        color: #23282B;
+        border-color: #e0a900;
+    }
+
+.btn-Save {
+    background-color: #28a745 !important; /* Green background */
+    color: #fff !important; /* White text */
+    border: 1px solid #28a745 !important; /* Green border */
+}
+
+    .btn-Save:hover,
+    .btn-Save:focus {
+        background-color: #218838 !important; /* Slightly darker green on hover/focus */
+        border-color: #218838 !important;
+    }
+
+.bg-primary {
+    background-color: #23282B !important;
+}
+
+#map {
+    height: 80vh;
+    width: 100%;
+}
+
+/* Fixed sidebar with margin from the edge of the screen */
+.main-sidebar {
+    position: fixed !important;
+    top: 20px; /* Adds margin from the top */
+    left: 20px; /* Adds margin from the left edge */
+    width: 230px !important; /* Smaller width for the sidebar */
+    height: 100vh !important; /* Full height but accounts for margin */
+    background-color: #23282B; /* Dark background */
+    border-radius: 20px; /* Rounded corners */
+    z-index: 1000; /* Ensure it stays above other content */
+    overflow: hidden !important; /* Prevent scrolling */
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15); /* Adds shadow for floating effect */
+    padding-bottom: 20px; /* Adds padding at the bottom for spacing */
+    margin-top: 10px;
+    margin-bottom: 25px;
+}
+
+.sidebar-mini .main-sidebar .nav-link, .sidebar-mini-md .main-sidebar .nav-link, .sidebar-mini-xs .main-sidebar .nav-link {
+    width: unset !important;
+    transition: width ease-in-out .3s;
+}
+
+body:not(.layout-fixed) .main-sidebar .sidebar {
+    overflow: hidden;
+}
+
+body:not(.layout-fixed) .main-sidebar {
+    height: inherit;
+    min-height: 90% !important;
+    position: absolute;
+    top: 0;
+}
+
+/* Ensure the sidebar content has padding and centers the user panel */
+.sidebar {
+    height: 100% !important;
+    padding: 20px;
+}
+
+[class*=sidebar-dark] .btn-sidebar, [class*=sidebar-dark] .form-control-sidebar {
+    border: 1px solid #56606a;
+    color: #fff;
+}
+
+.user-panel {
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+/* Style for the sidebar links */
+.nav-sidebar .nav-link {
+    color: #fff;
+    border-radius: 10px; /* Rounded button-like links */
+    padding: 10px;
+}
+
+    .nav-sidebar .nav-link.active-status {
+        background-color: #F3BC12; /* Yellow for active links */
+        color: #23282B;
+    }
+
+    .nav-sidebar .nav-link:hover {
+        background-color: #1d1f1f; /* Slightly darker background on hover */
+    }
+
+/* Modify sidebar search button */
+.btn-sidebar {
+    background-color: #F3BC12;
+    color: #23282B;
+}
+
+/* Responsive behavior */
+@media (max-width: 768px) {
+    .main-sidebar {
+        width: 180px; /* Smaller width on mobile screens */
+        left: 10px; /* Less margin on smaller screens */
+        top: 10px; /* Less margin on smaller screens */
+        height: calc(90vh - 20px);
+    }
+}
+
+.main-sidebar {
+    position: fixed !important;
+    top: 20px;
+    left: 20px;
+    width: 230px !important;
+    height: 95vh !important;
+    background-color: #23282B;
+    border-radius: 20px;
+    z-index: 1000;
+    overflow: hidden !important;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15);
+    padding-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 25px;
+}
+
+.sidebar-div {
+    display: flex !important;
+    height: calc(70vh - 200px) !important;
+}
+
+body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-header {
+    transition: margin-left .3s ease-in-out;
+    margin-left: 255px;
+    border-radius: 15px;
+}
+
+.btn-sidebar, .form-control-sidebar {
+    border: 1px solid #56606a;
+    color: #fff;
+}
+
+/* Override the dark theme specifically for the search bar */
+.search-bar .form-control-sidebar {
+    background-color: #fff !important; /* White background */
+    color: #000 !important; /* Dark text */
+    border: 1px solid #ccc !important; /* Light border */
+}
+
+.search-bar .btn-sidebar {
+    background-color: #F3BC12 !important; /* Light button background */
+    color: #000 !important; /* Dark search icon */
+}
+
+.search-bar .form-control-sidebar::placeholder {
+    color: #999 !important; /* Lighter placeholder color */
+}
+
+th {
+    background-color: #23282B;
+    color: #ffffff;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* FullCalendar Custom Styles */
+.fc {
+    font-family: 'Arial', sans-serif;
+}
+
+.fc-header-toolbar {
+    background-color: #23282B;
+    color: #ffffff;
+}
+
+.fc-toolbar-title {
+    color: #ffffff;
+}
+
+.fc-button-primary {
+    background-color: #F3BC12;
+    border-color: #F3BC12;
+}
+
+    .fc-button-primary:hover {
+        background-color: #e0a900;
+        border-color: #e0a900;
+    }
+
+.fc-daygrid-day {
+    color: #ffffff;
+}
+
+.fc-daygrid-day-number {
+    color: #23282B;
+    text-decoration: none;
+}
+
+.fc-event {
+    color: #23282B;
+}
+
+    .fc-event:hover {
+        background-color: #767676;
+        border-color: #23282B;
+    }
+
+.fc-daygrid-day:hover {
+    background-color: #c7c7c7;
+}
+
+.fc-daygrid-day.fc-day-today {
+    background-color: #23282B;
+    color: #F3BC12;
+}
+
+a {
+    color: #F3BC12;
+    text-decoration: none;
+}
+/* FullCalendar Custom Styles */

@@ -8,9 +8,9 @@ namespace ParkIt.Models.Data
         public ParkItDbContext(DbContextOptions<ParkItDbContext> options) : base(options)
         {
         }
-        public DbSet<ParkIt.Models.Data.Employee> Employee { get; set; } = default!;
-        public DbSet<ParkIt.Models.Data.Zone> Zone { get; set; } = default!;
-        public DbSet<ParkIt.Models.Data.Transactions> Transactions { get; set; } = default!;
+        public DbSet<Employee> Employee { get; set; } = default!;
+        public DbSet<Zone> Zone { get; set; } = default!;
+        public DbSet<Transactions> Transactions { get; set; } = default!;
         public DbSet<Event> Event { get; set; }
         public DbSet<Subzone> Subzone { get; set; }
     }

@@ -1,4 +1,4 @@
-﻿@model ParkIt.ViewModel.TransactionsListViewModel
+﻿
 
 <!DOCTYPE html>
 <html lang="en">
@@ -7,56 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/2.1.4/js/dataTables.js"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" />
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.6/css/dataTables.dataTables.css" />
+    <script src="https://cdn.datatables.net/2.1.6/js/dataTables.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="~/css/site.css">
     <title>@ViewData["Title"]</title>
     <style>
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-        }
-
-        table {
-            width: 100%; /* Adjusted to use full width of container */
-            border-collapse: collapse;
-            background-color: #e0e0e0;
-            border-radius: 10px;
-            overflow: hidden;
-            table-layout: fixed; /* Ensures columns take up the full width */
-        }
-
-        th, td {
-            padding: 25px; /* Increased padding for wider cells */
-            border: 1px solid #ccc;
-            text-align: left;
-            word-wrap: break-word; /* Allows long words to break and wrap */
-        }
-
-        th {
-            background-color: #A9A9A9;
-            color: #23282B;
-        }
-
-        tr:nth-child(even) {
-            background-color: #ddd !important;
-        }
-
-        tr:nth-child(odd) {
-            background-color: #ffffff !important;
-        }
-
-        .save-button2 {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #F3BC12;
-            color: #23282B;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+      
 
         .modal .form-container {
             display: flex;
@@ -100,10 +57,49 @@
 </head>
 <body>
     <div class="container">
+
         <h1>@ViewData["Title"]</h1>
-        <button onclick="$('#FilterModal').modal('show');">Filter</button>
-        <table id="Transaction-Table" class="display">
-            <thead>
+        <p class="text-right">
+            <a onclick="location.href='@Url.Action("AddTransaction", "Transaction")'" class="btn btn-primary">Create New Transaction</a>
+        </p>
+        <div class="container-fluid">
+            <div class="text-right mb-3">
+                <button id="toggleFiltersButton" class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#filterSection" aria-expanded="false" aria-controls="filterSection">
+                    Show Filters
+                </button>
+            </div>
+
+            <!-- Filters Section -->
+            <div class="collapse" id="filterSection">
+                <div class="row mb-3">
+                    <div class="col">
+                        <select id="TypeFilter" class="form-control">
+                            <option value="All">All Types</option>
+                            <option value="VIP">VIP</option>
+                            <option value="Normal">Normal</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <select id="StatusFilter" class="form-control">
+                            <option value="All">All Statuses</option>
+                            <option value="Pending">Parked</option>
+                            <option value="Completed">Dispatched</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <input type="date" id="StartDateFilter" class="form-control" placeholder="Start Date" />
+                    </div>
+                    <div class="col">
+                        <input type="date" id="EndDateFilter" class="form-control" placeholder="End Date" />
+                    </div>
+                    <div class="col">
+                        <button id="FilterButton" class="btn btn-primary">Apply Filters</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table id="Transaction-Table" class="table table-hover table-striped table-bordered">
+            <thead class="thead-dark">
                 <tr>
                     <th></th>
                     <th>CAR_ID</th>
@@ -115,54 +111,24 @@
                     <th>CAR_MODEL</th>
                     <th>TIME_ARRIVED</th>
                     <th>FEE</th>
+                  
                 </tr>
             </thead>
             <tbody>
-                @if (Model?.Transaction == null || !Model.Transaction.Any())
-                {
-                    <tr><td colspan="10">No Data Available</td></tr>
-                }
-                else
-                {
-                    @foreach (var t in Model.Transaction)
-                    {
-                        <tr onclick="$('#editEventModal').modal('show');" data-transaction-id="@t.Transaction_ID">
-                            <td><img src="@Url.Content("~/Images/UserIcon.png")" style="width: 35px; height: 35px;background-color: transparent;display: block;" alt="Icon" /></td>
-                            <td>@t.Transaction_ID</td>
-                            <td id="runnerName_@t.Transaction_ID">Loading...</td>
-                            <td id="zoneName_@t.Transaction_ID">-</td>
-                            <td>@t.Type</td>
-                            <td>@t.Status</td>
-                            <td>@t.ParkingSpot_ID</td>
-                            <td>@t.CarModel</td>
-                            <td>@t.ArrivalTime</td>
-                            <td>@t.Fee</td>
-                        </tr>
-                        <script>
-                            $(document).ready(function () {
-                                GetRunnerName(@t.Transaction_ID);
-                                GetZoneName(@t.Transaction_ID)
-                            });
-                        </script>
-                    }
-                }
+              
             </tbody>
         </table>
-        <button onclick="location.href='@Url.Action("AddTransaction", "Transaction")'" class="save-button2">Add</button>
+      
     </div>
-
-
-
-
-
-
 
     <div class="modal fade" id="editEventModal" tabindex="-1" aria-labelledby="editEventModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="editEventModalLabel">Transaction Info</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeEditModal" onclick=" $('#editEventModal').modal('hide');"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeEditModal" onclick=" $('#editEventModal').modal('hide');">
+                      
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-container">
@@ -226,135 +192,73 @@
     </div>
 
 
-    <div class="modal fade" id="FilterModal" tabindex="-1" aria-labelledby="FilterModal" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="editEventModalLabel">Transaction Info</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeEditModal" onclick=" $('#editEventModal').modal('hide');"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-container">
-                        <div class="form-left">
-                            <label for="CarModel">Car Model</label>
-                            <select data-placeholder="Select Car Model" name="Carmodel" id="carmodel" >
-                                <option disabled>Select Car Model</option>
-                                <option>Mercedes-Benz</option>
-                                <option>LandRover</option>
-                                <option>BMW</option>
-                                <option>Nissan</option>
-                                <option>Toyota</option>
-                                <option>Jeep</option>
-                                <option>Honda</option>
-                                <option>VolksWagen</option>
-                                <option>Hyundai</option>
-                                 <option>Audi</option>
-                                <option>Kia</option>
-                            </select>
-                            <label for="PhoneNumber">Phone Number</label>
-                            <input type="text" name="PhoneNumber" placeholder="Customer Number" maxlength="15" id="PhoneNumber" />
-                            <label for="ArrivalTime">Arrival Time</label>
-                            <input type="datetime-local" name="ArrivalTime" placeholder="Arrival Time" id="ArrivalTime"  />
-                            <label for="DispatchTime">Dispatch Time</label>
-                            <input type="datetime-local" name="DispatchTime" placeholder="Dispatch Time" id="DispatchTime"  />
-                            <label for="Runner_Collect_ID">Runner Collect Name</label>
-                            <input type="text" name="Runner_Collect_ID" id="Runner_Collect_ID" placeholder="Runner on Collect" maxlength="50"  />
-                            <label for="Runner_Dispatch_ID">Runner Dispatch Name</label>
-                            <input type="text" name="Runner_Dispatch_ID" id="Runner_Dispatch_ID" placeholder="Runner on Dispatch" maxlength="50"  />
-                            <label for="Zone_ID">Zone Name</label>
-                            <input type="text" name="Zone_ID" placeholder="Zone ID" id="Zone_ID"  />
-                            <label for="ParkingSpot_ID">Parking Spot</label>
-                            <input type="number" name="ParkingSpot_ID" placeholder="Parking Spot ID" id="ParkingSpot_ID"  />
-                        </div>
-                        <div class="form-right">
-
-                            <select data-placeholder="Select Customer Type">
-                                <option disbaled>Select Customer Type</option>
-                                <option>VIP</option>
-                                <option>Normal</option>
-                            </select>
-                          
-                            <label for="TicketNumber">Ticket Number</label>
-                            <input type="number" name="TicketNumber" id="TicketNumber" placeholder="Car Ticket Number" maxlength="50"  />
-                            <label for="Fee">Fee</label>
-                            <input type="number" name="Fee" placeholder="Fee" id="Fee"  />
-                            <div class="form-group radio-group">
-                                <select data-placeholder="Select One">
-                                    <option disabled>Select One</option>
-                                    <option>Parked</option>
-                                    <option>Dispatched</option>
-                                </select>
-                                
-                            </div>
-                            <label>Customer Rating</label>
-                            <input type="text" name="Rating" id="rating_val" value="0" readonly />
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 </body>
 <script>
-    // $('#Table').DataTable();
-    $(document).on('click', 'tr[data-transaction-id]', function () {
-        var userId = $(this).data('transaction-id');
-        fetchTransactionDetails(userId);
+    var table = $('#Transaction-Table').DataTable();
+
+    $.ajax({
+        url: '/Transaction/TransactionTable',
+        type: 'GET',
+        success: function (response) {
+            if (response.success) {
+                console.log('transaction Table:', response.tableinfo);
+                var tableBody = $('#Transaction-Table tbody');
+                tableBody.empty();
+
+                $.each(response.tableinfo, function (index, item) {
+                    console.log(item);
+                    var row = `
+                            <tr>
+                                <td data-transaction-id="${item.transactioninfo.transaction_ID}">
+                                    <img src="../Images/UserIcon.png" style="width: 35px; height: 35px; background-color: transparent; display: block;" alt="Icon" />
+                                </td>
+                                <td>${item.transactioninfo.transaction_ID}</td>
+                                <td>${item.runnerName}</td>
+                                <td>${item.zoneName}</td>
+                                <td>${item.transactioninfo.type}</td>
+                                <td>${item.transactioninfo.status}</td>
+                                <td>${item.transactioninfo.parkingSpot_ID}</td>
+                                <td>${item.transactioninfo.carModel}</td>
+                                <td>${item.transactioninfo.arrivalTime}</td>
+                                <td>${item.transactioninfo.fee}</td>
+                            </tr>`;
+                    tableBody.append(row);
+                });
+            } else {
+                alert("Failed to fetch user data.");
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("Error: " + error);
+        }
+    });
+    $('#toggleFiltersButton').click(function () {
+        var $filterSection = $('#filterSection');
+        var $button = $(this);
+
+        if ($filterSection.is(':visible')) {
+            // Hide the filter section
+            $filterSection.hide();
+            // Update button text to indicate that the filter is hidden
+            $button.text('Show Filters');
+        } else {
+            // Show the filter section
+            $filterSection.show();
+            // Update button text to indicate that the filter is visible
+            $button.text('Hide Filters');
+        }
+    });
+
+    $(document).on('click', 'td[data-transaction-id]', function () {
+        console.log('Table row clicked');
+        var transactionId = $(this).data('transaction-id');
+        fetchTransactionDetails(transactionId);
         $('#editEventModal').modal('show');
     });
-    function GetRunnerName(transactionId) {
-        $.ajax({
-            url: '/User/GetRunnerCollectByTransactionId',
-            type: 'GET',
-            data: { id: transactionId },
-            success: function (response) {
-                console.log(response); // Log the entire response object
 
-                if (response.success) {
-                    var runnerNameElement = document.getElementById("runnerName_" + transactionId);
-                    if (runnerNameElement) {
-                        runnerNameElement.innerHTML = response.runner_Name;
-                    } else {
-                        console.warn('Element not found for transaction ID:', transactionId);
-                    }
-                } else {
-                    alert('Failed to retrieve runner information: ' + (response.message || 'Unknown error'));
-                }
-            },
-            error: function (xhr, status, error) {
-                console.log('AJAX Error:', xhr.responseText); // Log full error response
-                alert('Error: ' + xhr.responseText);
-            }
-        });
-    }
-    function GetZoneName(transactionId) {
-        $.ajax({
-            url: '/Zone/GetZoneByTransactionId', // Ensure this URL matches your route
-            type: 'GET',
-            data: { id: transactionId },
-            success: function (response) {
-                console.log(response); // Log the entire response object
-                if (response.success) {
-                    var zoneNameElement = document.getElementById("zoneName_" + transactionId);
-                    if (zoneNameElement) {
-                        zoneNameElement.innerHTML = response.zone_Name;
-                    } else {
-                        console.warn('Element not found for transaction ID:', transactionId);
-                    }
-                } else {
-                    alert('Failed to retrieve zone information: ' + (response.message || 'Unknown error'));
-                }
-            },
-            error: function (xhr, status, error) {
-                console.log('AJAX Error:', xhr.responseText); // Log full error response
-                alert('Error: ' + xhr.responseText);
-            }
-        });
-    }
-    $(document).ready(function () {
-        $('#Transaction-Table').DataTable();
-    });
+   
+    
 
     function fetchTransactionDetails(transactionId) {
         $.ajax({
@@ -362,40 +266,97 @@
             type: 'GET',
             data: { id: transactionId },
             success: function (result) {
-                if (result.success) {
-                    console.log(result);
-                    populateModal(result.data);
+                console.log('Fetch result:', result);
+                if (result.success && result.data ) {
+                    var data = result.data;
+                    $('#Transaction_ID').val(data.transaction_ID || '');
+                    $('input[name="CarModel"]').val(data.carModel || '');
+                    $('input[name="PhoneNumber"]').val(data.phone || '');
+                    $('input[name="ArrivalTime"]').val(data.arrivalTime || '');
+                    $('input[name="DispatchTime"]').val(data.dispatchTime || '');
+                    $('input[name="Runner_Collect_ID"]').val(data.runnerCollect || '');
+                    $('input[name="Runner_Dispatch_ID"]').val(data.runnerDispatch || '');
+                    $('input[name="ParkingSpot_ID"]').val(data.parking || '');
+                    $('input[name="TicketNumber"]').val(data.ticketNumber || '');
+                    $('input[name="Fee"]').val(data.fee || '');
+                    $('input[name="Note"]').val(data.note || '');
+                    $('input[name="Zone_ID"]').val(data.zone_Name || '');
+                    $('input[name="Rating"]').val(data.rating || '');
+                    $('input[name="Type"][value="' + (data.type || '') + '"]').prop('checked', true);
+                    $('input[name="Status"][value="' + (data.status || '') + '"]').prop('checked', true);
                     $('#editEventModal').modal('show');
                 } else {
-                    alert('Error fetching zone details');
+                    alert('Error fetching transaction details');
                 }
             },
             error: function (err) {
                 console.error(err);
-                alert('Error fetching zone details');
+                alert('Error fetching transaction details');
             }
         });
     }
 
-    function populateModal(transaction) {
-        $('#Transaction_ID').val(transaction.transaction_ID);
-        $('input[name="CarModel"]').val(transaction.carModel);
-        $('input[name="PhoneNumber"]').val(transaction.phone);
-        $('input[name="ArrivalTime"]').val(transaction.arrivalTime);
-        $('input[name="DispatchTime"]').val(transaction.dispatchTime);
-        $('input[name="Runner_Collect_ID"]').val(transaction.runnerCollect);
-        $('input[name="Runner_Dispatch_ID"]').val(transaction.runnerDispatch);
-        $('input[name="ParkingSpot_ID"]').val(transaction.parking);
-        $('input[name="TicketNumber"]').val(transaction.ticketNumber);
-        $('input[name="Fee"]').val(transaction.fee);
-        $('input[name="Note"]').val(transaction.note);
-        $('input[name="Zone_ID"]').val(transaction.zone_Name);
-        $('input[name="Rating"]').val(transaction.rating);
-        $('input[name="Type"][value="' + transaction.type+ '"]').prop('checked', true);
-        $('input[name="Status"][value="' + transaction.status    + '"]').prop('checked', true);
 
-       
+</script>
 
-    }
+<script>
+    $(document).ready(function () {
+        // Function to fetch and display filtered transactions
+        function fetchTransactions() {
+            var type = $('#TypeFilter').val();
+            var status = $('#StatusFilter').val();
+            var startDate = $('#StartDateFilter').val();
+            var endDate = $('#EndDateFilter').val();
+
+            $.ajax({
+                url: '@Url.Action("GetFilteredTransactions", "Transaction")',
+                type: 'GET',
+                data: {
+                    type: type,
+                    status: status,
+                    startDate: startDate ? new Date(startDate).toISOString() : null,
+                    endDate: endDate ? new Date(endDate).toISOString() : null,
+                    length: 10 // Adjust this value based on your pagination needs
+                },
+                success: function (response) {
+                    var tableBody = $('#Transaction-Table tbody');
+                    tableBody.empty(); // Clear the existing table rows
+
+                    // Populate the table with the response data
+                    $.each(response.data, function (index, transaction) {
+                        console.log(response.data);
+                        var row = $('<tr></tr>');
+                        // Ensure 'transaction.transactioninfo' and 'transaction.runnerName' and 'transaction.zoneName' are correct
+                        row.append('<td data-transaction-id="' + transaction.transactioninfo.transaction_ID + '">' +
+                            '<img src="../Images/UserIcon.png" style="width: 35px; height: 35px; background-color: transparent; display: block;" alt="Icon" />' +
+                            '</td>');
+                        row.append('<td>' + transaction.transactioninfo.transaction_ID + '</td>');
+                        row.append('<td>' + transaction.runnerName + '</td>');
+                        row.append('<td>' + transaction.zoneName + '</td>');
+                        row.append('<td>' + transaction.transactioninfo.type + '</td>');
+                        row.append('<td>' + transaction.transactioninfo.status + '</td>');
+                        row.append('<td>' + transaction.transactioninfo.parkingSpot_ID + '</td>');
+                        row.append('<td>' + transaction.transactioninfo.carModel + '</td>');
+                        row.append('<td>' + transaction.transactioninfo.arrivalTime + '</td>');
+                        row.append('<td>' + transaction.transactioninfo.fee + '</td>');
+
+                        tableBody.append(row);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching transactions: " + error);
+                    alert("An error occurred while fetching transactions.");
+                }
+            });
+        }
+
+        // Bind the fetch function to the Apply Filters button
+        $('#FilterButton').click(function () {
+            fetchTransactions();
+        });
+
+        // Fetch transactions on page load
+        fetchTransactions();
+    });
 </script>
 </html>

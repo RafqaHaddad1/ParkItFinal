@@ -1,5 +1,4 @@
-﻿    @model ParkIt.ViewModel.UserZonesSubzones
-
+﻿   
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -285,21 +284,11 @@
                         <input type="text" name="NfcCode" placeholder="NFC Code" />
                     <select name="zones" id="zones" class="zones form-control select2-hidden-accessible" data-placeholder="Select a Zone" style="width: 100%;" tabindex="-1" aria-hidden="true" onchange="setSubzones()">
                         <option value="" selected disabled>Select a zone</option>
-                            @if (Model?.Zones != null && Model.Zones.Any())
-                            {
-                                foreach (var z in Model.Zones)
-                                {
-                                    <option value="@z.Zone_Name" data-zone-id="@z.Zone_ID">@z.Zone_Name</option>
-                                }
-                            }
-                            else
-                            {
-                                <option value="">No zones available</option>
-                            }
+                 
 
                         </select>
 
-                        <input type="number" name="Zone_ID" id="Zone_ID" placeholder="Zone_ID" hidden />
+                        <input type="number" name="Zone_ID" id="Zone_ID" placeholder="Zone_ID" readonly />
                   
                     <select name="subzones" id="subzones" class="subzones form-control select2-hidden-accessible" data-placeholder="Select a Subzone" style="width: 100%;" tabindex="-1" aria-hidden="true" onchange="updateSubzoneID()">
                         <option value="" selected disabled>Select a Subzone</option>
@@ -361,7 +350,7 @@
         <script>
         $('.zones').select2();
         $('.subzones').select2();
-  
+         SelectZones();
     
         document.addEventListener('DOMContentLoaded', () => {
             const runnerRadio = document.getElementById('Runner');
@@ -565,30 +554,35 @@
                 if (allFilled) {
                     filenameInput.value = filenames.join(', ');
                     // Submit the form if all fields are filled
+
+                window.location.href = 'User/Users';  // Redirects to a new URL
+
                     document.getElementById('Employee-Form').submit();
                 } else {
                     alert('Please fill all required fields.');
                 }
                 return false; // Prevent default form submission
             }
-            function updateZoneID() {
-                // Get the selected option
-                var selectedOption = document.getElementById("zones").selectedOptions[0];
-                // Get the Zone_ID from the data attribute
-                var zoneID = selectedOption.getAttribute("data-zone-id");
-                // Set the Zone_ID input field value
-                document.getElementById("Zone_ID").value = zoneID;
-            }
-            function updateSubzoneID() {
-                // Get the selected option
-                var selectedOption = document.getElementById("subzones").selectedOptions[0];
-                // Get the Zone_ID from the data attribute
-                var subzoneID = selectedOption.getAttribute("data-subzone-id");
-                // Set the Zone_ID input field value
-                document.getElementById("Subzone_ID").value = subzoneID;
-            }
-        function setSubzones() {
+        function updateZoneID() {
             // Get the selected option
+            var selectedOption = document.getElementById("zones").selectedOptions[0];
+            // Get the Zone_ID from the data attribute
+            var zoneID = selectedOption.getAttribute("data-zone-id"); // Fix the attribute name
+            // Set the Zone_ID input field value
+            document.getElementById("Zone_ID").value = zoneID;
+        }
+
+        function updateSubzoneID() {
+            // Get the selected option
+            var selectedOption = document.getElementById("subzones").selectedOptions[0];
+            // Get the Subzone_ID from the data attribute
+            var subzoneID = selectedOption.getAttribute("data-subzone-id"); // Use correct attribute for subzone
+            // Set the Subzone_ID input field value
+            document.getElementById("Subzone_ID").value = subzoneID;
+        }
+
+        function setSubzones() {
+            // Get the selected zone
             var selectElement = document.getElementById("zones");
             var selectedOption = selectElement.options[selectElement.selectedIndex];
 
@@ -598,9 +592,10 @@
             // Set the Zone_ID input field value
             document.getElementById("Zone_ID").value = zoneId;
 
-            // Call the AJAX function to fetch subzones
+            // Fetch subzones for the selected zone
             updateSubzones(zoneId);
         }
+
         function updateSubzones(zoneId) {
             $.ajax({
                 url: '/Zone/GetSubzonesByZoneId',
@@ -624,7 +619,6 @@
 
                         // Optionally, trigger the updateSubzoneID function to set the Subzone_ID
                         updateSubzoneID();
-
                     } else {
                         alert('Failed to retrieve subzones: ' + response.message);
                     }
@@ -634,7 +628,39 @@
                 }
             });
         }
-       
+
+        function SelectZones() {
+            $.ajax({
+                url: '/User/AddUser',
+                type: 'GET',
+                success: function (response) {
+                    console.log(response); // Log the response object
+
+                    if (response.success) {
+                        var ZoneDropdown = document.getElementById("zones");
+                        ZoneDropdown.innerHTML = ""; // Clear existing options
+
+                        // Populate the zone dropdown with new options
+                        response.zones.forEach(function (zone) {
+                            var option = document.createElement("option");
+                            option.value = zone.zone_Name;
+                            option.text = zone.zone_Name;
+                            option.setAttribute("data-zone-id", zone.zone_ID);
+                            console.log("Zone ID: ", zone.zone_ID);
+                            ZoneDropdown.appendChild(option);
+                        });
+                        updateZoneID();
+                    
+                    } else {
+                        alert('Failed to retrieve zones: ' + response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Error: ' + error);
+                }
+            });
+        }
+
       
             </script>
     </body>

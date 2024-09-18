@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "5n1qsRN1SE1MCTLni0Qg89RAnFyyiFG3sifROs3yeHQ=",
+  "Hash": "JVU2JfF4fSuxvrruOAJ8q4amC6XEFiyZYd5FJojWZ6c=",
   "Source": "ParkIt",
   "BasePath": "_content/ParkIt",
   "Mode": "Default",
@@ -245,6 +245,25 @@
       "OriginalItemSpec": "wwwroot\\Content\\img\\ddbeca72-ec20-435f-8d23-f3398588fb88_Screenshot 2024-08-05 154821.png"
     },
     {
+      "Identity": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\css\\Login.css",
+      "SourceId": "ParkIt",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\",
+      "BasePath": "_content/ParkIt",
+      "RelativePath": "css/Login.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\Login.css"
+    },
+    {
       "Identity": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\css\\site.css",
       "SourceId": "ParkIt",
       "SourceType": "Discovered",
@@ -454,6 +473,25 @@
       "OriginalItemSpec": "wwwroot\\FilesUpload\\6a6f7053-b974-4d34-82fe-d9017b856662_WhatsApp Image 2023-02-19 at 1.03.38 PM.jpeg"
     },
     {
+      "Identity": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\FilesUpload\\e82d52dc-0751-4fe3-a74e-ce2a06fdc374_Screenshot 2024-08-07 104952.png",
+      "SourceId": "ParkIt",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\",
+      "BasePath": "_content/ParkIt",
+      "RelativePath": "FilesUpload/e82d52dc-0751-4fe3-a74e-ce2a06fdc374_Screenshot 2024-08-07 104952.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\FilesUpload\\e82d52dc-0751-4fe3-a74e-ce2a06fdc374_Screenshot 2024-08-07 104952.png"
+    },
+    {
       "Identity": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\FilesUpload\\f76c7c7c-d671-4e58-9421-97a4b7c7ffc9_Screenshot 2024-06-27 165906.png",
       "SourceId": "ParkIt",
       "SourceType": "Discovered",
@@ -490,6 +528,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\420bd4e1-41f6-4ab7-b098-0ba7d1a8dc98_Screenshot 2024-08-08 155256.png"
+    },
+    {
+      "Identity": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\Images\\LoginDesign.jpg",
+      "SourceId": "ParkIt",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\",
+      "BasePath": "_content/ParkIt",
+      "RelativePath": "Images/LoginDesign.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\LoginDesign.jpg"
     },
     {
       "Identity": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\Images\\nav_logo.png",
@@ -585,6 +642,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\ImagesUpload\\022783ad-d958-4e75-a5eb-50a2d7199bcd_Screenshot 2024-08-12 124115.png"
+    },
+    {
+      "Identity": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\ImagesUpload\\0cc081b8-5415-4a24-bb3d-f907aabb44fb_Screenshot 2024-08-12 124115.png",
+      "SourceId": "ParkIt",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\",
+      "BasePath": "_content/ParkIt",
+      "RelativePath": "ImagesUpload/0cc081b8-5415-4a24-bb3d-f907aabb44fb_Screenshot 2024-08-12 124115.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\ImagesUpload\\0cc081b8-5415-4a24-bb3d-f907aabb44fb_Screenshot 2024-08-12 124115.png"
     },
     {
       "Identity": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\ImagesUpload\\1bca39b2-afb7-4ead-93b9-0af9c2df5b63_Screenshot 2024-06-27 165906.png",
@@ -718,6 +794,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\ImagesUpload\\72efcab0-1c2a-450e-abb8-092f45c24f4e_Screenshot 2024-08-08 155011.png"
+    },
+    {
+      "Identity": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\ImagesUpload\\75bb7ae4-1730-43ab-ba11-c8a04fbfeee7_Screenshot 2024-07-26 135101.png",
+      "SourceId": "ParkIt",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\",
+      "BasePath": "_content/ParkIt",
+      "RelativePath": "ImagesUpload/75bb7ae4-1730-43ab-ba11-c8a04fbfeee7_Screenshot 2024-07-26 135101.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\ImagesUpload\\75bb7ae4-1730-43ab-ba11-c8a04fbfeee7_Screenshot 2024-07-26 135101.png"
     },
     {
       "Identity": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\ImagesUpload\\9d9ec787-f555-44d3-97df-fbe1bc56635c_Screenshot 2024-08-07 104952.png",

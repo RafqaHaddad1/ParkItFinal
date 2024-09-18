@@ -20,30 +20,47 @@ namespace ParkIt.Controllers
             _dbContext = dbContext;
             _password = password;
         }
-
+        [HttpGet]
         public async Task<IActionResult> Users()
         {
-            var model = new EmployeeListViewModel
+            var model = await
+                 _dbContext.Employee
+                 .Where(e => e.IsDeleted.HasValue && e.IsDeleted.Value == false)
+                .ToListAsync();
+            
+        
+            if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")
             {
-                Employees = await _dbContext.Employee
-               .Where(e => e.IsDeleted.HasValue && e.IsDeleted.Value == false)
-                .ToListAsync(),
-
-            };
-            return View(model);
+                return Json(new
+                {
+                    success = true,
+                    modell = model,
+                });
+            }
+            // Return the view for normal (non-AJAX) requests
+            return View();
         }
-
+        [HttpGet]
         public async Task<IActionResult> AddUser()
         {
 
-            var model = new UserZonesSubzones
-            {
-                Zones = await _dbContext.Zone.ToListAsync(),
-                Subzones = await _dbContext.Subzone.ToListAsync(),
-                Employee = new Employee() 
-            };
+            var Zones = await _dbContext.Zone.ToListAsync();
+            var Subzones = await _dbContext.Subzone.ToListAsync();
+            var employee = new Employee();
 
-            return View(model);
+            if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                return Json(new
+                {
+                    success = true,
+                    zones = Zones,
+                    subzones = Subzones,
+                    Employee = employee,
+              
+                });
+            }
+            // Return the view for normal (non-AJAX) requests
+            return View();
         }
 
 
@@ -99,11 +116,22 @@ namespace ParkIt.Controllers
                 var pass = _password.HashPassword(model.Password);
                 model.Password = pass;
                 model.AddDate = DateTime.Now;
+                model.IsDeleted = false;
                 _dbContext.Employee.Add(model);
                 await _dbContext.SaveChangesAsync();
                 _logger.LogInformation("Added successfully");
+                
+                if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                {
+                    return Json(new
+                    {
+                        success = true,
+                        info = model,
 
-                return RedirectToAction("Users");
+                    });
+                }
+                // Return the view for normal (non-AJAX) requests
+                return View("Users");
             }
             catch (Exception ex)
             {
@@ -127,22 +155,33 @@ namespace ParkIt.Controllers
             await _dbContext.SaveChangesAsync();
             return Json(new { success = true });
         }
+        [HttpGet]
         public async Task<IActionResult> EditUser(int id)
         {
             try
             {
                 var model = _dbContext.Employee.Find(id);
-                var unhashedPassword = _password.UnHashPassword(model.Password);
-                var models = new UserZonesSubzones
-                {
-                    Zones = await _dbContext.Zone.ToListAsync(),
-                    Subzones = await _dbContext.Subzone.ToListAsync(),
-                    Employee = model,
-                    UnHashedPassword = unhashedPassword
-                };
+                //var unhashedPassword = _password.UnHashPassword(model.Password);
+                var Zones = await _dbContext.Zone.ToListAsync();
+                var Subzones = await _dbContext.Subzone.ToListAsync();
+             
 
                 _logger.LogInformation("Info sent Successfully");
-                return View(models);
+                if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                {
+                    return Json(new
+                    {
+                        success = true,
+                        zones = Zones,
+                        subzones = Subzones,
+                        Employee = model,
+                        //unhashedPassword = unhashedPassword,
+                       
+                    });
+                }
+                // Return the view for normal (non-AJAX) requests
+                return View();
+            
             }
             catch (Exception ex)
             {
@@ -225,8 +264,8 @@ namespace ParkIt.Controllers
                 // Save changes to the database
                 await _dbContext.SaveChangesAsync();
                 _logger.LogInformation("Employee updated successfully");
-                return RedirectToAction("Users");
-                //return Json(new { success = true, message = "Employee updated successfully" });
+             
+                return Json(new { success = true, message = "Employee updated successfully", redirectTo ="/User/Users" });
             }
             catch (Exception ex)
             {

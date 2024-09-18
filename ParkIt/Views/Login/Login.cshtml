@@ -1,187 +1,78 @@
-﻿@{
+﻿
+@{
+    ViewData["Title"] = "Login";
     Layout = null;
 }
-<html>
-<head>
-   
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="@Url.Content("~/css/Login.css?v=w")" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0">
-    <style>
-        html, body {
-            width: 100%;
-            height: 100%;
-            font-family: 'Open Sans', sans-serif;
-            background: linear-gradient(135deg, #23282B 0%, #F3BC12 100%);
-            overflow: hidden;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0">
 
-        .container {
-            text-align: center;
-            width: 100%;
-        }
+<form id="loginForm">
+    <div class="d-flex flex-row login">
+        <div class="login-form d-flex flex-column justify-content-center align-items-center">
+            <img src="@Url.Content("../Images/nav_logo.png")" class="logo" />
 
-        .logo {
-            display: block;
-            margin: 0 auto; 
-            max-width: 200px; 
-            padding-bottom: 20px; 
-        }
+            <div class="form-group">
+                <label class='mb-2'><i class="fas fa-user"></i> Username</label>
+                <input id="username" name="Name" type="text" class='form-control' placeholder="Username" required="required">
+            </div>
 
+            <div class="form-group mt-4">
+                <label class='mb-2'><i class="fas fa-lock"></i> Password</label>
+                <input id ="password" name="Password" type="password" class='form-control' placeholder="Password" required="required">
+            </div>
 
-        .login {
-            display: inline-block;
-            width: 100%;
-            max-width: 350px;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-           
-        }
+         
+            
+            <button type="submit" class="custom-button mt-4">Login</button>
 
-            .login h1 {
-                color: #fff;
-                margin-bottom: 20px;
-                letter-spacing: 1px;
-                font-size: 24px;
-                text-align: center;
-            }
-
-        input {
-            width: 100%;
-            margin-bottom: 15px;
-            padding: 12px;
-            font-size: 14px;
-            color: #fff;
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(0, 0, 0, 0.2);
-            border-radius: 4px;
-            outline: none;
-            transition: box-shadow 0.3s ease;
-        }
-
-            input:focus {
-                box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-            }
-
-        .btn {
-            display: inline-block;
-            width: 100%;
-            padding: 12px;
-            margin-top: 10px;
-            font-size: 14px;
-            color: #fff;
-            background-color: #23282B;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .LoginFailed {
-            margin-top: 20px;
-            padding: 10px;
-            background: red;
-            color: white;
-            border-radius: 4px;
-            font-weight: bold;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .message {
-            margin-top: 10px;
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 14px;
-            font-weight: bold;
-            text-align: center;
-            display: none;
-        }
-
-            .message.success {
-                background-color: #d4edda;
-                color: #155724;
-                border: 1px solid #c3e6cb;
-            }
-
-            .message.error {
-                background-color: #f8d7da;
-                color: #721c24;
-                border: 1px solid #f5c6cb;
-            }
-    </style>
-</head>
-<body>
- 
-     <div class="login">
-        <img src="@Url.Content("~/Images/nav_logo.png")" alt="ParkIt logo" class="logo" />
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true)
-            @if (@ViewBag.Message != null)
-            {
-                <div style="border: 1px solid red">
-                    @ViewBag.Message
-                </div>
-            }
-            <h1>Login</h1>
-        <form id="loginForm" onsubmit="return handleSubmit();">
-            <input id="username" name="Name" type="text" placeholder="Username" required="required" />
-            <input id="password" name="Password" type="password" placeholder="Password" autocomplete="new-password" required="required" />
-            <button type="submit" class="btn btn-primary btn-block btn-large">Sign In</button>
-            <div id="message" class="message"></div>
-            @if (TempData["Message"] != null)
-            {
-                <div class="LoginFailed">
-                    @TempData["Message"].ToString()
-                </div>
-            }
-        </form>
-           
+            <!-- Error Message -->
+            <div id="errorMessage" class="alert alert-danger" style="display:none;"></div>
         </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        function handleSubmit(event) {
-       
+        <div class="bg">
+            <img src="@Url.Content("../Images/LoginDesign.jpg")" />
+        </div>
+    </div>
+</form>
 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#loginForm').submit(function (e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            // Hide any previous error message
+            $('#errorMessage').hide();
+
+            // Serialize form data
             var user = $('#username').val();
             var pass = $('#password').val();
 
             $.ajax({
-                url: '/Login/CheckUsernameAndPassword',
+                url: '/Login/CheckUsernameAndPassword', 
                 type: 'POST',
                 data: { username: user, password: pass },
                 success: function (response) {
-                    var messageElement = $('#message');
-
-                    if (response.success) {
-                        // Redirect to the URL provided in the response (if needed)
-                        window.location.href = '/Home/Index';
-                    } else {
-                        // Display error message on the same page
-                        messageElement.removeClass('success').addClass('error')
-                            .text(response.message)
-                            .show(); // Show the message
+                    if (response.redirectTo) {
+                        window.location.href = response.redirectTo; // Redirect on success
+                    } else if (response.message) {
+                        // Display server-side validation messages
+                        $('#errorMessage').text(response.message).show();
                     }
                 },
                 error: function (xhr, status, error) {
-                    $('#message').removeClass('success').addClass('error')
-                        .text('An unexpected error occurred: ' + error)
-                        .show(); // Show the message
+                    var errorMessage = JSON.parse(xhr.responseText).message;
+                    // Handle error response
+                    $('#errorMessage').text(errorMessage).show();
                 }
             });
-
-            return false; // Ensure form does not submit traditionally
-        }
-
-        $(document).ready(function () {
-            // Ensure the form submission is handled by handleSubmit
-            $('#loginForm').on('submit', handleSubmit);
         });
-        </script>
-</body>
-</html>
+    });
+</script>

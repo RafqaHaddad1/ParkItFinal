@@ -44,7 +44,7 @@ namespace ParkIt.Controllers
                 }
                 AuthenticateUserSession(employee);
                 // Return success and message if login is successful
-                return Json(new { success = true, message = "Login successful." });
+                return Json(new { success = true, redirectTo = "/Home/Index" });
             }
             catch (Exception ex)
             {
