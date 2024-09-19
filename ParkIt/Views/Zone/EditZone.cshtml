@@ -1,4 +1,4 @@
-﻿@model ParkIt.Models.Data.SubzoneAndZone;
+﻿
 
 <!DOCTYPE html>
 <html lang="en">
@@ -260,17 +260,17 @@
             @using (Html.BeginForm("SavePostEdit", "Zone", FormMethod.Post, new { enctype = "multipart/form-data", id = "Zone-Form" }))
         {
                 <div class="form-left">
-                    <input type="number" id="Zone_ID" name="Zone_ID" value="@Model.zone.Zone_ID" readonly/>
-                    <input type="text" name="Zone_Name" placeholder="Zone Name"  value="@Model.zone.Zone_Name" required  />
-                    <input type="text" name="Area" placeholder="Area" value="@Model.zone.Area" required />
-                    <input type="text" name="Street" placeholder="Street" value="@Model.zone.Street" required />
+                    <input type="number" id="Zone_ID" name="Zone_ID" readonly/>
+                    <input type="text" name="Zone_Name" placeholder="Zone Name"   required  />
+                    <input type="text" name="Area" placeholder="Area" required />
+                    <input type="text" name="Street" placeholder="Street"  required />
                     <select name="supervisor" id="supervisor" class="supervisor form-control select2-hidden-accessible" data-placeholder="Select a Supervisor" style="width: 100%;" tabindex="-1" aria-hidden="true">
                         <option value="" selected disabled>Select a Supervisor</option>
                     </select>
-                    <input type="number" id="Supervisor_ID" name="Supervisor_ID" value="@Model.zone.Supervisor_ID" hidden />
+                    <input type="number" id="Supervisor_ID" name="Supervisor_ID"  readonly />
                     <br/>
                     <label>
-                        <input type="checkbox" name="Active" value="true" id="active-checkbox" @(Model.zone.Active ? "checked" : "")>
+                        <input type="checkbox" name="Active" value="true" id="active-checkbox" >
                         Active
                     </label>
                 </div>
@@ -284,7 +284,7 @@
 
                 <!-- Hidden field for subzones data -->
                 <input type="hidden" id="subzones-data" name="subzonesData" />
-                <input type="hidden" id="coordinates-data" name="AllCoordinates" value="@Model.zone.AllCoordinates" readonly />
+                <input type="hidden" id="coordinates-data" name="AllCoordinates" readonly />
                 <!-- Save Button -->
                 <input type="submit" class="save-button" value="Save" />
             <table id="subzone-table">
@@ -296,23 +296,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var subzone in Model.Subzones)
-                    {
-                        <tr>
-                            <td>@subzone.Subzone_Name</td>
-                            <td>@subzone.Capacity</td>
-                            <td>
-                                    <a onclick="openEditModal('@subzone.Subzone_ID', '@subzone.Subzone_Name', '@subzone.Capacity','@subzone.Zone_ID');" class="btn btn-primary" style="background-color: #F3BC12; border-color:#F3BC12; color:#23282B">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-
-
-                                    <button class="btn btn-danger" onclick="DeleteSubzone(@subzone.Subzone_ID)" style="background-color: #23282B; border-color:#23282B; color:#F3BC12">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    }
+            
                 </tbody>
             </table>
             }
@@ -470,9 +454,81 @@
         window.onload = function () {
             DisplayGoogleMap();
             setSupervisors();
-            $('#subzone-table').DataTable();
+         
          
         };
+        $(document).ready(function () {
+            var ZoneDataJson = sessionStorage.getItem('ZoneData');
+            console.log('Retrieved zone data from sessionStorage:', ZoneDataJson);
+
+            if (ZoneDataJson) {
+                try {
+                    var zoneData = JSON.parse(ZoneDataJson);
+                    console.log('Parsed zoneData:', zoneData);
+
+                    // Populate the page with the data
+                    if ($('input[name="Zone_ID"]').length > 0) {
+                        $('input[name="Zone_ID"]').val(zoneData.zone_ID);
+                    }
+                    if ($('input[name="Zone_Name"]').length > 0) {
+                        $('input[name="Zone_Name"]').val(zoneData.zone_Name);
+                    }
+                    if ($('input[name="Area"]').length > 0) {
+                        $('input[name="Area"]').val(zoneData.area);
+                    }
+                    if ($('input[name="Street"]').length > 0) {
+                        $('input[name="Street"]').val(zoneData.street);
+                    }
+                    if ($('#active-checkbox').length > 0) {
+                        $('#active-checkbox').prop('checked', zoneData.active);
+                    }
+                    if ($('input[name="Supervisor_ID"]').length > 0) {
+                        $('input[name="Supervisor_ID"]').val(zoneData.supervisor_ID);
+                    }
+                  
+                    // AJAX request to fetch subzone data
+                    $.ajax({
+                        url: '/Zone/GetSubzonesByZoneId', // Replace with your API endpoint
+                        method: 'GET',
+                        data: { zoneId: zoneData.zone_ID }, // Added missing comma here
+                        success: function (response) {
+                            console.log('Received response:', response);
+                      
+                            var $tableBody = $('#subzone-table tbody');
+                            $tableBody.empty(); // Clear existing rows
+
+                            $.each(response.subzones, function (index, item) {
+                                var row = `<tr>
+                                    <td>${item.subzone_Name}</td>
+                                    <td>${item.capacity}</td>
+                                    <td>
+                                        <a onclick="openEditModal('${item.subzone_ID}', '${item.subzone_Name}', '${item.capacity}', '${item.Zone_Name}');" class="btn btn-primary" style="background-color: #F3BC12; border-color:#F3BC12; color:#23282B">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <button class="btn btn-danger" onclick="DeleteSubzone(${item.subzone_ID});" style="background-color: #23282B; border-color:#23282B; color:#F3BC12">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>`;
+                                $tableBody.append(row);
+                            });
+
+                            // Initialize DataTable
+                            $("#subzone-table").DataTable();
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Error loading subzone data:', error);
+                        }
+                    });
+                } catch (e) {
+                    console.error('Error parsing zone data JSON:', e);
+                }
+            } else {
+                alert("No zone data found.");
+            }
+        });
+
+
 
         document.getElementById("add-subzone-button").onclick = function () {
             var subzoneName = document.getElementById("subzone-name").value;
@@ -659,19 +715,31 @@
                     defaultOption.selected = true;
                     supervisorDropdown.appendChild(defaultOption);
 
-                    // Populate the supervisor dropdown with the new options
-                    response.forEach(function (supervisor) {
-                        console.log("Adding supervisor:", supervisor); // Log each supervisor
-                        var option = document.createElement("option");
-                        option.value = supervisor.supervisor_ID;
-                        option.text = supervisor.supervisor_Name;
-                        supervisorDropdown.appendChild(option);
-                    });
-                    // Set the selected option if Supervisor_ID is available
-                    const supervisorId = $("#Supervisor_ID").val();
-                    if (supervisorId) {
-                        supervisorDropdown.value = supervisorId;
+                    // Check if the response is an array
+                    if (Array.isArray(response)) {
+                        response.forEach(function (supervisor) {
+                            console.log("Adding supervisor:", supervisor); // Log each supervisor
+                            var option = document.createElement("option");
+                            option.value = supervisor.supervisor_ID;
+                            option.text = supervisor.supervisor_Name;
+                            supervisorDropdown.appendChild(option);
+                        });
+
+                        // Set the selected option if Supervisor_ID is available
+                        const supervisorId = $("#Supervisor_ID").val();
+                        console.log(supervisorId);
+                        if (supervisorId) {
+                            // Ensure the option exists before setting it as selected
+                            const optionToSelect = Array.from(supervisorDropdown.options).find(option => option.value == supervisorId);
+                            if (optionToSelect) {
+                                optionToSelect.selected = true;
+                            }
+                        }
+                    } else {
+                        console.error('Response is not an array:', response);
+                        alert('No supervisors available.');
                     }
+
                     // Update the hidden Supervisor_ID input when a supervisor is selected
                     supervisorDropdown.addEventListener('change', function () {
                         var selectedSupervisorID = this.value;
@@ -685,6 +753,7 @@
                 }
             });
         }
+
     </script>
 </body>
 </html>

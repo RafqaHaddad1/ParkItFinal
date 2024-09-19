@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\test1\\source\\repos\\ParkIt\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|c:\\users\\test1\\source\\repos\\parkit\\parkit\\views\\schedule\\calendar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|solutionrelative:parkit\\views\\schedule\\calendar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|c:\\users\\test1\\source\\repos\\parkit\\parkit\\views\\user\\edituser.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|solutionrelative:parkit\\views\\user\\edituser.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|c:\\users\\test1\\source\\repos\\parkit\\parkit\\controllers\\schedulecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|solutionrelative:parkit\\controllers\\schedulecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|c:\\users\\test1\\source\\repos\\parkit\\parkit\\views\\user\\users.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|solutionrelative:parkit\\views\\user\\users.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -17,7 +17,7 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 237,
+          "DockedWidth": 243,
           "SelectedChildIndex": -1,
           "Children": [
             {
@@ -27,7 +27,7 @@
           ]
         },
         {
-          "DockedWidth": 313,
+          "DockedWidth": 204,
           "SelectedChildIndex": 2,
           "Children": [
             {
@@ -37,26 +37,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "ScheduleController.cs",
-              "DocumentMoniker": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Controllers\\ScheduleController.cs",
-              "RelativeDocumentMoniker": "ParkIt\\Controllers\\ScheduleController.cs",
-              "ToolTip": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Controllers\\ScheduleController.cs",
-              "RelativeToolTip": "ParkIt\\Controllers\\ScheduleController.cs",
-              "ViewState": "AQIAAJ8AAAAAAAAAAADwv7cAAAAQAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-17T13:00:31.047Z"
+              "Title": "Users.cshtml",
+              "DocumentMoniker": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\User\\Users.cshtml",
+              "RelativeDocumentMoniker": "ParkIt\\Views\\User\\Users.cshtml",
+              "ToolTip": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\User\\Users.cshtml",
+              "RelativeToolTip": "ParkIt\\Views\\User\\Users.cshtml",
+              "ViewState": "AQIAALEAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-09-19T11:51:13.515Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Calendar.cshtml",
-              "DocumentMoniker": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\Schedule\\Calendar.cshtml",
-              "RelativeDocumentMoniker": "ParkIt\\Views\\Schedule\\Calendar.cshtml",
-              "ToolTip": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\Schedule\\Calendar.cshtml",
-              "RelativeToolTip": "ParkIt\\Views\\Schedule\\Calendar.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAABqAAAA",
+              "Title": "EditUser.cshtml",
+              "DocumentMoniker": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\User\\EditUser.cshtml",
+              "RelativeDocumentMoniker": "ParkIt\\Views\\User\\EditUser.cshtml",
+              "ToolTip": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\User\\EditUser.cshtml",
+              "RelativeToolTip": "ParkIt\\Views\\User\\EditUser.cshtml",
+              "ViewState": "AQIAAHEBAAAAAAAAAAAAAIYBAAA0AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-09-17T12:28:32.294Z",
+              "WhenOpened": "2024-09-19T10:06:44.573Z",
               "EditorCaption": ""
             }
           ]

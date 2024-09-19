@@ -236,7 +236,7 @@ th {
 }
 
 /* FullCalendar Custom Styles */
-.fc {
+/*.fc {
     font-family: 'Arial', sans-serif;
 }
 
@@ -285,9 +285,9 @@ th {
     background-color: #23282B;
     color: #F3BC12;
 }
-
+*/
 a {
     color: #F3BC12;
     text-decoration: none;
 }
-/* FullCalendar Custom Styles */
+

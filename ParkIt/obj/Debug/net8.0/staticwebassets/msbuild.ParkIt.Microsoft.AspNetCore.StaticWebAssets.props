@@ -272,6 +272,22 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\FilesUpload\0cad3eaf-733b-4cc8-8da3-442e45b4f3c6_WhatsApp Image 2023-02-19 at 1.03.38 PM.jpeg))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\FilesUpload\0d5bd72a-5d15-4a0b-aed6-a51bbff33936_Screenshot 2024-08-09 102833.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>ParkIt</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/ParkIt</BasePath>
+      <RelativePath>FilesUpload/0d5bd72a-5d15-4a0b-aed6-a51bbff33936_Screenshot 2024-08-09 102833.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\FilesUpload\0d5bd72a-5d15-4a0b-aed6-a51bbff33936_Screenshot 2024-08-09 102833.png))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\FilesUpload\16e3ad76-2e84-471d-8434-46399c82ce00_1600w-poDQUzjtn9w.webp))">
       <SourceType>Package</SourceType>
       <SourceId>ParkIt</SourceId>
@@ -287,6 +303,22 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\FilesUpload\16e3ad76-2e84-471d-8434-46399c82ce00_1600w-poDQUzjtn9w.webp))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\FilesUpload\2578ca22-db02-4ffe-ab32-60d8fa534a04_Screenshot 2024-08-08 155256.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>ParkIt</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/ParkIt</BasePath>
+      <RelativePath>FilesUpload/2578ca22-db02-4ffe-ab32-60d8fa534a04_Screenshot 2024-08-08 155256.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\FilesUpload\2578ca22-db02-4ffe-ab32-60d8fa534a04_Screenshot 2024-08-08 155256.png))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\FilesUpload\46ea277d-5b50-4b3d-80ee-31d114802b42_1600w-ZUhLCj-GzIc.webp))">
       <SourceType>Package</SourceType>
@@ -351,6 +383,22 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\FilesUpload\6a6f7053-b974-4d34-82fe-d9017b856662_WhatsApp Image 2023-02-19 at 1.03.38 PM.jpeg))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\FilesUpload\85f18ede-ab73-44a6-b723-a52507e758c1_Screenshot 2024-08-09 102833.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>ParkIt</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/ParkIt</BasePath>
+      <RelativePath>FilesUpload/85f18ede-ab73-44a6-b723-a52507e758c1_Screenshot 2024-08-09 102833.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\FilesUpload\85f18ede-ab73-44a6-b723-a52507e758c1_Screenshot 2024-08-09 102833.png))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\FilesUpload\e82d52dc-0751-4fe3-a74e-ce2a06fdc374_Screenshot 2024-08-07 104952.png))">
       <SourceType>Package</SourceType>

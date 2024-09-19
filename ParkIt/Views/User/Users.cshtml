@@ -200,11 +200,29 @@
 
     function EditUser(id) {
         if (confirm('Are you sure you want to edit this user?')) {
-            window.location.href = "EditUser";
+            $.ajax({
+                url: '/User/EditUser', // Your endpoint to fetch employee data
+                method: 'GET',
+                data: { id: id },
+                success: function (response) {
+                    if (response.success) {
+                        // Store employee data in sessionStorage
+                        sessionStorage.setItem('EmployeeData', JSON.stringify(response.employee));
+                        console.log("Employee data stored in sessionStorage:", response.employee);
 
-            
+                        // Now redirect to the EditUser page after storing the data
+                        window.location.href = "EditUser/" + id;
+                    } else {
+                        alert("Failed to retrieve employee data.");
+                    }
+                },
+                error: function () {
+                    alert("An error occurred while fetching employee data.");
+                }
+            });
         }
     }
+
 
 
 
@@ -263,7 +281,7 @@
     }
 
     $(document).ready(function () {
-    var table = $('#User-table').DataTable();
+   
     $.ajax({
         url: '/User/Users',
         type: 'GET',
@@ -285,9 +303,10 @@
                               <td>${item.status || 'N/A'}</td>
                               <td>${item.lastOnline || 'N/A'}</td>
                             <td>
-                                <a onclick="EditUser(${item.employee_ID})" class="btn btn-primary" style="background-color: #F3BC12; border-color:#F3BC12; color:#23282B">
+                                 <a onclick="EditUser(${item.employee_ID})" class="btn btn-primary" style="background-color: #F3BC12; border-color:#F3BC12; color:#23282B">
                                     <i class="fas fa-edit"></i>
                                 </a>
+
                                 <button class="btn btn-danger" onclick="deleteUser(this, ${item.employee_ID})" style="background-color: #23282B; border-color:#23282B; color:#F3BC12">
                                     <i class="fas fa-trash"></i>
                                 </button>
@@ -295,6 +314,7 @@
                         </tr>`;
                     tableBody.append(row);
                 });
+                    var table = $('#User-table').DataTable();
             } else {
                 alert("Failed to fetch user data.");
             }

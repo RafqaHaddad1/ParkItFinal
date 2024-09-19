@@ -272,7 +272,7 @@
 <body>
     <div class="container">
         <h1>Edit User</h1>
-
+        
         <form asp-action="SavePostEdit" asp-controller="User" method="post" enctype="multipart/form-data" onsubmit="return validateAndRedirect()" class="container" id="Employee-Form">
             <div class="form-container">
                 <div class="form-left">
@@ -281,7 +281,7 @@
                     </div>
                     <input type="number" id="Employee_ID" name="Employee_ID" readonly/>
                     <input type="text" name="Name" placeholder="Name"  required />
-                    <input type="password" name="Password" placeholder="Password" required />
+                   
                     <div class="form-group radio-group">
                         <label>Title</label>
                         <div>
@@ -303,23 +303,13 @@
                     <input type="text" name="Address" placeholder="Address" required />
                     <input type="text" name="NfcCode" placeholder="NFC Code" />
                     <select name="zones" id="zones" class="zones" onchange="setSubzones()">
-                       @*  @if (Model?.Zones != null && Model.Zones.Any())
-                        {
-                            foreach (var z in Model.Zones)
-                            {
-                                <option value="@z.Zone_Name" data-zone-id="@z.Zone_ID">@z.Zone_Name</option>
-                            }
-                        }
-                        else
-                        {
-                            <option value="">No zones available</option>
-                        } *@
+                     =
 
                     </select>
-                    <input type="number" name="Zone_ID" id="Zone_ID" placeholder="Zone_ID" hidden />
+                    <input type="number" name="Zone_ID" id="Zone_ID" placeholder="Zone_ID" readonly />
                     <select name="subzones" id="subzones" class="subzones" onchange="updateSubzoneID()">
                     </select>
-                    <input type="number" name="Subzone_ID" placeholder="Subzone_ID" id="Subzone_ID" hidden />
+                    <input type="number" name="Subzone_ID" placeholder="Subzone_ID" id="Subzone_ID" readonly />
                 </div>
                 <div class="form-right">
                     <!-- Dropzone for file upload -->
@@ -330,21 +320,7 @@
                         <div id="file-list" class="file-list">
                             <h5>Uploaded Files</h5>
                             <ul id="file-items">
-                            @*     @if (!string.IsNullOrEmpty(Model.Employee.Files))
-                                {
-                                    var filePaths = Model.Employee.Files.Split(';');
-                                    foreach (var filePath in filePaths)
-                                    {
-                                        var trimmedPath = filePath.Trim();
-                                        if (!string.IsNullOrEmpty(trimmedPath))
-                                        {
-                                            <li>
-                                                <a href="@Url.Content(trimmedPath)" target="_blank">@System.IO.Path.GetFileName(trimmedPath)</a>
-                                                <button class="remove-button2" data-file-path="@Url.Content(trimmedPath)">Remove</button>
-                                            </li>
-                                        }
-                                    }
-                                } *@
+                           
                             </ul>
                         </div>
                     </div>
@@ -376,52 +352,80 @@
     <script >
         $('.zones').select2();
         $('.subzones').select2();
+        SelectZones();
+        initializeSubzone();
+        handleRunnerSelection();
+        setupRunnerRadioChangeHandler();
         $(document).ready(function () {
-            initializeZone();
-            initializeSubzone();
-            handleRunnerSelection();
-            setupRunnerRadioChangeHandler();
-            var employeeID = document.getElementById("Employee_ID").value;
-            console.log(employeeID);
-            $.ajax({
-                url: 'EditUser',
-                type: 'GET',
-                data: { id: employeeID },
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest' // Ensure the header is set for AJAX requests
-                },
-                success: function (response) {
-                    console.log(response);
-                    console.log(response.employee);
-                    if (response.success) {
+            var employeeDataJson = sessionStorage.getItem('EmployeeData');
+            console.log('Retrieved employeeData from sessionStorage:', employeeDataJson);
 
-                        $('#Employee_ID').val(response.employee.employee_ID);
-                        $('input[name="Name"]').val(response.employee.name);
-                        $('input[name="PhoneNumber"]').val(response.employee.phone);
-                        $('input[name="Address"]').val(response.employee.address);
-                        $('input[name="NfcCode"]').val(response.employee.nfcCode);
-                        $('input[name="Zone_Name"]').val(response.employee.zone_Name);
-                        $('input[name="Subzone_Name"]').val(response.employee.subzone_Name);
-                        $('input[name="Kafeel"]').val(response.employee.kafeel);
-                        $('input[name="AdditionalNotes"]').val(response.employee.additionalNotes);
-                        $('#supervisor').val(response.employee.supervisor);
-                        $('#active-checkbox').prop('checked', response.employee.active);
-                        $('input[name="Title"][value="' + response.employee.title + '"]').prop('checked', true);
-                        $('input[name="EmploymentType"][value="' + response.employee.type + '"]').prop('checked', true);
+            if (employeeDataJson) {
+                try {
+                    var employeeData = JSON.parse(employeeDataJson);
+                    console.log('Parsed employeeData:', employeeData);
 
-                        if (response.employee.title === "Runner") {
-                            // Show the supervisor input and set it as readonly
-                            $('#supervisor-container').show();
-                            $('#supervisor').val(response.employee.supervisor).prop('readonly', true);
-                        } else {
-                            // Hide the supervisor input
-                            $('#supervisor-container').hide();
-                        }
+                    // Populate the page with the data
+                    $('input[name="Employee_ID"]').val(employeeData.employee_ID);
+                    $('input[name="Name"]').val(employeeData.name);
+                    $('input[name="PhoneNumber"]').val(employeeData.phoneNumber);
+                    $('input[name="Address"]').val(employeeData.address);
+                    $('input[name="NfcCode"]').val(employeeData.nfcCode);
+                    $('input[name="Zone_Name"]').val(employeeData.zone_Name);
+                    $('input[name="Zone_ID"]').val(employeeData.zone_ID);
+                    $('input[name="Subzone_Name"]').val(employeeData.subzone_Name);
+                    $('input[name="Subzone_ID"]').val(employeeData.subzone_ID);
+                    $('input[name="Supervisor_ID"]').val(employeeData.supervisor_ID);
+                    $('input[name="Kafeel"]').val(employeeData.kafeel);
+                    $('input[name="AdditionalNotes"]').val(employeeData.additionalNotes);
+                    $('#supervisor').val(employeeData.supervisor);
+                    $('#active-checkbox').prop('checked', employeeData.active);
+                    $('input[name="Title"][value="' + employeeData.title + '"]').prop('checked', true);
+                    $('input[name="EmploymentType"][value="' + employeeData.employmentType + '"]').prop('checked', true);
 
+                    if (employeeData.title === "Runner") {
+                        // Show the supervisor input and set it as readonly
+                        $('#sadditionalInputContainer').show();
+                        $('#additionalInputContainer').val(employeeData.supervisor).prop('readonly', true);
+                    } else {
+                        // Hide the supervisor input
+                        $('#additionalInputContainer').hide();
                     }
 
+
+                    var listGroup = $('#file-items');
+                    listGroup.empty();
+    
+                    // Split the file items (assuming file paths are separated by semicolons)
+                    var filePaths = employeeData.files.split(';');
+    
+                    // Iterate through each file path
+                    filePaths.forEach(function(filePath) {
+                        var trimmedPath = filePath.trim();
+                        if (trimmedPath) {
+                            // Create a new list item with a link and a remove button
+                            var fileName = trimmedPath.substring(trimmedPath.lastIndexOf('/') + 1); // Extract the file name from the path
+            
+                            var listItem = `
+                                <li>
+                                    <a href="${trimmedPath}" target="_blank">${fileName}</a>
+                                    <button class="remove-button2" data-file-path="${trimmedPath}">Remove</button>
+                                </li>
+                            `;
+            
+                            // Append the new item to the list group
+                            listGroup.append(listItem);
+                        }
+                    });
+                } catch (e) {
+                    console.error('Error parsing employeeData JSON:', e);
                 }
-            });
+            } else {
+                alert("No employee data found.");
+            }
+
+ 
+
 
             // fillInfo(employeeID);
             // Use event delegation to handle click events on dynamically added "Remove" buttons
@@ -591,11 +595,7 @@
         function initializeSubzone() {
             const subzoneId = $("#Subzone_ID").val();
             if (subzoneId) {
-                $("#subzones option").each(function () {
-                    if ($(this).data("subzone-id") == subzoneId) {
-                        $(this).prop("selected", true);
-                    }
-                });
+                $('.subzones').val(subzoneId).trigger('change'); 
             }
         }
         function updateZoneID() {
@@ -617,7 +617,39 @@
             document.getElementById("Zone_ID").value = zoneId;
             updateSubzones(zoneId);
         }
+        function SelectZones() {
+            $.ajax({
+                url: '/User/AddUser',
+                type: 'GET',
+                success: function (response) {
+                    console.log(response); // Log the response object
 
+                    if (response.success) {
+                        var ZoneDropdown = document.getElementById("zones");
+                        ZoneDropdown.innerHTML = ""; // Clear existing options
+
+                        // Populate the zone dropdown with new options
+                        response.zones.forEach(function (zone) {
+                            var option = document.createElement("option");
+                            option.value = zone.zone_Name;
+                            option.text = zone.zone_Name;
+                            option.setAttribute("data-zone-id", zone.zone_ID);
+                            console.log("Zone ID: ", zone.zone_ID);
+                            ZoneDropdown.appendChild(option);
+                        });
+                        initializeZone();
+                        updateZoneID();
+                        setSubzones();
+                      
+                    } else {
+                        alert('Failed to retrieve zones: ' + response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Error: ' + error);
+                }
+            });
+        }
         function updateSubzones(zoneId) {
             $.ajax({
                 url: '/Zone/GetSubzonesByZoneId',
@@ -712,46 +744,46 @@
                 });
         }
         function fillInfo(userId) {
-            // $.ajax({
-            //     url: 'User/EditUser',
-            //     type: 'GET',
-            //     data: { id: userId },
-            //     headers: {
-            //         'X-Requested-With': 'XMLHttpRequest' // Ensure the header is set for AJAX requests
-            //     },
-            //     success: function (response) {
-            //         console.log(response);
-            //         console.log(response.employee);
-            //         if (response.success) {
-            //             console.log(response);
-            //             console.log(response.employee);
-            //             $('#Employee_ID').val(response.employee.employee_ID);
-            //             $('input[name="Name"]').val(response.employee.name);
-            //             $('input[name="PhoneNumber"]').val(response.employee.phone);
-            //             $('input[name="Address"]').val(response.employee.address);
-            //             $('input[name="NfcCode"]').val(response.employee.nfcCode);
-            //             $('input[name="Zone_Name"]').val(response.employee.zone_Name);
-            //             $('input[name="Subzone_Name"]').val(response.employee.subzone_Name);
-            //             $('input[name="Kafeel"]').val(response.employee.kafeel);
-            //             $('input[name="AdditionalNotes"]').val(response.employee.additionalNotes);
-            //             $('#supervisor').val(response.employee.supervisor);
-            //             $('#active-checkbox').prop('checked', response.employee.active);
-            //             $('input[name="Title"][value="' + response.employee.title + '"]').prop('checked', true);
-            //             $('input[name="EmploymentType"][value="' + response.employee.type + '"]').prop('checked', true);
+            $.ajax({
+                url: 'User/EditUser',
+                type: 'GET',
+                data: { id: userId },
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest' // Ensure the header is set for AJAX requests
+                },
+                success: function (response) {
+                    console.log(response);
+                    console.log(response.employee);
+                    if (response.success) {
+                        console.log(response);
+                        console.log(response.employee);
+                        $('#Employee_ID').val(response.employee.employee_ID);
+                        $('input[name="Name"]').val(response.employee.name);
+                        $('input[name="PhoneNumber"]').val(response.employee.phone);
+                        $('input[name="Address"]').val(response.employee.address);
+                        $('input[name="NfcCode"]').val(response.employee.nfcCode);
+                        $('input[name="Zone_Name"]').val(response.employee.zone_Name);
+                        $('input[name="Subzone_Name"]').val(response.employee.subzone_Name);
+                        $('input[name="Kafeel"]').val(response.employee.kafeel);
+                        $('input[name="AdditionalNotes"]').val(response.employee.additionalNotes);
+                        $('#supervisor').val(response.employee.supervisor);
+                        $('#active-checkbox').prop('checked', response.employee.active);
+                        $('input[name="Title"][value="' + response.employee.title + '"]').prop('checked', true);
+                        $('input[name="EmploymentType"][value="' + response.employee.type + '"]').prop('checked', true);
 
-            //             if (user.title === "Runner") {
-            //                 // Show the supervisor input and set it as readonly
-            //                 $('#supervisor-container').show();
-            //                 $('#supervisor').val(response.employee.supervisor).prop('readonly', true);
-            //             } else {
-            //                 // Hide the supervisor input
-            //                 $('#supervisor-container').hide();
-            //             }
+                        if (user.title === "Runner") {
+                            // Show the supervisor input and set it as readonly
+                            $('#supervisor-container').show();
+                            $('#supervisor').val(response.employee.supervisor).prop('readonly', true);
+                        } else {
+                            // Hide the supervisor input
+                            $('#supervisor-container').hide();
+                        }
 
-            //         }
+                    }
 
-            //     }
-            // });
+                }
+            });
         }
        
     </script>

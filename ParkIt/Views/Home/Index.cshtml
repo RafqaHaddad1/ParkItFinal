@@ -140,13 +140,13 @@
             <section class="col-8 connectedSortable">
                 <!-- Transactions Overview -->
                 <div class="card">
-                    <div class="card-header">
+                    @* <div class="card-header">
                         <h3 class="card-title">Transactions Overview</h3>
                         <button id="toggleButton2" class="arrow down"></button>
                         <div class="card-tools">
                             <input type="text" id="searchInput" class="form-control" placeholder="Search...">
                         </div>
-                    </div>
+                    </div> *@
                     <div class="card-body table-responsive p-0">
                         <table id="DashboardTable" class="table table-hover table-striped table-bordered">
                             <thead>
@@ -187,7 +187,7 @@
     </div>
 </section>
 <script type="text/javascript">
-    $('#DashboardTable').DataTable();
+ 
     $(document).ready(function () {
         $.ajax({
             url: '/Home/Index',
@@ -233,6 +233,7 @@
                         </tr>`;
                         tableBody.append(row);
                     });
+                    $('#DashboardTable').DataTable({})
 
                 } else {
                     alert("Failed to fetch dashboard data.");

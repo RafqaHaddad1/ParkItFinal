@@ -480,22 +480,20 @@
             document.getElementById('coordinates-data').value = coordinatesData;
         }
 
-        document.getElementById('Zone-Form').addEventListener('submit', function (event) {
-            collectCoordinatesData();
-        });
-        // Call DisplayGoogleMap on page load
-        window.onload = function () {
-            DisplayGoogleMap();
-            setSupervisors();
-            $('#subzone-table').DataTable();
-        };
-        $('.supervisor').select2();
-          let subzones = [];
+       
+        let subzones = [];
+
         document.getElementById("add-subzone-button").onclick = function () {
             var subzoneName = document.getElementById("subzone-name").value;
             var capacity = document.getElementById("subzone-capacity").value;
 
             if (subzoneName && capacity) {
+                const subzone = {
+                    Subzone_Name: subzoneName,
+                    Capacity: capacity
+                };
+                subzones.push(subzone); // Add subzone to the array
+
                 var tableBody = document.getElementById("subzone-table").querySelector('tbody');
                 var newRow = document.createElement('tr');
 
@@ -510,7 +508,9 @@
                 var deleteButton = document.createElement('button');
                 deleteButton.className = 'btn btn-danger';
                 deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
-                deleteButton.onclick = function () { DeleteSubzone(deleteButton); }; // Pass the button itself
+                deleteButton.onclick = function () {
+                    DeleteSubzone(deleteButton, subzoneName);
+                };
 
                 deleteCell.appendChild(deleteButton);
 
@@ -530,31 +530,36 @@
             }
         };
 
-        document.getElementById("Zone-Form").onsubmit = function () {
-            var subzones = [];
-            var rows = document.querySelectorAll("#subzone-table tbody tr");
-
-            rows.forEach(function (row) {
-                var cells = row.getElementsByTagName("td");
-                if (cells.length > 0) {
-                    subzones.push({
-                        Subzone_Name: cells[0].textContent,
-                        Capacity: cells[1].textContent
-                    });
-                }
-            });
-
-            document.getElementById("subzones-data").value = JSON.stringify(subzones);
-        };
-
-        function DeleteSubzone(button) {
+        function DeleteSubzone(button, subzoneName) {
             var row = button.closest('tr'); // Get the row of the button
             if (confirm('Are you sure you want to delete this subzone?')) {
                 // Remove the row from the table
                 row.remove();
+
+                // Remove the subzone from the subzones array
+                subzones = subzones.filter(subzone => subzone.Subzone_Name !== subzoneName);
             }
         }
 
+        document.getElementById('Zone-Form').addEventListener('submit', function (event) {
+            document.getElementById("subzones-data").value = JSON.stringify(subzones);
+            collectCoordinatesData();
+        });
+
+
+
+
+
+
+        // Call DisplayGoogleMap on page load
+        window.onload = function () {
+            DisplayGoogleMap();
+            setSupervisors();
+            $('#subzone-table').DataTable();
+        };
+        $('.supervisor').select2();
+       
+       
         function setSupervisors() {
             $.ajax({
                 url: '/User/GetSupervisor',

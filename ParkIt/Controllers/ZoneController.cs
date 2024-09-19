@@ -18,14 +18,21 @@ namespace ParkIt.Controllers
             _logger = logger;
             _dbContext = dbContext;
         }
+        [HttpGet]
         public async Task<IActionResult> CoveredZones()
         {
-            var model = new ZoneListViewModel
+            var model = await _dbContext.Zone.Where(z => z.IsDeleted == null || z.IsDeleted == false).ToListAsync();
+            
+            if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")
             {
-                Zones = await _dbContext.Zone.ToListAsync(),
-
-            };
-            return View(model);
+                return Json(new
+                {
+                    success = true,
+                    zonemodel = model,
+                });
+            }
+            // Return the view for normal (non-AJAX) requests
+            return View();
         }
         public IActionResult AddZone()
         {
@@ -38,6 +45,7 @@ namespace ParkIt.Controllers
             try
             {
                 var zones = await _dbContext.Zone
+               
                  .Select(z => new
                  {
                      Zone_ID = z.Zone_ID,
@@ -61,7 +69,7 @@ namespace ParkIt.Controllers
 
         }
 
-
+        [HttpGet]
         public IActionResult EditZone(int id)
         {
 
@@ -73,13 +81,17 @@ namespace ParkIt.Controllers
                 return NotFound();
             }
 
-            var model = new SubzoneAndZone
+            if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")
             {
-                zone = zone,
-                Subzones = subzones
-            };
-
-            return View(model);
+                return Json(new
+                {
+                    success = true,
+                    zoneinfo = zone,
+                    subzoneinfo = subzones
+                });
+            }
+            // Return the view for normal (non-AJAX) requests
+            return View();
         }
 
         [HttpPost]
@@ -222,7 +234,9 @@ namespace ParkIt.Controllers
                 var subzone = _dbContext.Subzone.Find(id);
                 if (subzone == null) return Json(new { success = false });
 
-                _dbContext.Subzone.Remove(subzone);
+                subzone.IsDeleted = true;
+                subzone.DeleteDate = DateTime.Now;
+                _dbContext.Subzone.Update(subzone);
                 await _dbContext.SaveChangesAsync();
 
                 return Json(new { success = true });
@@ -353,11 +367,12 @@ namespace ParkIt.Controllers
             try
             {
                 var subzones = _dbContext.Subzone
-             .Where(s => s.Zone_ID == zoneId)
+             .Where(s => (s.Zone_ID == zoneId && s.IsDeleted == null )||( s.Zone_ID == zoneId && s.IsDeleted == false))
              .Select(s => new
              {
                  Subzone_ID = s.Subzone_ID,
-                 Subzone_Name = s.Subzone_Name
+                 Subzone_Name = s.Subzone_Name,
+                 capacity = s.Capacity,
              })
              .ToList();
 

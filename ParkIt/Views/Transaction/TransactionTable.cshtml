@@ -195,7 +195,7 @@
     
 </body>
 <script>
-    var table = $('#Transaction-Table').DataTable();
+
 
     $.ajax({
         url: '/Transaction/TransactionTable',
@@ -224,7 +224,9 @@
                                 <td>${item.transactioninfo.fee}</td>
                             </tr>`;
                     tableBody.append(row);
+                    
                 });
+                var table = $('#Transaction-Table').DataTable();
             } else {
                 alert("Failed to fetch user data.");
             }
@@ -342,6 +344,7 @@
 
                         tableBody.append(row);
                     });
+                    var table = $('#Transaction-Table').DataTable();
                 },
                 error: function (xhr, status, error) {
                     console.error("Error fetching transactions: " + error);

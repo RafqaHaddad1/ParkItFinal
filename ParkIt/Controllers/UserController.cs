@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Build.Construction;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using ParkIt.Data;
 using ParkIt.Models.Data;
 using ParkIt.ViewModel; 
@@ -164,7 +165,9 @@ namespace ParkIt.Controllers
                 //var unhashedPassword = _password.UnHashPassword(model.Password);
                 var Zones = await _dbContext.Zone.ToListAsync();
                 var Subzones = await _dbContext.Subzone.ToListAsync();
-             
+
+                // Store the employee data in the session
+                HttpContext.Session.SetString("EmployeeData", JsonConvert.SerializeObject(model));
 
                 _logger.LogInformation("Info sent Successfully");
                 if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")
