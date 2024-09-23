@@ -268,10 +268,13 @@
             overflow-y: auto; /* Enable scrolling if options overflow */
         }
     </style>
+
+    <link rel="stylesheet" href="~/css/site.css">
+
 </head>
 <body>
     <div class="container">
-        <h1>Edit User</h1>
+        <h1 class="Title">Edit User</h1>
         
         <form asp-action="SavePostEdit" asp-controller="User" method="post" enctype="multipart/form-data" onsubmit="return validateAndRedirect()" class="container" id="Employee-Form">
             <div class="form-container">

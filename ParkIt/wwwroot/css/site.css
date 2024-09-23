@@ -68,7 +68,8 @@ html {
     background-color: #F3BC12; /* Yellow background */
     color: #23282B; /* Dark text */
     border: 1px solid #F3BC12; /* Yellow border */
-    margin-bottom: 10px;
+/*    margin-bottom: 10px;*/
+
 }
 
     .btn-primary:hover,
@@ -140,7 +141,7 @@ body:not(.layout-fixed) .main-sidebar {
 
 [class*=sidebar-dark] .btn-sidebar, [class*=sidebar-dark] .form-control-sidebar {
     border: 1px solid #56606a;
-    color: #fff;
+    color: #23282B;
 }
 
 .user-panel {
@@ -289,5 +290,11 @@ th {
 a {
     color: #F3BC12;
     text-decoration: none;
+}
+
+.Title {
+    text-align: center; 
+    color: #23282B;
+    font-weight:normal;
 }
 

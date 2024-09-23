@@ -304,10 +304,13 @@
 
        
     </style>
+
+    <link rel="stylesheet" href="~/css/site.css">
+
 </head>
 <body>
     <div class="container">
-        <h1>Create New Transaction</h1>
+        <h1 class="Title">Create New Transaction</h1>
 
         <form asp-action="AddTransaction" asp-controller="Transaction" method="post" enctype="multipart/form-data" onsubmit="return validateAndRedirect()" class="container" id="Employee-Form">
             <div class="form-container">

@@ -11,24 +11,26 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.10.2/dropzone.min.css">
   
         <style>
-            .container {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                padding: 20px;
-                max-width: 1500px;
-                margin: 0 auto;
-            }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            max-width: 1500px; /* Adjust max width as needed */
+            margin: 0 auto;
+        }
 
-            .form-container {
-                display: flex;
-                justify-content: space-between;
-                width: 90%;
-                background-color: #e0e0e0;
-                padding: 20px;
-                border-radius: 10px;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            }
+        .form-container {
+            display: flex;
+            flex-direction: row; /* Change to row direction */
+            justify-content: space-between;
+            width: 90%;
+            background-color: #e0e0e0;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            column-gap: 20px; /* Add space between columns */
+        }
 
             .form-left, .form-right {
                 display: flex;
@@ -259,10 +261,13 @@
             overflow-y: auto; /* Enable scrolling if options overflow */
         }
         </style>
+
+           <link rel="stylesheet" href="~/css/site.css">
+
     </head>
     <body>
         <div class="container">
-            <h1>Create New User</h1>
+            <h1 class="Title">Create New User</h1>
 
             <form asp-action="AddEmployee" asp-controller="User" method="post" enctype="multipart/form-data" onsubmit="return validateAndRedirect()" class="container" id="Employee-Form">
                 <div class="form-container">

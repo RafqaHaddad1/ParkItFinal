@@ -43,7 +43,7 @@
 
         .map-container #myDiv {
             width: 100%;
-            height: 500px;
+            height: 100%;
         }
 
     /* Form Container Styles */
@@ -126,10 +126,11 @@
     }
 </style>
 
+<h1 class="Title">Zones Table</h1>
+
 <div class="container">
     <!-- Table Container -->
     <div class="table-container">
-        <h1>@ViewData["Title"]</h1>
         <p class="text-right">
             <a class="btn btn-primary" id="AddZoneButton" onclick="location.href='@Url.Action("AddZone", "Zone")'">Create New Zone</a>
         </p>
@@ -195,7 +196,7 @@
                                     <!-- Right Section for Map -->
                                     <div class="form-right">
                                         <div class="map-container">
-                                    <div id="modalMap" style="width: 100%; height: 400px;"></div>
+                                    <div id="modalMap" style="width: 100%; height: 100%;"></div>
                                         </div>
                                     </div>
                                 </div>

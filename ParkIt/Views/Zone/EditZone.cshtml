@@ -251,11 +251,18 @@
         }
 
     </style>
+
+    <link rel="stylesheet" href="~/css/site.css">
+
 </head>
 <body>
+    <h1 class="Title">Edit Zone</h1>
     <div class="container">
         <!-- Table Container -->
         <div class="table-container">
+
+           
+
             <!-- Zone fields -->
             @using (Html.BeginForm("SavePostEdit", "Zone", FormMethod.Post, new { enctype = "multipart/form-data", id = "Zone-Form" }))
         {
@@ -274,6 +281,8 @@
                         Active
                     </label>
                 </div>
+
+                <h2>Add subzones</h2>
 
                 <div class="form-right">
                     <!-- Subzone fields -->
