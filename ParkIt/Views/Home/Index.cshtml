@@ -162,6 +162,7 @@
               
                             </tbody>
                         </table>
+                        
                     </div>
                 </div>
             </section>
@@ -179,6 +180,7 @@
                         <ul class="list-group">
                         </ul>
                     </div>
+                    <button id="addMoreButton" class="btn-primary">Load More</button>
                 </div>
             </section>
             <!-- right col -->
@@ -204,17 +206,49 @@
                     // Log Zone Rankings
                     console.log('Zone Rankings:', response.zoneRanking);
 
-                    // Clear and update the list group with zone rankings
+                    //Fill zone ranking list
                     var listGroup = $('.list-group');
-                    listGroup.empty();  // Clear the existing list
-                    $.each(response.zoneRanking, function (index, ranking) {
-                        var listItem = `
-                        <li class="list-group-item">
-                            ${ranking.zoneName}
-                            <span class="float-right">${ranking.transactionCount}</span>
-                        </li>`;
-                        listGroup.append(listItem);
+                    listGroup.empty();
+
+                    // Determine the maximum number of items to display initially
+                    const itemsPerPage = 5;
+                    let currentPage = 1;
+
+                    // Function to display the current page of items
+                    function displayZones() {
+                        const startIndex = (currentPage - 1) * itemsPerPage;
+                        const endIndex = startIndex + itemsPerPage;
+
+                        const zonesToDisplay = response.zoneRanking.slice(startIndex, endIndex);
+
+                        $.each(zonesToDisplay, function (index, ranking) {
+                            var listItem = `
+                            <li class="list-group-item">
+                                ${ranking.zoneName}
+                                <span class="float-right">${ranking.transactionCount}</span>
+                            </li>`;
+                            listGroup.append(listItem);
+                        });
+
+                        // Check if there are more items to display
+                        if (endIndex >= response.zoneRanking.length) {
+                            // No more items, disable or hide the "Add More" button
+                            $('#addMoreButton').hide();
+                        } else {
+                            // More items to display, show the "Add More" button
+                            $('#addMoreButton').show();
+                        }
+                    }
+
+                    // Display the initial page of items
+                    displayZones();
+
+                    // Add an event listener to the "Add More" button
+                    $('#addMoreButton').click(function () {
+                        currentPage++;
+                        displayZones();
                     });
+
 
                     // Log and update the dashboard table
                     console.log('Dashboard Table:', response.alltransactions);
@@ -243,18 +277,6 @@
                 console.error("Error: " + error);
             }
         });
-
-     
-        // $('#DashboardTable').DataTable({
-        //     responsive: true,
-        //     autoWidth: false,
-        //     paging: false, // Disable pagination
-        //     order: [[0, 'asc']],
-
-        //     pageLength: -1, // Show all entries
-        //     dom: '<"top"i>rt<"bottom"p><"clear">', // Customize the DataTable layout
-        //     info: false // Hide the "Showing x to y of z entries" text
-        // });
 
         // Hide the default search input box
         $('.dataTables_filter').hide();

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using ParkIt.Models.Data;
-using ParkIt.ViewModel;
+
 using System.Security.Policy;
 using Zone = ParkIt.Models.Data.Zone;
 
@@ -45,7 +45,7 @@ namespace ParkIt.Controllers
             try
             {
                 var zones = await _dbContext.Zone
-               
+                .Where(e => e.IsDeleted == false || e.IsDeleted == null)
                  .Select(z => new
                  {
                      Zone_ID = z.Zone_ID,
@@ -401,7 +401,7 @@ namespace ParkIt.Controllers
             try
             {
                 var zone = _dbContext.Zone
-                 .Where(e => e.Zone_ID == id)
+                 .Where(e => e.Zone_ID == id && e.IsDeleted==false)
                  .Select(e => new
                  {
                      Zone_ID = e.Zone_ID,

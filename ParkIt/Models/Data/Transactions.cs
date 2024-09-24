@@ -22,7 +22,7 @@ namespace ParkIt.Models.Data
         public string? FileName { get; set; }
         public string? Note { get; set; }
       
-       
+       public DateTime AddDate { get; set; }
     }
 
 }

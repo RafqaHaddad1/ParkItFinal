@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ParkIt.Data;
 using ParkIt.Models.Data;
+using ParkIt.Models.Helper;
 namespace ParkIt.Controllers
 {
     public class LoginController : Controller

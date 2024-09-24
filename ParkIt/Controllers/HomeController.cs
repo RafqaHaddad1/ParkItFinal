@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ParkIt.Data;
+
 using ParkIt.Models;
 using ParkIt.Models.Data;
-using ParkIt.ViewModel;
+
 using System.Data.Entity;
 using System.Diagnostics;
 

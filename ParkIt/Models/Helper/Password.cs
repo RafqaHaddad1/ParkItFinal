@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace ParkIt.Data
+namespace ParkIt.Models.Helper
 {
     public class Password
     {

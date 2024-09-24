@@ -58,10 +58,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhbnNhY3Rpb25cQWRkVHJhbnNhY3Rpb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/test1/source/repos/ParkIt/ParkIt/Views/Transaction/EditTransaction.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhbnNhY3Rpb25cRWRpdFRyYW5zYWN0aW9uLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/test1/source/repos/ParkIt/ParkIt/Views/Transaction/TransactionTable.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhbnNhY3Rpb25cVHJhbnNhY3Rpb25UYWJsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

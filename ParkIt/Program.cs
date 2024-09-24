@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ParkIt.Models.Data;
-using ParkIt.Data;
+using ParkIt.Models.Helper;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<Password>();

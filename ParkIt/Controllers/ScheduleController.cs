@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ParkIt.Models.Data;
 using Microsoft.EntityFrameworkCore;
-using ParkIt.ViewModel;
+
 
 namespace Calendar.Controllers
 {

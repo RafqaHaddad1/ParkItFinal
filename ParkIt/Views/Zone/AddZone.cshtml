@@ -45,14 +45,18 @@
     
         /* Save Button Styling */
         .save-button {
-            align-self: flex-end;
             margin-top: 20px;
             padding: 10px 20px;
             background-color: #F3BC12;
+            margin-bottom: 20px;
             color: #23282B;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+        }
+
+        .button-container {
+            text-align: center;
         }
 
         /* Table Container Styles */
@@ -270,10 +274,7 @@
         <!-- Table Container -->
         <div class="table-container">
             <form asp-action="AddZoneWithSubzones" asp-controller="Zone" method="post" enctype="multipart/form-data" class="form-container" id="Zone-Form">
-
-              
-
-                <!-- Zone fields -->
+           <!-- Zone fields -->
                 <div class="form-left">
                     <input type="text" name="Zone_Name" placeholder="Zone Name" required />
                     <input type="text" name="Area" placeholder="Area" required />
@@ -303,23 +304,26 @@
                 <input type="hidden" id="subzones-data" name="subzonesData" />
        
                 <!-- Save Button -->
-         
-                <input type="submit" class="save-button" value="Save" />
+              
                 <div id="info" name="AllCoordinates" style="position:absolute; color: red; font-family: Arial, Helvetica, sans-serif; height: 200px; font-size: 12px"></div>
+
+                <br />
+                <table id="subzone-table">
+                    <thead>
+                        <tr>
+                            <th>Subzone</th>
+                            <th>Capacity</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <div class="button-container">
+                    <input type="submit" class="save-button"></input>
+                </div>
             </form>
-            <br/>
-            <table id="subzone-table">
-                <thead>
-                    <tr>
-                        <th>Subzone</th>
-                        <th>Capacity</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                   
-                </tbody>
-            </table>
+           
         </div>
         <div class="form-right">
             <!-- Map Container -->
@@ -328,7 +332,11 @@
             </div>
             <div id="info" style="position:absolute; color: red; font-family: Arial, Helvetica, sans-serif; height: 200px; font-size: 12px"></div>
         </div>
+
+       
     </div>
+
+
 
     <!-- Google Maps API -->
     <script async defer type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBiyENFIL4UsKCGGbXh3-nASJIMeJmpmYU&libraries=drawing"></script>

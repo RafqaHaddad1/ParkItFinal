@@ -317,7 +317,9 @@
                 <div class="form-left">
                    @* <input type="number" name="" placeholder="Transaction ID" required readonly />  *@
                     <input type="text" name="CarModel" placeholder="Car Model" maxlength="100" required />
+                    <label for="ArrvialTime">Arrival Time</label>
                     <input type="datetime-local" name="ArrivalTime" placeholder="Arrival Time" required />
+                    <label for="DispatchTime">Dispatch Time</label>
                     <input type="datetime-local" name="DispatchTime" placeholder="Dispatch Time"  />
                    
                     <select name="zones" id="zones" class="zones form-control select2-hidden-accessible" data-placeholder="Select a Zone" style="width: 100%;" tabindex="-1" aria-hidden="true" onchange="updateZoneID()">
@@ -334,7 +336,7 @@
                     <input type="number" name="Runner_Collect_ID" id="Runner_Collect_ID" placeholder="Runner on Collect" maxlength="50" hidden />
 
 
-                    <select name="runnerDispatch" id="runnerDispatch" class="runnerDispatch form-control select2-hidden-accessible" data-placeholder="Select a Select a Runner on Dispatch" style="width: 100%;" tabindex="-1" aria-hidden="true" onchange="updateRunnerCollectID()">
+                    <select name="runnerDispatch" id="runnerDispatch" class="runnerDispatch form-control select2-hidden-accessible" data-placeholder="Select a Runner on Dispatch" style="width: 100%;" tabindex="-1" aria-hidden="true" onchange="updateRunnerCollectID()">
                         <option value="" selected disabled>Select the Runner on Dispatch</option>
 
                     </select>

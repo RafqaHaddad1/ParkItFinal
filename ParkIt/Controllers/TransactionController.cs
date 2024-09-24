@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using ParkIt.Models.Data;
-using ParkIt.ViewModel;
+
 using System;
 using System.IO;
 using System.Linq;
@@ -116,7 +116,7 @@ namespace ParkIt.Controllers
                     var relativePath = $"/ImagesUpload/{uniqueFileName}";
                     model.FileName = relativePath;
                 }
-
+                model.AddDate = DateTime.Now;
                 _dbContext.Transactions.Add(model);
                 await _dbContext.SaveChangesAsync();
                 _logger.LogInformation("Transaction added successfully.");

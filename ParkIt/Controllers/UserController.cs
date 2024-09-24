@@ -2,9 +2,9 @@
 using Microsoft.Build.Construction;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using ParkIt.Data;
 using ParkIt.Models.Data;
-using ParkIt.ViewModel; 
+using ParkIt.Models.Helper;
+
 
 namespace ParkIt.Controllers
 {
