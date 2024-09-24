@@ -45,7 +45,7 @@ namespace ParkIt.Controllers
         public async Task<IActionResult> AddUser()
         {
 
-            var Zones = await _dbContext.Zone.ToListAsync();
+            var Zones = await _dbContext.Zone.Where(z => z.IsDeleted == false || z.IsDeleted ==null).ToListAsync();
             var Subzones = await _dbContext.Subzone.ToListAsync();
             var employee = new Employee();
 

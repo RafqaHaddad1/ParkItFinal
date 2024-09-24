@@ -13,15 +13,27 @@
    
 
     <style>
-        /* General Container Styles */
         .container {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            align-items: center;
             padding: 20px;
+            max-width: 1500px; /* Adjust max width as needed */
+            margin: 0 auto;
         }
 
-      
-        /* Form Left and Right Sections */
+        .form-container {
+            display: flex;
+            flex-direction: row; /* Change to row direction */
+            justify-content: space-between;
+            width: 90%;
+            background-color: #e0e0e0;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            column-gap: 20px; /* Add space between columns */
+        }
+
         .form-left, .form-right {
             display: flex;
             flex-direction: column;
@@ -42,8 +54,7 @@
             .form-left input[type="file"] {
                 padding: 3px;
             }
-    
-        /* Save Button Styling */
+
         .save-button {
             margin-top: 20px;
             padding: 10px 20px;
@@ -268,75 +279,66 @@
 
 </head>
 <body>
-    <h1 class="Title">Create New Zone</h1>
-
     <div class="container">
-        <!-- Table Container -->
-        <div class="table-container">
-            <form asp-action="AddZoneWithSubzones" asp-controller="Zone" method="post" enctype="multipart/form-data" class="form-container" id="Zone-Form">
-           <!-- Zone fields -->
+        <h1 class="Title">Create Zone with Subzones</h1>
+
+        <form asp-action="AddZoneWithSubzones" asp-controller="Zone" method="post" enctype="multipart/form-data" class="container" id="Zone-Form">
+            <div class="form-container">
+                <!-- Left Column: Zone Details -->
                 <div class="form-left">
+                    
                     <input type="text" name="Zone_Name" placeholder="Zone Name" required />
                     <input type="text" name="Area" placeholder="Area" required />
                     <input type="text" name="Street" placeholder="Street" required />
+
                     <select name="supervisor" id="supervisor" class="supervisor form-control select2-hidden-accessible" data-placeholder="Select a Supervisor" style="width: 100%;" tabindex="-1" aria-hidden="true">
                         <option value="" selected disabled>Select a Supervisor</option>
                     </select>
+
                     <input type="number" id="Supervisor_ID" name="Supervisor_ID" hidden />
-                    <br/>
+
                     <label>
                         <input type="checkbox" name="Active" value="true" id="active-checkbox">
                         Active
                     </label>
-                </div>
-                
-                <h2>Add subzones</h2>
-
-                <div class="form-right">
-                    <!-- Subzone fields -->
+                    <h2>Add Subzones</h2>
                     <input type="text" id="subzone-name" name="Subzone_Name" placeholder="Subzone Name" />
                     <input type="number" id="subzone-capacity" name="Capacity" placeholder="Capacity" />
                     <button type="button" id="add-subzone-button" class="add-button">+ Add Subzone</button>
+                    </br>
+                    <!-- Table to show added subzones -->
+                    <table id="subzone-table">
+                        <thead>
+                            <tr>
+                                <th>Subzone</th>
+                                <th>Capacity</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Rows for subzones will be dynamically added here -->
+                        </tbody>
+                    </table>
+                    <!-- Hidden fields for coordinates and subzone data -->
+                    <input type="hidden" id="coordinates-data" name="AllCoordinates" />
+                    <input type="hidden" id="subzones-data" name="subzonesData" />
                 </div>
-                <input type="hidden" id="coordinates-data" name="AllCoordinates" />
 
-                <!-- Hidden field for subzones data -->
-                <input type="hidden" id="subzones-data" name="subzonesData" />
-       
-                <!-- Save Button -->
-              
-                <div id="info" name="AllCoordinates" style="position:absolute; color: red; font-family: Arial, Helvetica, sans-serif; height: 200px; font-size: 12px"></div>
-
-                <br />
-                <table id="subzone-table">
-                    <thead>
-                        <tr>
-                            <th>Subzone</th>
-                            <th>Capacity</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-                <div class="button-container">
-                    <input type="submit" class="save-button"></input>
+                <!-- Right Column: Subzones and Map -->
+                <div class="form-right">
+                    <!-- Map Container -->
+                    <div class="map-container">
+                        <div id="myDiv"></div>
+                    </div>
                 </div>
-            </form>
-           
-        </div>
-        <div class="form-right">
-            <!-- Map Container -->
-            <div class="map-container">
-                <div id="myDiv"></div>
             </div>
-            <div id="info" style="position:absolute; color: red; font-family: Arial, Helvetica, sans-serif; height: 200px; font-size: 12px"></div>
-        </div>
 
-       
+            <!-- Submit Button -->
+            <div class="button-container">
+                <input type="submit" class="save-button" value="Save">
+            </div>
+        </form>
     </div>
-
-
 
     <!-- Google Maps API -->
     <script async defer type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBiyENFIL4UsKCGGbXh3-nASJIMeJmpmYU&libraries=drawing"></script>
@@ -539,6 +541,11 @@
 
                 // Append row to table
                 tableBody.appendChild(newRow);
+
+                var noDataMessage = tableBody.querySelector('.dataTables_empty');
+                if (noDataMessage) {
+                    noDataMessage.remove();
+                }
 
                 // Clear input fields after adding
                 document.getElementById("subzone-name").value = '';

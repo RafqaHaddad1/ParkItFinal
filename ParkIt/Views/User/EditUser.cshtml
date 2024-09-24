@@ -306,13 +306,13 @@
                     <input type="text" name="Address" placeholder="Address" required />
                     <input type="text" name="NfcCode" placeholder="NFC Code" />
                     <select name="zones" id="zones" class="zones" onchange="setSubzones()">
-                     =
+                     
 
                     </select>
-                    <input type="number" name="Zone_ID" id="Zone_ID" placeholder="Zone_ID" readonly />
+                    <input type="number" name="Zone_ID" id="Zone_ID" placeholder="Zone_ID" hidden />
                     <select name="subzones" id="subzones" class="subzones" onchange="updateSubzoneID()">
                     </select>
-                    <input type="number" name="Subzone_ID" placeholder="Subzone_ID" id="Subzone_ID" readonly />
+                    <input type="number" name="Subzone_ID" placeholder="Subzone_ID" id="Subzone_ID" hidden />
                 </div>
                 <div class="form-right">
                     <!-- Dropzone for file upload -->
@@ -355,10 +355,7 @@
     <script >
         $('.zones').select2();
         $('.subzones').select2();
-        SelectZones();
-        initializeSubzone();
-        handleRunnerSelection();
-        setupRunnerRadioChangeHandler();
+       
         $(document).ready(function () {
             var employeeDataJson = sessionStorage.getItem('EmployeeData');
             console.log('Retrieved employeeData from sessionStorage:', employeeDataJson);
@@ -426,9 +423,11 @@
             } else {
                 alert("No employee data found.");
             }
-
- 
-
+            SelectZones();
+            initializeSubzone();
+            handleRunnerSelection();
+            setupRunnerRadioChangeHandler();
+          
 
             // fillInfo(employeeID);
             // Use event delegation to handle click events on dynamically added "Remove" buttons
@@ -559,7 +558,7 @@
             }, 200);
         }
 
-        // Determine file icon based on file type
+        // Determine file icon based on file type 
         function iconSelector(fileType) {
             if (fileType === 'application/pdf') return 'pdf.png';
             if (fileType.startsWith('image')) return 'image.png';
@@ -583,9 +582,12 @@
         }
     
 
+
+
         //Select zone and Subzone
         function initializeZone() {
             const zoneId = $("#Zone_ID").val();
+            console.log("selected zone id: " + $("#Zone_ID").val());
             if (zoneId) {
                 $("#zones option").each(function () {
                     if ($(this).data("zone-id") == zoneId) {
@@ -597,8 +599,15 @@
         }
         function initializeSubzone() {
             const subzoneId = $("#Subzone_ID").val();
+            console.log("subzoneId " + subzoneId);
             if (subzoneId) {
-                $('.subzones').val(subzoneId).trigger('change'); 
+                // $('.subzones').val(subzoneId).trigger('change'); 
+                $("#subzones option").each(function () {
+                    if ($(this).data("subzone-id") == subzoneId) {
+                        $(this).prop("selected", true);
+                        setSubzones();
+                    }
+                });
             }
         }
         function updateZoneID() {
@@ -674,6 +683,7 @@
                             subzoneDropdown.appendChild(option);
                         });
                         initializeSubzone();
+                      
                     } else {
                         alert('Failed to retrieve subzones: ' + response.message);
                     }
@@ -727,18 +737,19 @@
                         selectElement.appendChild(optionElement);
                     });
 
+                    // Append the select element to the container
+                    inputContainer.appendChild(selectElement);
+
                     // Set the selected option if Supervisor_ID is available
                     const supervisorId = $("#Supervisor_ID").val();
+                    console.log("supervisor Id " + supervisorId);
                     if (supervisorId) {
                         selectElement.value = supervisorId;
                     }
 
-                    inputContainer.appendChild(selectElement);
-
                     // Add event listener to update hidden input field
                     selectElement.addEventListener('change', () => {
-                        const selectedValue = selectElement.value;
-                        document.getElementById('Supervisor_ID').value = selectedValue;
+                        document.getElementById('Supervisor_ID').value = selectElement.value;
                     });
                 })
                 .catch(error => {
@@ -746,6 +757,7 @@
                     // Optionally handle errors, e.g., show a message to the user
                 });
         }
+
         function fillInfo(userId) {
             $.ajax({
                 url: 'User/EditUser',

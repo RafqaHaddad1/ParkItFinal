@@ -190,7 +190,8 @@
                             <input type="text" name="Note" placeholder="Additional Notes" maxlength="1000" id="Note" readonly/>
                            <label>Customer Rating</label>
                           <input type="text" name="Rating" id="rating_val" value="0" readonly/>
-                               
+                            <img id="imageElementID"  style="width: 180px; height: 150px" />
+
                         </div>
                     </div>
                 </div>
@@ -293,6 +294,8 @@
                     $('input[name="Rating"]').val(data.rating || '');
                     $('input[name="Type"][value="' + (data.type || '') + '"]').prop('checked', true);
                     $('input[name="Status"][value="' + (data.status || '') + '"]').prop('checked', true);
+                    $('#imageElementID').attr('src', data.fileName || "../Images/carimage.jpg");
+               
                     $('#editEventModal').modal('show');
                 } else {
                     alert('Error fetching transaction details');
