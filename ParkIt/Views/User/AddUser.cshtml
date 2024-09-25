@@ -293,7 +293,7 @@
 
                         </select>
 
-                        <input type="number" name="Zone_ID" id="Zone_ID" placeholder="Zone_ID" readonly />
+                        <input type="number" name="Zone_ID" id="Zone_ID" placeholder="Zone_ID" hidden />
                   
                     <select name="subzones" id="subzones" class="subzones form-control select2-hidden-accessible" data-placeholder="Select a Subzone" style="width: 100%;" tabindex="-1" aria-hidden="true" onchange="updateSubzoneID()">
                         <option value="" selected disabled>Select a Subzone</option>
@@ -644,7 +644,13 @@
                     if (response.success) {
                         var ZoneDropdown = document.getElementById("zones");
                         ZoneDropdown.innerHTML = ""; // Clear existing options
-
+                        // Add a default "Select a Supervisor" option
+                        var defaultOption = document.createElement("option");
+                        defaultOption.value = "";
+                        defaultOption.text = "Select a Zone";
+                        defaultOption.disabled = true;
+                        defaultOption.selected = true;
+                        ZoneDropdown.appendChild(defaultOption);
                         // Populate the zone dropdown with new options
                         response.zones.forEach(function (zone) {
                             var option = document.createElement("option");

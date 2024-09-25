@@ -22,7 +22,7 @@ namespace ParkIt.Controllers
         public async Task<IActionResult> CoveredZones()
         {
             var model = await _dbContext.Zone.Where(z => z.IsDeleted == null || z.IsDeleted == false).ToListAsync();
-            
+
             if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")
             {
                 return Json(new
@@ -112,7 +112,7 @@ namespace ParkIt.Controllers
                     _logger.LogError("DbContext is null");
                     return Json(new { success = false, message = "Database context is not initialized" });
                 }
-               
+
                 // Add the Zone
                 _dbContext.Zone.Add(zoneModel);
                 await _dbContext.SaveChangesAsync();
@@ -123,8 +123,8 @@ namespace ParkIt.Controllers
                 // Set the Zone_ID for each Subzone
                 foreach (var subzone in subzones)
                 {
-                    subzone.Zone_ID = zoneModel.Zone_ID; 
-                    subzone.AddDate = DateTime.Now; 
+                    subzone.Zone_ID = zoneModel.Zone_ID;
+                    subzone.AddDate = DateTime.Now;
                     _dbContext.Subzone.Add(subzone);
 
                 }
@@ -207,7 +207,7 @@ namespace ParkIt.Controllers
             try
             {
                 subzoneModel.Zone_ID = id;
-                subzoneModel.AddDate = DateTime.Now;    
+                subzoneModel.AddDate = DateTime.Now;
                 _dbContext.Subzone.Add(subzoneModel);
                 await _dbContext.SaveChangesAsync();
 
@@ -251,7 +251,7 @@ namespace ParkIt.Controllers
         [HttpPost]
         public async Task<IActionResult> SavePostEdit(Zone model, string? subzonesData)
         {
-          
+
             if (!ModelState.IsValid)
             {
                 var errors = ModelState.Values.SelectMany(v => v.Errors);
@@ -312,6 +312,7 @@ namespace ParkIt.Controllers
         public IActionResult GetAllCoordinates()
         {
             var zones = _dbContext.Zone
+                .Where(z => z.IsDeleted == false || z.IsDeleted == null)
                 .Select(z => new
                 {
                     z.Zone_ID,
@@ -401,7 +402,7 @@ namespace ParkIt.Controllers
             try
             {
                 var zone = _dbContext.Zone
-                 .Where(e => e.Zone_ID == id && e.IsDeleted==false)
+                 .Where(e => (e.Zone_ID == id && e.IsDeleted==false) || (e.Zone_ID == id && e.IsDeleted == null))
                  .Select(e => new
                  {
                      Zone_ID = e.Zone_ID,

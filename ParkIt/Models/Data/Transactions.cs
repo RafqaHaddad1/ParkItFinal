@@ -21,8 +21,7 @@ namespace ParkIt.Models.Data
         public double? Rating { get; set; }
         public string? FileName { get; set; }
         public string? Note { get; set; }
-
-        public DateTime? AddDate { get; set; }
+       public DateTime? AddDate { get; set; }
     }
 
 }
