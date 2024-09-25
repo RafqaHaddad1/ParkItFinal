@@ -293,7 +293,7 @@
                         <input type="text" name="Area" placeholder="Area" required />
                         <input type="text" name="Street" placeholder="Street" required />
 
-                        <select name="supervisor" id="supervisor" class="supervisor form-control select2-hidden-accessible" data-placeholder="Select a Supervisor" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                    <select name="supervisor" id="supervisor" class="supervisor form-control select2-hidden-accessible" data-placeholder="Select a Supervisor" style="width: 100%;" tabindex="-1" aria-hidden="true" onchange="updateSupervisorID()">
                             <option value="" selected disabled>Select a Supervisor</option>
                         </select>
 
@@ -762,6 +762,7 @@
                             var option = document.createElement("option");
                             option.value = supervisor.supervisor_ID;
                             option.text = supervisor.supervisor_Name;
+                            option.setAttribute("data-supervisor-id", supervisor.supervisor_ID);
                             supervisorDropdown.appendChild(option);
                         });
 
@@ -781,11 +782,12 @@
                     }
 
                     // Update the hidden Supervisor_ID input when a supervisor is selected
-                    supervisorDropdown.addEventListener('change', function () {
-                        var selectedSupervisorID = this.value;
-                        document.getElementById("Supervisor_ID").value = selectedSupervisorID;
-                        console.log("Selected Supervisor ID:", selectedSupervisorID); // Log selected ID
-                    });
+                    // supervisorDropdown.addEventListener('change', function () {
+                    //     var selectedSupervisorID = this.value;
+                    //     document.getElementById("Supervisor_ID").value = selectedSupervisorID;
+                    //     console.log("Selected Supervisor ID:", selectedSupervisorID); // Log selected ID
+
+                    // });
                 },
                 error: function (xhr, status, error) {
                     console.log('Error:', error); // Log any error
@@ -793,8 +795,15 @@
                 }
             });
         }
-
-       
+        function updateSupervisorID() {
+            // Get the selected option
+            var selectedOption = document.getElementById("supervisor").selectedOptions[0];
+            // Get the Subzone_ID from the data attribute
+            var supervisorId = selectedOption.getAttribute("data-supervisor-id"); // Use correct attribute for subzone
+            // Set the Subzone_ID input field value
+            document.getElementById("Supervisor_ID").value = supervisorId;
+        }
+    
     </script>
 </body>
 </html>

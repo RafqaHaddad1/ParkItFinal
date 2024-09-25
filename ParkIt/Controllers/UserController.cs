@@ -26,7 +26,7 @@ namespace ParkIt.Controllers
         {
             var model = await
                  _dbContext.Employee
-                 .Where(e => e.IsDeleted.HasValue && e.IsDeleted.Value == false)
+                 .Where(e => e.IsDeleted == false || e.IsDeleted == null) 
                 .ToListAsync();
             
         
@@ -45,7 +45,7 @@ namespace ParkIt.Controllers
         public async Task<IActionResult> AddUser()
         {
 
-            var Zones = await _dbContext.Zone.Where(z => z.IsDeleted == false || z.IsDeleted ==null).ToListAsync();
+            var Zones = await _dbContext.Zone.Where(z => z.IsDeleted == false || z.IsDeleted == null).ToListAsync();
             var Subzones = await _dbContext.Subzone.ToListAsync();
             var employee = new Employee();
 

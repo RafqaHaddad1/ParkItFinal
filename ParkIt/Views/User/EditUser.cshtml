@@ -5,7 +5,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - YourAppName</title>
- 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.10.2/dropzone.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.10.2/dropzone.min.js"></script>
     <style>
         .container {
             display: flex;
@@ -140,6 +144,20 @@
                 margin-left: 10px;
             }
 
+        .my-select2 {
+            width: 100%;
+            height: 35px;
+            font-size: 16px;
+          
+            background-color: #f5f5f5;
+            color: #444;
+            padding: 5px 10px;
+            margin: 10px 0;
+          
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
         .form-control {
             display: block;
             width: 100%;
@@ -182,7 +200,8 @@
             border-radius: 5px;
             padding: 6px 12px;
             height: 34px;
-            margin-bottom: 10px
+            margin-bottom: 10px;
+
         }
 
         .select2-container--default .select2-selection--single {
@@ -295,7 +314,10 @@
                             <input type="radio" id="Supervisor" name="Title" value="Supervisor">
                             <label for="Supervisor">Supervisor</label>
                         </div>
-                        <div id="additionalInputContainer" class="additionalInputContainer"></div>
+                      
+                        <select name="supervisors" id="supervisors" class="supervisors my-select2" onchange="updateSupervisorID()">
+                        </select>
+                        <br/>
                         <input type="number" id="Supervisor_ID" name="Supervisor_ID"  hidden />
                     </div>
                     <label>
@@ -305,12 +327,12 @@
                     <input type="text" name="PhoneNumber" placeholder="Phone"  required />
                     <input type="text" name="Address" placeholder="Address" required />
                     <input type="text" name="NfcCode" placeholder="NFC Code" />
-                    <select name="zones" id="zones" class="zones" onchange="setSubzones()">
+                    <select name="zones" id="zones" class="zones my-select2" onchange="setSubzones()">
                      
 
                     </select>
                     <input type="number" name="Zone_ID" id="Zone_ID" placeholder="Zone_ID" hidden />
-                    <select name="subzones" id="subzones" class="subzones" onchange="updateSubzoneID()">
+                    <select name="subzones" id="subzones" class="subzones my-select2" onchange="updateSubzoneID()">
                     </select>
                     <input type="number" name="Subzone_ID" placeholder="Subzone_ID" id="Subzone_ID" hidden />
                 </div>
@@ -347,16 +369,14 @@
             <button type="submit" class="save-button" onclick="return confirm('Are you sure you want to save these changes?');">Save</button>
         </form>
     </div>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.10.2/dropzone.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.10.2/dropzone.min.js"></script>
+  
     <script >
         $('.zones').select2();
         $('.subzones').select2();
-       
+        $('.supervisors').select2();
+
         $(document).ready(function () {
+         
             var employeeDataJson = sessionStorage.getItem('EmployeeData');
             console.log('Retrieved employeeData from sessionStorage:', employeeDataJson);
 
@@ -384,12 +404,14 @@
                     $('input[name="EmploymentType"][value="' + employeeData.employmentType + '"]').prop('checked', true);
 
                     if (employeeData.title === "Runner") {
+                        console.log("showing select element");
                         // Show the supervisor input and set it as readonly
-                        $('#sadditionalInputContainer').show();
-                        $('#additionalInputContainer').val(employeeData.supervisor).prop('readonly', true);
+                        $('#supervisors').show();
+                       
                     } else {
                         // Hide the supervisor input
-                        $('#additionalInputContainer').hide();
+                        console.log("hiding select element");
+                        $('#supervisors').hide();
                     }
 
 
@@ -417,18 +439,31 @@
                             listGroup.append(listItem);
                         }
                     });
+
+             
                 } catch (e) {
                     console.error('Error parsing employeeData JSON:', e);
                 }
             } else {
                 alert("No employee data found.");
             }
+
             SelectZones();
             initializeSubzone();
             handleRunnerSelection();
-            setupRunnerRadioChangeHandler();
-          
+            function handleRunnerSelection() {
+                const runnerRadio = document.getElementById('Runner');
+                const inputContainer = document.getElementById('supervisors');
 
+                if (runnerRadio.checked) {
+                    const zoneId = $("#Zone_ID").val();
+                    SelectSupervisor(zoneId);
+
+                } else {
+                    // inputContainer.innerHTML = ''; 
+                    $('#supervisors').hide();
+                }
+            }
             // fillInfo(employeeID);
             // Use event delegation to handle click events on dynamically added "Remove" buttons
             $(document).on('click', '.remove-button2', function () {
@@ -455,7 +490,8 @@
                 }
             });
         });
-       
+
+    
 
         const dropzone = document.getElementById('dropzone');
         const fileInput = document.getElementById('file-input');
@@ -587,7 +623,7 @@
         //Select zone and Subzone
         function initializeZone() {
             const zoneId = $("#Zone_ID").val();
-            console.log("selected zone id: " + $("#Zone_ID").val());
+       
             if (zoneId) {
                 $("#zones option").each(function () {
                     if ($(this).data("zone-id") == zoneId) {
@@ -599,7 +635,7 @@
         }
         function initializeSubzone() {
             const subzoneId = $("#Subzone_ID").val();
-            console.log("subzoneId " + subzoneId);
+      
             if (subzoneId) {
                 // $('.subzones').val(subzoneId).trigger('change'); 
                 $("#subzones option").each(function () {
@@ -646,7 +682,7 @@
                             option.value = zone.zone_Name;
                             option.text = zone.zone_Name;
                             option.setAttribute("data-zone-id", zone.zone_ID);
-                            console.log("Zone ID: ", zone.zone_ID);
+                           
                             ZoneDropdown.appendChild(option);
                         });
                         initializeZone();
@@ -668,7 +704,7 @@
                 type: 'GET',
                 data: { zoneId: zoneId },
                 success: function (response) {
-                    console.log(response); 
+           
 
                     if (response.success) {
                         var subzoneDropdown = document.getElementById("subzones");
@@ -694,70 +730,63 @@
             });
         }
 
-        //add supervisor
-        function handleRunnerSelection() {
-            const runnerRadio = document.getElementById('Runner');
-            const inputContainer = document.getElementById('additionalInputContainer');
 
-            if (runnerRadio.checked) {
-                createSupervisorDropdown();
-            } else {
-                inputContainer.innerHTML = '';
-            }
-        }
+        function SelectSupervisor(zoneId) {
+            $.ajax({
+                url: '/User/GetSupervisorByZoneID',
+                type: 'GET',
+                data: { zoneid: zoneId },
+                success: function (response) {
+                    console.log(response); // Log the response object
 
-        function setupRunnerRadioChangeHandler() {
-            $('input[name="Title"]').on('change', function () {
-                handleRunnerSelection();
+                    if (Array.isArray(response) && response.length > 0) {
+                        var supervisordropdown = document.getElementById("supervisors");
+                        supervisordropdown.innerHTML = ""; // Clear existing options
+
+                        // Populate the dropdown with new options
+                        response.forEach(function (supervisor) {
+                            var option = document.createElement("option");
+                            option.value = supervisor.supervisor_ID;
+                            option.text = supervisor.supervisor_Name; // Fixed typo here
+                            option.setAttribute("data-supervisor-id", supervisor.supervisor_ID); // Fixed missing closing parenthesis
+
+                            supervisordropdown.appendChild(option);
+                        });
+                        initializeSupervisor();
+                    } else {
+                        alert('Failed to retrieve supervisors: ' + response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Error: ' + error);
+                }
             });
         }
 
-        function createSupervisorDropdown() {
-            const inputContainer = document.getElementById('additionalInputContainer');
-            inputContainer.innerHTML = ''; // Clear any previous input
 
-            const selectElement = document.createElement('select');
-            selectElement.id = 'runnerOptions';
-            selectElement.name = 'RunnerOptions';
 
-            // Create and append default option
-            const defaultOption = document.createElement('option');
-            defaultOption.textContent = 'Select a Supervisor';
-            defaultOption.value = '';
-            selectElement.appendChild(defaultOption);
 
-            // Fetch options from the server
-            fetch('/User/GetSupervisor') // Adjust URL as needed
-                .then(response => response.json())
-                .then(data => {
-                    data.forEach(option => {
-                        const optionElement = document.createElement('option');
-                        optionElement.value = option.supervisor_ID; // Assuming ID is used as value
-                        optionElement.textContent = option.supervisor_Name; // Display name
-                        selectElement.appendChild(optionElement);
-                    });
-
-                    // Append the select element to the container
-                    inputContainer.appendChild(selectElement);
-
-                    // Set the selected option if Supervisor_ID is available
-                    const supervisorId = $("#Supervisor_ID").val();
-                    console.log("supervisor Id " + supervisorId);
-                    if (supervisorId) {
-                        selectElement.value = supervisorId;
-                    }
-
-                    // Add event listener to update hidden input field
-                    selectElement.addEventListener('change', () => {
-                        document.getElementById('Supervisor_ID').value = selectElement.value;
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching options:', error);
-                    // Optionally handle errors, e.g., show a message to the user
-                });
+        function updateSupervisorID() {
+            // Get the selected option
+            var selectedOption = document.getElementById("supervisors").selectedOptions[0];
+            // Get the Subzone_ID from the data attribute
+            var supervisorId = selectedOption.getAttribute("data-supervisor-id"); // Use correct attribute for subzone
+            // Set the Subzone_ID input field value
+            document.getElementById("Supervisor_ID").value = supervisorId;
         }
+        function initializeSupervisor() {
+            const supervisorId = $("#Supervisor_ID").val();
 
+            if (supervisorId) {
+                // $('.subzones').val(subzoneId).trigger('change');
+                $("#supervisors option").each(function () {
+                    if ($(this).data("supervisor-id") == supervisorId) {
+                        $(this).prop("selected", true);
+                        
+                    }
+                });
+            }
+        }
         function fillInfo(userId) {
             $.ajax({
                 url: 'User/EditUser',
@@ -800,7 +829,7 @@
                 }
             });
         }
-       
+    
     </script>
   
 </body>
