@@ -303,22 +303,22 @@
                     </div>
                     <input type="number" id="Employee_ID" name="Employee_ID" readonly/>
                     <input type="text" name="Name" placeholder="Name"  required />
-                   
+                    <input type="password" name="Password" placeholder="Password" hidden />
                     <div class="form-group radio-group">
                         <label>Title</label>
                         <div>
-                            <input type="radio" id="Runner" name="Title" value="Runner">
+                            <input type="radio" id="Runner" name="Title" value="Runner" onchange="handleRunnerSelection()">
                             <label for="Runner">Runner</label>
                         </div>
                         <div>
-                            <input type="radio" id="Supervisor" name="Title" value="Supervisor">
+                            <input type="radio" id="Supervisor" name="Title" value="Supervisor" onchange="handleRunnerSelection()">
                             <label for="Supervisor">Supervisor</label>
                         </div>
                       
                         <select name="supervisors" id="supervisors" class="supervisors my-select2" onchange="updateSupervisorID()">
                         </select>
                         <br/>
-                        <input type="number" id="Supervisor_ID" name="Supervisor_ID"  hidden />
+                        <input type="number" id="Supervisor_ID" name="Supervisor_ID"  readonly />
                     </div>
                     <label>
                         <input type="checkbox" name="Active" value="true" id="active-checkbox" >
@@ -387,6 +387,8 @@
 
                     // Populate the page with the data
                     $('input[name="Employee_ID"]').val(employeeData.employee_ID);
+                    $('input[name="Password"]').val(employeeData.password);
+                    
                     $('input[name="Name"]').val(employeeData.name);
                     $('input[name="PhoneNumber"]').val(employeeData.phoneNumber);
                     $('input[name="Address"]').val(employeeData.address);
@@ -404,13 +406,13 @@
                     $('input[name="EmploymentType"][value="' + employeeData.employmentType + '"]').prop('checked', true);
 
                     if (employeeData.title === "Runner") {
-                        console.log("showing select element");
+                     
                         // Show the supervisor input and set it as readonly
                         $('#supervisors').show();
                        
                     } else {
                         // Hide the supervisor input
-                        console.log("hiding select element");
+                     
                         $('#supervisors').hide();
                     }
 
@@ -451,19 +453,8 @@
             SelectZones();
             initializeSubzone();
             handleRunnerSelection();
-            function handleRunnerSelection() {
-                const runnerRadio = document.getElementById('Runner');
-                const inputContainer = document.getElementById('supervisors');
 
-                if (runnerRadio.checked) {
-                    const zoneId = $("#Zone_ID").val();
-                    SelectSupervisor(zoneId);
-
-                } else {
-                    // inputContainer.innerHTML = ''; 
-                    $('#supervisors').hide();
-                }
-            }
+            
             // fillInfo(employeeID);
             // Use event delegation to handle click events on dynamically added "Remove" buttons
             $(document).on('click', '.remove-button2', function () {
@@ -605,6 +596,7 @@
         function validateAndRedirect() {
             // Get all required fields
             const requiredFields = document.querySelectorAll('input[required]');
+
             // Check if all required fields are filled
             for (let field of requiredFields) {
                 if (!field.value) {
@@ -613,10 +605,28 @@
                 }
             }
 
-            // Redirect or submit the form
-            return true; // Proceed with form submission
+            // If all required fields are filled, perform AJAX call
+            $.ajax({
+                url: '/User/SavePostEdit', // URL to your action method
+                type: 'POST',
+                data: $('#Employee-Form').serialize(), // Serialize the form data
+                success: function (response) {
+                    if (response.success) {
+                        // Redirect to the URL provided in the response
+                        window.location.href = response.redirectTo;
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('An error occurred: ' + error);
+                }
+            });
+
+            // Prevent the default form submission
+            return false;
         }
-    
+
 
 
 
@@ -764,7 +774,21 @@
         }
 
 
+            function handleRunnerSelection() {
+                const runnerRadio = document.getElementById('Runner');
+                const inputContainer = document.getElementById('supervisors');
+                const supervisorId = document.getElementById('Supervisor_ID');
+                if (runnerRadio.checked) {
+                    const zoneId = $("#Zone_ID").val();
+                    SelectSupervisor(zoneId);
 
+                } else {
+                    inputContainer.innerHTML = '';
+                    $('#supervisors').hide();
+                    supervisorId.value = '';
+
+                }
+            }
 
         function updateSupervisorID() {
             // Get the selected option
@@ -776,7 +800,6 @@
         }
         function initializeSupervisor() {
             const supervisorId = $("#Supervisor_ID").val();
-
             if (supervisorId) {
                 // $('.subzones').val(subzoneId).trigger('change');
                 $("#supervisors option").each(function () {

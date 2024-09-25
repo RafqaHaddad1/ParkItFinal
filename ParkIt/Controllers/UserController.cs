@@ -178,8 +178,6 @@ namespace ParkIt.Controllers
                         zones = Zones,
                         subzones = Subzones,
                         Employee = model,
-                        //unhashedPassword = unhashedPassword,
-                       
                     });
                 }
                 // Return the view for normal (non-AJAX) requests
