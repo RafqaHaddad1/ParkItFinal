@@ -68,8 +68,7 @@ html {
     background-color: #F3BC12; /* Yellow background */
     color: #23282B; /* Dark text */
     border: 1px solid #F3BC12; /* Yellow border */
-/*    margin-bottom: 10px;*/
-
+    /*    margin-bottom: 10px;*/
 }
 
     .btn-primary:hover,
@@ -105,7 +104,7 @@ html {
     position: fixed !important;
     top: 20px; /* Adds margin from the top */
     left: 20px; /* Adds margin from the left edge */
-    width: 230px !important; /* Smaller width for the sidebar */
+    width: 230px ; /* Smaller width for the sidebar */
     height: 100vh !important; /* Full height but accounts for margin */
     background-color: #23282B; /* Dark background */
     border-radius: 20px; /* Rounded corners */
@@ -119,7 +118,7 @@ html {
 
 .sidebar-mini .main-sidebar .nav-link, .sidebar-mini-md .main-sidebar .nav-link, .sidebar-mini-xs .main-sidebar .nav-link {
     width: unset !important;
-    transition: width ease-in-out .3s;
+/*    transition: width ease-in-out .3s;*/
 }
 
 body:not(.layout-fixed) .main-sidebar .sidebar {
@@ -136,7 +135,7 @@ body:not(.layout-fixed) .main-sidebar {
 /* Ensure the sidebar content has padding and centers the user panel */
 .sidebar {
     height: 100% !important;
-    padding: 20px;
+    padding: 15px;
 }
 
 [class*=sidebar-dark] .btn-sidebar, [class*=sidebar-dark] .form-control-sidebar {
@@ -185,7 +184,7 @@ body:not(.layout-fixed) .main-sidebar {
     position: fixed !important;
     top: 20px;
     left: 20px;
-    width: 230px !important;
+    width: 230px;
     height: 95vh !important;
     background-color: #23282B;
     border-radius: 20px;
@@ -195,6 +194,8 @@ body:not(.layout-fixed) .main-sidebar {
     padding-bottom: 20px;
     margin-top: 10px;
     margin-bottom: 25px;
+    /* Add the following line to collapse the main-sidebar */
+    transition: width 0.3s ease-in-out;
 }
 
 .sidebar-div {
@@ -206,6 +207,12 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-head
     transition: margin-left .3s ease-in-out;
     margin-left: 255px;
     border-radius: 15px;
+}
+
+@media (min-width: 992px) {
+    .sidebar-mini.sidebar-collapse .content-wrapper, .sidebar-mini.sidebar-collapse .main-footer, .sidebar-mini.sidebar-collapse .main-header
+{
+    margin-left: 6.6rem !important;
 }
 
 .btn-sidebar, .form-control-sidebar {
@@ -225,76 +232,50 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-head
     color: #000 !important; /* Dark search icon */
 }
 
-.search-bar .form-control-sidebar::placeholder {
-    color: #999 !important; /* Lighter placeholder color */
+    .search-bar .form-control-sidebar::placeholder {
+        color: #999 !important; /* Lighter placeholder color */
+    }
+
+/* New CSS for closing the sidebar */
+.main-sidebar.collapsed {
+    width: 3.5rem !important; /* Set the desired collapsed width here */
+    padding: 0 !important;
 }
 
-th {
+    .main-sidebar.collapsed .nav-sidebar {
+        display: none;
+    }
+
+    .main-sidebar.collapsed .btn-sidebar {
+        display: block !important;
+    }
+
+    /* Additional CSS to ensure text hides completely */
+    .main-sidebar.collapsed .nav-sidebar .nav-link {
+        display: none;
+    }
+
+    .main-sidebar.collapsed:hover {
+        width: 3.5rem !important; /* Keep the width constant */
+        transition: none; /* Disable transition on hover */
+    }
+
+th 
+{
     background-color: #23282B;
     color: #ffffff;
     text-align: center;
     vertical-align: middle;
 }
 
-/* FullCalendar Custom Styles */
-/*.fc {
-    font-family: 'Arial', sans-serif;
-}
-
-.fc-header-toolbar {
-    background-color: #23282B;
-    color: #ffffff;
-}
-
-.fc-toolbar-title {
-    color: #ffffff;
-}
-
-.fc-button-primary {
-    background-color: #F3BC12;
-    border-color: #F3BC12;
-}
-
-    .fc-button-primary:hover {
-        background-color: #e0a900;
-        border-color: #e0a900;
-    }
-
-.fc-daygrid-day {
-    color: #ffffff;
-}
-
-.fc-daygrid-day-number {
-    color: #23282B;
-    text-decoration: none;
-}
-
-.fc-event {
-    color: #23282B;
-}
-
-    .fc-event:hover {
-        background-color: #767676;
-        border-color: #23282B;
-    }
-
-.fc-daygrid-day:hover {
-    background-color: #c7c7c7;
-}
-
-.fc-daygrid-day.fc-day-today {
-    background-color: #23282B;
-    color: #F3BC12;
-}
-*/
+ 
 a {
     color: #F3BC12;
     text-decoration: none;
 }
 
 .Title {
-    text-align: center; 
+    text-align: center;
     color: #23282B;
-    font-weight:normal;
+    font-weight: normal;
 }
-

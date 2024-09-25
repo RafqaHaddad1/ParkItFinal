@@ -15,14 +15,14 @@ namespace ParkIt.Models.Data
         public int ParkingSpot_ID { get; set; }
         public string? Type { get; set; }
         public int? TicketNumber { get; set; }
-        public int? Fee { get; set; } 
+        public int? Fee { get; set; }
         public string? Status { get; set; }
         public string? PhoneNumber { get; set; }
         public double? Rating { get; set; }
         public string? FileName { get; set; }
         public string? Note { get; set; }
-      
-       public DateTime AddDate { get; set; }
+
+        public DateTime? AddDate { get; set; }
     }
 
 }
