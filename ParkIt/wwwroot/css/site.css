@@ -104,7 +104,7 @@ html {
     position: fixed !important;
     top: 20px; /* Adds margin from the top */
     left: 20px; /* Adds margin from the left edge */
-    width: 230px ; /* Smaller width for the sidebar */
+    width: 230px; /* Smaller width for the sidebar */
     height: 100vh !important; /* Full height but accounts for margin */
     background-color: #23282B; /* Dark background */
     border-radius: 20px; /* Rounded corners */
@@ -118,7 +118,7 @@ html {
 
 .sidebar-mini .main-sidebar .nav-link, .sidebar-mini-md .main-sidebar .nav-link, .sidebar-mini-xs .main-sidebar .nav-link {
     width: unset !important;
-/*    transition: width ease-in-out .3s;*/
+    /*    transition: width ease-in-out .3s;*/
 }
 
 body:not(.layout-fixed) .main-sidebar .sidebar {
@@ -210,72 +210,70 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-head
 }
 
 @media (min-width: 992px) {
-    .sidebar-mini.sidebar-collapse .content-wrapper, .sidebar-mini.sidebar-collapse .main-footer, .sidebar-mini.sidebar-collapse .main-header
-{
-    margin-left: 6.6rem !important;
-}
+    .sidebar-mini.sidebar-collapse .content-wrapper, .sidebar-mini.sidebar-collapse .main-footer, .sidebar-mini.sidebar-collapse .main-header {
+        margin-left: 6.6rem !important;
+    }
 
-.btn-sidebar, .form-control-sidebar {
-    border: 1px solid #56606a;
-    color: #fff;
-}
+    .btn-sidebar, .form-control-sidebar {
+        border: 1px solid #56606a;
+        color: #fff;
+    }
 
-/* Override the dark theme specifically for the search bar */
-.search-bar .form-control-sidebar {
-    background-color: #fff !important; /* White background */
-    color: #000 !important; /* Dark text */
-    border: 1px solid #ccc !important; /* Light border */
-}
+    /* Override the dark theme specifically for the search bar */
+    .search-bar .form-control-sidebar {
+        background-color: #fff !important; /* White background */
+        color: #000 !important; /* Dark text */
+        border: 1px solid #ccc !important; /* Light border */
+    }
 
-.search-bar .btn-sidebar {
-    background-color: #F3BC12 !important; /* Light button background */
-    color: #000 !important; /* Dark search icon */
-}
+    .search-bar .btn-sidebar {
+        background-color: #F3BC12 !important; /* Light button background */
+        color: #000 !important; /* Dark search icon */
+    }
 
     .search-bar .form-control-sidebar::placeholder {
         color: #999 !important; /* Lighter placeholder color */
     }
 
-/* New CSS for closing the sidebar */
-.main-sidebar.collapsed {
-    width: 3.5rem !important; /* Set the desired collapsed width here */
-    padding: 0 !important;
-}
-
-    .main-sidebar.collapsed .nav-sidebar {
-        display: none;
+    /* New CSS for closing the sidebar */
+    .main-sidebar.collapsed {
+        width: 3.5rem !important; /* Set the desired collapsed width here */
+        padding: 0 !important;
     }
 
-    .main-sidebar.collapsed .btn-sidebar {
-        display: block !important;
+        .main-sidebar.collapsed .nav-sidebar {
+            display: none;
+        }
+
+        .main-sidebar.collapsed .btn-sidebar {
+            display: block !important;
+        }
+
+        /* Additional CSS to ensure text hides completely */
+        .main-sidebar.collapsed .nav-sidebar .nav-link {
+            display: none;
+        }
+
+        .main-sidebar.collapsed:hover {
+            width: 3.5rem !important; /* Keep the width constant */
+            transition: none; /* Disable transition on hover */
+        }
+
+    th {
+        background-color: #23282B;
+        color: #ffffff;
+        text-align: center;
+        vertical-align: middle;
     }
 
-    /* Additional CSS to ensure text hides completely */
-    .main-sidebar.collapsed .nav-sidebar .nav-link {
-        display: none;
+
+    a {
+        color: #F3BC12;
+        text-decoration: none;
     }
 
-    .main-sidebar.collapsed:hover {
-        width: 3.5rem !important; /* Keep the width constant */
-        transition: none; /* Disable transition on hover */
+    .Title {
+        text-align: center;
+        color: #23282B;
+        font-weight: normal;
     }
-
-th 
-{
-    background-color: #23282B;
-    color: #ffffff;
-    text-align: center;
-    vertical-align: middle;
-}
-
- 
-a {
-    color: #F3BC12;
-    text-decoration: none;
-}
-
-.Title {
-    text-align: center;
-    color: #23282B;
-    font-weight: normal;
-}

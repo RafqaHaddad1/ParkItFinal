@@ -304,7 +304,11 @@
                     $('input[name="Type"][value="' + (data.type || '') + '"]').prop('checked', true);
                     $('input[name="Status"][value="' + (data.status || '') + '"]').prop('checked', true);
                     $('#imageElementID').attr('src', data.fileName || "../Images/carimage.jpg");
-               
+                    const imageElement = $('#imageElementID');
+                    const defaultImage = "../Images/carimage.jpg";
+                    imageElement.on('error', function () {
+                        $(this).attr('src', defaultImage);
+                    });
                     $('#editEventModal').modal('show');
                 } else {
                     alert('Error fetching transaction details');

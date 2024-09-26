@@ -43,6 +43,7 @@ namespace ParkIt.Controllers
                     return Json(new { success = false, message = "Incorrect password." });
                 }
                 AuthenticateUserSession(employee);
+              
                 // Return success and message if login is successful
                 return Json(new { success = true, redirectTo = "/Home/Index" });
             }
