@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using ParkIt.Models.Data;
@@ -8,6 +9,7 @@ using Zone = ParkIt.Models.Data.Zone;
 
 namespace ParkIt.Controllers
 {
+   
     public class ZoneController : Controller
     {
         private readonly ILogger<ZoneController> _logger;
@@ -208,6 +210,7 @@ namespace ParkIt.Controllers
 
             try
             {
+                subzoneModel.IsDeleted = false;
                 subzoneModel.Zone_ID = id;
                 subzoneModel.AddDate = DateTime.Now;
                 _dbContext.Subzone.Add(subzoneModel);
@@ -354,6 +357,7 @@ namespace ParkIt.Controllers
                 // Update the existing subzone with new values
                 _dbContext.Entry(existingSubzone).CurrentValues.SetValues(subzone);
                 subzone.UpdateDate = DateTime.Now;
+                existingSubzone.UpdateDate = DateTime.Now;
                 // Save changes to the database
                 await _dbContext.SaveChangesAsync();
                 _logger.LogInformation("Subzone updated successfully");

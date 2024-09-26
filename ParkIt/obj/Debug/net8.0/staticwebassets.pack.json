@@ -69,8 +69,20 @@
       "PackagePath": "staticwebassets\\FilesUpload\\6a6f7053-b974-4d34-82fe-d9017b856662_WhatsApp Image 2023-02-19 at 1.03.38 PM.jpeg"
     },
     {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\FilesUpload\\6def8e1e-def2-4f30-bf04-e45614e8d90a_Screenshot 2024-09-25 160644.png",
+      "PackagePath": "staticwebassets\\FilesUpload\\6def8e1e-def2-4f30-bf04-e45614e8d90a_Screenshot 2024-09-25 160644.png"
+    },
+    {
       "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\FilesUpload\\85f18ede-ab73-44a6-b723-a52507e758c1_Screenshot 2024-08-09 102833.png",
       "PackagePath": "staticwebassets\\FilesUpload\\85f18ede-ab73-44a6-b723-a52507e758c1_Screenshot 2024-08-09 102833.png"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\FilesUpload\\c51f9a92-1753-445f-a5b6-0c7d86037990_Screenshot 2024-09-26 110900.png",
+      "PackagePath": "staticwebassets\\FilesUpload\\c51f9a92-1753-445f-a5b6-0c7d86037990_Screenshot 2024-09-26 110900.png"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\FilesUpload\\cecc5ea0-850b-4727-961b-8dde9d8f6f38_Screenshot 2024-09-26 111207.png",
+      "PackagePath": "staticwebassets\\FilesUpload\\cecc5ea0-850b-4727-961b-8dde9d8f6f38_Screenshot 2024-09-26 111207.png"
     },
     {
       "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\FilesUpload\\e82d52dc-0751-4fe3-a74e-ce2a06fdc374_Screenshot 2024-08-07 104952.png",
@@ -79,6 +91,10 @@
     {
       "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\FilesUpload\\f76c7c7c-d671-4e58-9421-97a4b7c7ffc9_Screenshot 2024-06-27 165906.png",
       "PackagePath": "staticwebassets\\FilesUpload\\f76c7c7c-d671-4e58-9421-97a4b7c7ffc9_Screenshot 2024-06-27 165906.png"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\FilesUpload\\ff3d04d1-7c70-4c13-a072-16c1880ae0d0_Screenshot 2024-09-26 111207.png",
+      "PackagePath": "staticwebassets\\FilesUpload\\ff3d04d1-7c70-4c13-a072-16c1880ae0d0_Screenshot 2024-09-26 111207.png"
     },
     {
       "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\ImagesUpload\\022783ad-d958-4e75-a5eb-50a2d7199bcd_Screenshot 2024-08-12 124115.png",
@@ -127,6 +143,10 @@
     {
       "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\ImagesUpload\\89135bc2-9da5-425f-be73-9fc4a32c9b68_Screenshot 2024-08-08 155256.png",
       "PackagePath": "staticwebassets\\ImagesUpload\\89135bc2-9da5-425f-be73-9fc4a32c9b68_Screenshot 2024-08-08 155256.png"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\ImagesUpload\\9aa1f688-56a5-488a-8f7b-ebf35914f247_Screenshot 2024-08-07 104952.png",
+      "PackagePath": "staticwebassets\\ImagesUpload\\9aa1f688-56a5-488a-8f7b-ebf35914f247_Screenshot 2024-08-07 104952.png"
     },
     {
       "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\ImagesUpload\\9d9ec787-f555-44d3-97df-fbe1bc56635c_Screenshot 2024-08-07 104952.png",
@@ -199,6 +219,10 @@
     {
       "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\js\\auth.js",
+      "PackagePath": "staticwebassets\\js\\auth.js"
     },
     {
       "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\js\\site.js",

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Build.Construction;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -8,6 +9,7 @@ using ParkIt.Models.Helper;
 
 namespace ParkIt.Controllers
 {
+    
     public class UserController : Controller
     {
         private readonly ILogger<UserController> _logger;

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using ParkIt.Models.Data;
@@ -8,6 +9,7 @@ using System.Globalization;
 
 namespace ParkIt.Controllers
 {
+
     public class ReportController : Controller
     {
         private readonly ILogger<ReportController> _logger;

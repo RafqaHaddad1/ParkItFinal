@@ -42,7 +42,6 @@
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
 <script>
     $(document).ready(function () {
         $('#loginForm').submit(function (e) {
@@ -56,23 +55,32 @@
             var pass = $('#password').val();
 
             $.ajax({
-                url: '/Login/CheckUsernameAndPassword', 
+                url: '/Login/CheckUsernameAndPassword',
                 type: 'POST',
-                data: { username: user, password: pass },
+                data: { username: user, password: pass },  // No need for Authorization here
                 success: function (response) {
-                    if (response.redirectTo) {
-                        window.location.href = response.redirectTo; // Redirect on success
+                    // On successful login, check if a redirect and token are present
+                    if (response.redirectTo && response.token) {
+                        // Store the received token in localStorage
+                        localStorage.setItem('jwtToken', response.token);
+                        console.log('Stored Token:', localStorage.getItem('jwtToken')); // Check token
+                       
+                        // Redirect to the intended page
+                        window.location.href = response.redirectTo;
                     } else if (response.message) {
-                        // Display server-side validation messages
+                        // Display server-side validation messages if login fails
                         $('#errorMessage').text(response.message).show();
                     }
                 },
                 error: function (xhr, status, error) {
+                    // Handle error response and show error message
                     var errorMessage = JSON.parse(xhr.responseText).message;
-                    // Handle error response
                     $('#errorMessage').text(errorMessage).show();
                 }
             });
+
         });
+
+       
     });
 </script>

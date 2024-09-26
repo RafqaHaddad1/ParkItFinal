@@ -1,65 +1,93 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ParkIt.Models.Data;
-using ParkIt.Models.Helper;
-namespace ParkIt.Controllers
-{
-    public class LoginController : Controller
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.IdentityModel.Tokens;
+    using ParkIt.Models.Data;
+    using ParkIt.Models.Helper;
+    using System.IdentityModel.Tokens.Jwt;
+    using System.Security.Claims;
+    using System.Text;
+
+    namespace ParkIt.Controllers
     {
-        private readonly ILogger<LoginController> _logger;
-        private readonly ParkItDbContext _dbContext;
-        private readonly Password _password;
-
-        public LoginController(ILogger<LoginController> logger, ParkItDbContext dbContext, Password password)
+        public class LoginController : Controller
         {
-            _logger = logger;
-            _dbContext = dbContext;
-            _password = password;
-        }
+            private readonly ILogger<LoginController> _logger;
+            private readonly ParkItDbContext _dbContext;
+            private readonly Password _password;
+            private readonly IConfiguration _configuration; 
 
-        public IActionResult Login()
-        {
-            return View();
-        }
+            public LoginController(ILogger<LoginController> logger, ParkItDbContext dbContext, Password password, IConfiguration configuration) 
+            {
+                _logger = logger;
+                _dbContext = dbContext;
+                _password = password;
+                _configuration = configuration; 
+            }
 
+            public IActionResult Login()
+            {
+                return View();
+            }
+        [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> CheckUsernameAndPassword(string username, string password)
-        {
-            try
+            public async Task<IActionResult> CheckUsernameAndPassword(string username, string password)
             {
-                // Check if the employee exists with the given username
-                var employee = await _dbContext.Employee
-                    .FirstOrDefaultAsync(e => e.Name == username);
-
-                if (employee == null)
+                try
                 {
-                    return Json(new { success = false, message = "Username not found." });
-                }
+                    var employee = await _dbContext.Employee
+                        .FirstOrDefaultAsync(e => e.Name == username);
 
-                // Verify the password (assuming passwords are hashed)
-                var decryptedPassword = _password.UnHashPassword(employee.Password); // Ensure this is done securely
-                if (password != decryptedPassword)
-                {
-                    return Json(new { success = false, message = "Incorrect password." });
+                    if (employee == null)
+                    {
+                        return Json(new { success = false, message = "Username not found." });
+                    }
+
+                    var decryptedPassword = _password.UnHashPassword(employee.Password);
+                    if (password != decryptedPassword)
+                    {
+                        return Json(new { success = false, message = "Incorrect password." });
+                    }
+                    AuthenticateUserSession(employee);
+                    var token = GenerateJWTToken(employee);
+
+                    return Json(new { success = true, redirectTo = "/Home/Index", token });
                 }
-                AuthenticateUserSession(employee);
-              
-                // Return success and message if login is successful
-                return Json(new { success = true, redirectTo = "/Home/Index" });
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An error occurred: {ex.Message}");
+                    return StatusCode(500, "Internal server error");
+                }
             }
-            catch (Exception ex)
+
+            private void AuthenticateUserSession(Employee staff)
             {
-                // Log the exception details and return an error response
-                Console.WriteLine($"An error occurred: {ex.Message}");
-                return StatusCode(500, "Internal server error");
+                HttpContext.Session.SetString("UserId", staff.Employee_ID.ToString());
+                HttpContext.Session.SetString("UserName", staff.Name);
+                HttpContext.Session.SetString("UserTitle", staff.Title);
             }
-        }
-        private void AuthenticateUserSession(Employee staff)
-        {
-            HttpContext.Session.SetString("UserId", staff.Employee_ID.ToString());
-            HttpContext.Session.SetString("UserName", staff.Name);
-            HttpContext.Session.SetString("UserTitle", staff.Title); // Updated key to "UserTitle"
-            // Add any additional session data as needed
+
+            public string GenerateJWTToken(Employee user)
+            {
+                var claims = new List<Claim>
+                {
+                     new Claim(ClaimTypes.NameIdentifier, user.Employee_ID.ToString()),
+                     new Claim(ClaimTypes.Name, user.Name),
+                        
+                };
+
+                var jwtToken = new JwtSecurityToken(
+                    claims: claims,
+                    notBefore: DateTime.UtcNow,
+                    expires: DateTime.UtcNow.AddDays(30),
+                    signingCredentials: new SigningCredentials(
+                        new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]) // Use _configuration
+                        ),
+                        SecurityAlgorithms.HmacSha256Signature)
+                    );
+
+                return new JwtSecurityTokenHandler().WriteToken(jwtToken);
+            }
         }
     }
-}
