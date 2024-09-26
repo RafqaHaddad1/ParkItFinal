@@ -1,15 +1,6 @@
-﻿using Microsoft.AspNetCore.Http; // Add this for IFormFile
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ParkIt.Models.Data;
-
-using System;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
-using NuGet.Common.Migrations;
 
 namespace ParkIt.Controllers
 {
@@ -48,7 +39,7 @@ namespace ParkIt.Controllers
                     // Add each transaction with its corresponding runner's and zone's name to the list
                     transactionsWithRunners.Add(new
                     {
-                        
+
                         Transactioninfo = t,
                         RunnerName = runner?.Name ?? "No Runner",
                         ZoneName = zone?.Zone_Name ?? "No Zones"
@@ -91,11 +82,10 @@ namespace ParkIt.Controllers
 
             try
             {
-
                 if (carPhoto != null && carPhoto.Length > 0)
                 {
                     // Specify the directory path
-                    string uploadsDirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot",  "ImagesUpload");
+                    string uploadsDirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "ImagesUpload");
 
                     // Ensure directory exists
                     if (!Directory.Exists(uploadsDirectoryPath))
@@ -116,19 +106,19 @@ namespace ParkIt.Controllers
                     var relativePath = $"/ImagesUpload/{uniqueFileName}";
                     model.FileName = relativePath;
                 }
+
                 model.AddDate = DateTime.Now;
                 _dbContext.Transactions.Add(model);
                 await _dbContext.SaveChangesAsync();
                 _logger.LogInformation("Transaction added successfully.");
 
-               
                 if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")
                 {
-                    return Json(new { success = true, model = model, redirectTo = "Transaction/TransactionTable" });
+                    return Json(new { success = true, model = model, redirectTo = Url.Action("TransactionTable", "Transaction") });
                 }
 
                 // Return the view for normal (non-AJAX) requests
-                return View("TransactionTable");
+                return RedirectToAction("TransactionTable");
 
             }
             catch (Exception ex)
@@ -137,6 +127,7 @@ namespace ParkIt.Controllers
                 return Json(new { success = false, message = "Error adding transaction", exception = ex.InnerException?.Message });
             }
         }
+
 
         [HttpGet]
         public IActionResult GetTransactionDetails(int id)
@@ -148,8 +139,9 @@ namespace ParkIt.Controllers
             {
                 return Json(new { success = false, message = "transaction not found" });
             }
-           
-            return Json(new {
+
+            return Json(new
+            {
                 success = true,
                 data = new
                 {
@@ -172,7 +164,7 @@ namespace ParkIt.Controllers
                 }
             });
         }
-        
+
         [HttpGet]
         public async Task<IActionResult> GetFilteredTransactions(string type, string status, int? start = null, DateTime? startDate = null, DateTime? endDate = null, int? length = null)
         {
@@ -182,7 +174,7 @@ namespace ParkIt.Controllers
 
 
             var query = _dbContext.Transactions.AsQueryable();
-        
+
 
             // Apply type filter
             if (!string.IsNullOrEmpty(type) && type != "All")

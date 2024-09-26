@@ -80,6 +80,7 @@
             <div class="collapse" id="filterSection">
                 <div class="row mb-3">
                     <div class="col">
+                        <label>Select Type:</label>
                         <select id="TypeFilter" class="form-control">
                             <option value="All">All Types</option>
                             <option value="VIP">VIP</option>
@@ -87,6 +88,7 @@
                         </select>
                     </div>
                     <div class="col">
+                        <label>Select Status:</label>
                         <select id="StatusFilter" class="form-control">
                             <option value="All">All Statuses</option>
                             <option value="Parked">Parked</option>
@@ -94,9 +96,11 @@
                         </select>
                     </div>
                     <div class="col">
+                        <label>Start Date:</label>
                         <input type="date" id="StartDateFilter" class="form-control" placeholder="Start Date" />
                     </div>
                     <div class="col">
+                        <label>End Date:</label>
                         <input type="date" id="EndDateFilter" class="form-control" placeholder="End Date" />
                     </div>
                     <div class="col">
@@ -118,14 +122,13 @@
                     <th>CAR_MODEL</th>
                     <th>TIME_ARRIVED</th>
                     <th>FEE</th>
-                  
+
                 </tr>
             </thead>
             <tbody>
-              
             </tbody>
         </table>
-      
+
     </div>
 
     <div class="modal fade" id="editEventModal" tabindex="-1" aria-labelledby="editEventModalLabel" aria-hidden="true">
@@ -134,7 +137,6 @@
                 <div class="modal-header">
                     <h4 class="modal-title" id="editEventModalLabel">Transaction Info</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeEditModal" onclick=" $('#editEventModal').modal('hide');">
-                      
                     </button>
                 </div>
                 <div class="modal-body">
@@ -145,13 +147,13 @@
                             <label for="CarModel">Car Model</label>
                             <input type="text" name="CarModel" placeholder="Car Model" maxlength="100" id="CarModel" readonly />
                             <label for="PhoneNumber">Phone Number</label>
-                            <input type="text" name="PhoneNumber" placeholder="Customer Number" maxlength="15"  id="PhoneNumber" readonly />
+                            <input type="text" name="PhoneNumber" placeholder="Customer Number" maxlength="15" id="PhoneNumber" readonly />
                             <label for="ArrivalTime">Arrival Time</label>
                             <input type="datetime-local" name="ArrivalTime" placeholder="Arrival Time" id="ArrivalTime" readonly />
                             <label for="DispatchTime">Dispatch Time</label>
                             <input type="datetime-local" name="DispatchTime" placeholder="Dispatch Time" id="DispatchTime" readonly />
                             <label for="Runner_Collect_ID">Runner Collect Name</label>
-                            <input type="text" name="Runner_Collect_ID" id="Runner_Collect_ID"  placeholder="Runner on Collect" maxlength="50" readonly />
+                            <input type="text" name="Runner_Collect_ID" id="Runner_Collect_ID" placeholder="Runner on Collect" maxlength="50" readonly />
                             <label for="Runner_Dispatch_ID">Runner Dispatch Name</label>
                             <input type="text" name="Runner_Dispatch_ID" id="Runner_Dispatch_ID" placeholder="Runner on Dispatch" maxlength="50" readonly />
                             <label for="Zone_ID">Zone Name</label>
@@ -187,10 +189,10 @@
                                 </div>
                             </div>
                             <label for="Note">Notes</label>
-                            <input type="text" name="Note" placeholder="Additional Notes" maxlength="1000" id="Note" readonly/>
-                           <label>Customer Rating</label>
-                          <input type="text" name="Rating" id="rating_val" value="0" readonly/>
-                            <img id="imageElementID"  style="width: 180px; height: 150px" />
+                            <input type="text" name="Note" placeholder="Additional Notes" maxlength="1000" id="Note" readonly />
+                            <label>Customer Rating</label>
+                            <input type="text" name="Rating" id="rating_val" value="0" readonly />
+                            <img id="imageElementID" style="width: 180px; height: 150px" />
 
                         </div>
                     </div>
@@ -200,7 +202,7 @@
     </div>
 
 
-    
+
 </body>
 </html>
 
@@ -225,20 +227,20 @@
                     $.each(response.tableinfo, function (index, item) {
                         console.log(item);
                         var row = `
-                                <tr>
-                                    <td data-transaction-id="${item.transactioninfo.transaction_ID}">
-                                        <img src="../Images/UserIcon.png" style="width: 35px; height: 35px; background-color: transparent; display: block;" alt="Icon" />
-                                    </td>
-                                    <td>${item.transactioninfo.transaction_ID}</td>
-                                    <td>${item.runnerName}</td>
-                                    <td>${item.zoneName}</td>
-                                    <td>${item.transactioninfo.type}</td>
-                                    <td>${item.transactioninfo.status}</td>
-                                    <td>${item.transactioninfo.parkingSpot_ID}</td>
-                                    <td>${item.transactioninfo.carModel}</td>
-                                    <td>${item.transactioninfo.arrivalTime}</td>
-                                    <td>${item.transactioninfo.fee}</td>
-                                </tr>`;
+                                    <tr>
+                                        <td data-transaction-id="${item.transactioninfo.transaction_ID}">
+                                            <img src="../Images/UserIcon.png" style="width: 35px; height: 35px; background-color: transparent; display: block;" alt="Icon" />
+                                        </td>
+                                        <td>${item.transactioninfo.transaction_ID}</td>
+                                        <td>${item.runnerName}</td>
+                                        <td>${item.zoneName}</td>
+                                        <td>${item.transactioninfo.type}</td>
+                                        <td>${item.transactioninfo.status}</td>
+                                        <td>${item.transactioninfo.parkingSpot_ID}</td>
+                                        <td>${item.transactioninfo.carModel}</td>
+                                        <td>${item.transactioninfo.arrivalTime}</td>
+                                        <td>${item.transactioninfo.fee}</td>
+                                    </tr>`;
                         tableBody.append(row);
                     });
 
