@@ -303,7 +303,7 @@
                             <input type="checkbox" name="Active" value="true" id="active-checkbox">
                             Active
                         </label>
-
+                    
                         <h2>Add Subzones</h2>
                         <input type="text" id="subzone-name" name="Subzone_Name" placeholder="Subzone Name" />
                         <input type="number" id="subzone-capacity" name="Capacity" placeholder="Capacity" />
@@ -324,7 +324,7 @@
                         </table>
 
                         <!-- Hidden fields for coordinates and subzone data -->
-                        <input type="hidden" id="coordinates-data" name="AllCoordinates" readonly />
+                        <input type="text" id="coordinates-data" name="AllCoordinates" readonly />
                         <input type="hidden" id="subzones-data" name="subzonesData" />
                     </div>
 
@@ -403,7 +403,7 @@
         function InitMap() {
             const location = new google.maps.LatLng(33.888630, 35.495480);
             const mapOptions = {
-                zoom: 12,
+                zoom: 15,
                 center: location,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
@@ -433,7 +433,12 @@
                 });
                 polygon.setMap(map);
                 console.log('Polygon created with paths:', path);
-
+                const bounds = new google.maps.LatLngBounds();
+                polygon.getPath().forEach(function (latlng) {
+                    bounds.extend(latlng);
+                });
+                map.fitBounds(bounds); // Adjust the map to fit the polygon bounds
+                console.log('Map zoomed to polygon bounds.');
                 // Attach event listeners for editing
                 google.maps.event.addListener(polygon.getPath(), 'set_at', updateCoordinates);
                 google.maps.event.addListener(polygon.getPath(), 'insert_at', updateCoordinates);
@@ -450,8 +455,8 @@
                 polygonOptions: {
                     clickable: true,
                     draggable: false,
-                    editable: true, // New polygons should also be editable
-                    fillColor: "#ADFF2F",
+                    editable: true, 
+                    fillColor: "#FF0000",
                     fillOpacity: 0.5
                 }
             });
@@ -481,6 +486,7 @@
                 });
                 coordinatesInput.value = coordinates.join(',');
                 console.log('Updated coordinates:', coordinates.join(','));
+               
             }
         }
 
@@ -520,7 +526,10 @@
                     if ($('input[name="Supervisor_ID"]').length > 0) {
                         $('input[name="Supervisor_ID"]').val(zoneData.supervisor_ID);
                     }
-                  
+                    
+                    if ($('input[name="AllCoordinates"]').length > 0) {
+                        $('input[name="AllCoordinates"]').val(zoneData.allCoordinates);
+                    }
                     // AJAX request to fetch subzone data
                     $.ajax({
                         url: '/Zone/GetSubzonesByZoneId', // Replace with your API endpoint
@@ -537,7 +546,7 @@
                                     <td>${item.subzone_Name}</td>
                                     <td>${item.capacity}</td>
                                     <td>
-                                        <a onclick="openEditModal('${item.subzone_ID}', '${item.subzone_Name}', '${item.capacity}', '${item.Zone_Name}');" class="btn btn-primary" style="background-color: #F3BC12; border-color:#F3BC12; color:#23282B">
+                                                <a onclick="openEditModal('${item.subzone_ID}', '${item.subzone_Name}', '${item.capacity}', '${item.zone_id}');" class="btn btn-primary" style="background-color: #F3BC12; border-color:#F3BC12; color:#23282B">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                         <button class="btn btn-danger" onclick="DeleteSubzone(${item.subzone_ID});" style="background-color: #23282B; border-color:#23282B; color:#F3BC12">

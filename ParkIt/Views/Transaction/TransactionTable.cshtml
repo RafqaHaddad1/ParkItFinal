@@ -363,12 +363,17 @@
                 endDate: endDate ? new Date(endDate).toISOString() : null,
             },
             success: function (response) {
+                console.log(response);
                 var transactionTable = $('#Transaction-Table').DataTable();
                 transactionTable.clear(); // Clear the existing table data
                 transactionTable.rows.add(response.data).draw(); // Add filtered data and redraw the table
-
+                $('#Transaction-Table tbody tr').each(function (index, row) {
+                    var transactionInfo = response.data[index].transactioninfo;
+                    var transactionId = transactionInfo.transaction_ID;
+                    $(row).attr('data-transaction-id', transactionId);
+                });
                 // Modal handling for viewing/editing transactions
-                $(document).on('click', 'td[data-transaction-id]', function () {
+                $(document).on('click', 'tr[data-transaction-id]', function () {
                     var transactionId = $(this).data('transaction-id');
                     fetchTransactionDetails(transactionId);
                     $('#editEventModal').modal('show');
@@ -379,4 +384,5 @@
             }
         });
     }
+
 </script>

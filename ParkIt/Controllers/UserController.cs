@@ -213,7 +213,10 @@ namespace ParkIt.Controllers
                 // Retrieve existing file paths and initialize paths list
                 var existingPaths = existingEmployee.Files?.Split(';').ToList() ?? new List<string>();
                 // Update the existing employee with new values (excluding files)
-                _dbContext.Entry(existingEmployee).CurrentValues.SetValues(model);   // Process new files and collect their paths
+                _dbContext.Entry(existingEmployee).CurrentValues.SetValues(model);
+                // Process new files and collect their paths
+                model.AddDate = existingEmployee.AddDate;
+                existingEmployee.UpdateDate = DateTime.Now;
                 var newPaths = new List<string>();
 
                 foreach (var file in Files)
@@ -350,7 +353,7 @@ namespace ParkIt.Controllers
             try
             {
                 var supervisors = await _dbContext.Employee
-                 .Where(e => e.Title == "Supervisor")
+                 .Where(e => (e.Title == "Supervisor" && e.IsDeleted == null) ||(e.Title == "Supervisor" && e.IsDeleted == false))
                  .Select(e => new
                  {
                      Supervisor_Name = e.Name,
@@ -379,7 +382,7 @@ namespace ParkIt.Controllers
             try
             {
                 var supervisors = await _dbContext.Employee
-                     .Where(e => e.Title == "Supervisor" && e.Zone_ID == zoneid)
+                     .Where(e => (e.Title == "Supervisor" && e.Zone_ID == zoneid && e.IsDeleted == false ) || (e.Title == "Supervisor" && e.Zone_ID == zoneid && e.IsDeleted == null))
                      .Select(e => new
                      {
                          Supervisor_Name = e.Name,
@@ -413,7 +416,7 @@ namespace ParkIt.Controllers
             try
             {
                 var runner = await _dbContext.Employee
-                 .Where(e => e.Title == "Runner" && e.Zone_ID == id) 
+                 .Where(e =>( e.Title == "Runner" && e.Zone_ID == id && e.IsDeleted == false) || (e.Title == "Runner" && e.Zone_ID == id && e.IsDeleted == null)) 
                  .Select(e => new
                  {
                      Runner_Name = e.Name,
@@ -442,7 +445,7 @@ namespace ParkIt.Controllers
             try
             {
                 var runner = await _dbContext.Employee
-                 .Where(e => e.Zone_ID == id)
+                 .Where(e => (e.Zone_ID == id && e.IsDeleted == false) || (e.Zone_ID == id && e.IsDeleted == null))
                  .Select(e => new
                  {
                      Employee_Name = e.Name,
@@ -471,7 +474,7 @@ namespace ParkIt.Controllers
             try
             {
                 var runner = await _dbContext.Employee
-                    .Where(e => e.Employee_ID == id)
+                    .Where(e => (e.Employee_ID == id && e.IsDeleted == false) || (e.Employee_ID == id && e.IsDeleted == null))
                     .Select(e => new
                     {
                         Runner_Name = e.Name

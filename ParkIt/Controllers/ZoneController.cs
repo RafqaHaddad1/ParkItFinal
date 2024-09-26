@@ -73,8 +73,8 @@ namespace ParkIt.Controllers
         public IActionResult EditZone(int id)
         {
 
-            var zone = _dbContext.Zone.FirstOrDefault(z => z.Zone_ID == id);
-            var subzones = _dbContext.Subzone.Where(s => s.Zone_ID == id).ToList();
+            var zone = _dbContext.Zone.FirstOrDefault(z => (z.Zone_ID == id && z.IsDeleted == false) || (z.Zone_ID == id && z.IsDeleted == null));
+            var subzones = _dbContext.Subzone.Where(s => (s.Zone_ID == id && s.IsDeleted == false) || (s.Zone_ID == id && s.IsDeleted == null)).ToList();
 
             if (zone == null)
             {
@@ -125,10 +125,12 @@ namespace ParkIt.Controllers
                 {
                     subzone.Zone_ID = zoneModel.Zone_ID;
                     subzone.AddDate = DateTime.Now;
+                    subzone.IsDeleted = false;
                     _dbContext.Subzone.Add(subzone);
 
                 }
-
+                zoneModel.IsDeleted = false;
+                
                 await _dbContext.SaveChangesAsync();
                 zoneModel.NumberOfSubzone = await GetSubzoneCountByZoneIdAsync(zoneModel.Zone_ID);
                 zoneModel.NumberOfRunner = await GetNumberOfRunners(zoneModel.Zone_ID);
@@ -275,10 +277,11 @@ namespace ParkIt.Controllers
                 {
                     return Json(new { success = false, message = "Zone not found" });
                 }
-
+                model.AddDate = existingZone.AddDate;
                 // Update the existing zone with new values
                 _dbContext.Entry(existingZone).CurrentValues.SetValues(model);
-
+                model.UpdateDate = DateTime.Now;
+                existingZone.UpdateDate = DateTime.Now;
                 // Update the NumberOfSubzone property
                 existingZone.NumberOfSubzone = await GetSubzoneCountByZoneIdAsync(existingZone.Zone_ID);
                 existingZone.NumberOfRunner = await GetNumberOfRunners(existingZone.Zone_ID);
@@ -298,14 +301,14 @@ namespace ParkIt.Controllers
         public async Task<int> GetSubzoneCountByZoneIdAsync(int zoneId)
         {
             return await _dbContext.Subzone
-                                 .Where(s => s.Zone_ID == zoneId)
+                                 .Where(s => (s.Zone_ID == zoneId && s.IsDeleted == false) || (s.Zone_ID == zoneId && s.IsDeleted == null))
                                  .CountAsync();
         }
         [HttpGet]
         public async Task<int> GetNumberOfRunners(int zoneId)
         {
             return await _dbContext.Employee
-                                 .Where(s => s.Zone_ID == zoneId)
+                                 .Where(s => (s.Zone_ID == zoneId && s.IsDeleted == false) || (s.Zone_ID == zoneId && s.IsDeleted == null))
                                  .CountAsync();
         }
         [HttpGet]
@@ -345,10 +348,12 @@ namespace ParkIt.Controllers
                 {
                     return Json(new { success = false, message = "Subzone not found" });
                 }
-
+                subzone.IsDeleted = false;
+                existingSubzone.IsDeleted = false;
+                subzone.AddDate = existingSubzone.AddDate;
                 // Update the existing subzone with new values
                 _dbContext.Entry(existingSubzone).CurrentValues.SetValues(subzone);
-
+                subzone.UpdateDate = DateTime.Now;
                 // Save changes to the database
                 await _dbContext.SaveChangesAsync();
                 _logger.LogInformation("Subzone updated successfully");
@@ -374,6 +379,7 @@ namespace ParkIt.Controllers
                  Subzone_ID = s.Subzone_ID,
                  Subzone_Name = s.Subzone_Name,
                  capacity = s.Capacity,
+                 zone_id = s.Zone_ID,
              })
              .ToList();
 
@@ -428,7 +434,7 @@ namespace ParkIt.Controllers
                     .Select(t => new
                     {
                         Zone_Name = _dbContext.Zone
-                                    .Where(e => e.Zone_ID == t.Zone_ID)
+                                    .Where(e => (e.Zone_ID == t.Zone_ID && e.IsDeleted == false) || (e.Zone_ID == t.Zone_ID && e.IsDeleted == null))
                                     .Select(e => e.Zone_Name)
                                     .FirstOrDefault()
                     })
@@ -489,8 +495,10 @@ namespace ParkIt.Controllers
             {
                 // Asynchronously query the database
                 var coordinates = await _dbContext.Zone
-                    .Select(zone => zone.AllCoordinates)
-                    .ToListAsync();
+                  .Where(z => z.IsDeleted == false || z.IsDeleted == null)
+                  .Select(zone => zone.AllCoordinates)
+                  .ToListAsync();
+
 
                 // Check if the list is empty
                 if (!coordinates.Any())

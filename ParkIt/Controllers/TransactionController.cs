@@ -19,8 +19,8 @@ namespace ParkIt.Controllers
         {
             // Step 1: Retrieve all transactions, employees, and zones in advance
             var transactionTable = await _dbContext.Transactions.ToListAsync();
-            var runners = await _dbContext.Employee.ToListAsync();
-            var zones = await _dbContext.Zone.ToListAsync(); // Assuming Zones is the DbSet for Zone
+            var runners = await _dbContext.Employee.Where(t => t.IsDeleted == false || t.IsDeleted == null).ToListAsync();
+            var zones = await _dbContext.Zone.Where(t => t.IsDeleted == false || t.IsDeleted == null).ToListAsync(); // Assuming Zones is the DbSet for Zone
 
             // Step 2: Initialize a list to hold the transaction and runner/zone data
             var transactionsWithRunners = new List<object>();
@@ -31,10 +31,10 @@ namespace ParkIt.Controllers
                 foreach (var t in transactionTable)
                 {
                     // Fetch the runner based on Runner_Collect_ID
-                    var runner = runners.FirstOrDefault(e => e.Employee_ID == t.Runner_Collect_ID);
+                    var runner = runners.FirstOrDefault(e => (e.Employee_ID == t.Runner_Collect_ID && e.IsDeleted == false ) || (e.Employee_ID == t.Runner_Collect_ID && e.IsDeleted == null));
 
                     // Fetch the zone based on Zone_ID
-                    var zone = zones.FirstOrDefault(z => z.Zone_ID == t.Zone_ID);
+                    var zone = zones.FirstOrDefault(z => (z.Zone_ID == t.Zone_ID && z.IsDeleted == false) || (z.Zone_ID == t.Zone_ID && z.IsDeleted == null));
 
                     // Add each transaction with its corresponding runner's and zone's name to the list
                     transactionsWithRunners.Add(new

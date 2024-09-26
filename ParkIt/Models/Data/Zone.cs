@@ -17,6 +17,7 @@ namespace ParkIt.Models.Data
         public bool? IsDeleted { get; set; }
         public DateTime? AddDate{ get; set; }
         public DateTime? DeleteDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
     }
 
 }
