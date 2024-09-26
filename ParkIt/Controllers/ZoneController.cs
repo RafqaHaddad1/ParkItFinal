@@ -73,8 +73,8 @@ namespace ParkIt.Controllers
         public IActionResult EditZone(int id)
         {
 
-            var zone = _dbContext.Zone.FirstOrDefault(z => z.Zone_ID == id);
-            var subzones = _dbContext.Subzone.Where(s => s.Zone_ID == id).ToList();
+            var zone = _dbContext.Zone.FirstOrDefault(z => (z.Zone_ID == id && z.IsDeleted == false) || (z.Zone_ID == id && z.IsDeleted == null));
+            var subzones = _dbContext.Subzone.Where(s => (s.Zone_ID == id && s.IsDeleted == false) || (s.Zone_ID == id && s.IsDeleted == null)).ToList();
 
             if (zone == null)
             {
@@ -301,14 +301,14 @@ namespace ParkIt.Controllers
         public async Task<int> GetSubzoneCountByZoneIdAsync(int zoneId)
         {
             return await _dbContext.Subzone
-                                 .Where(s => s.Zone_ID == zoneId)
+                                 .Where(s => (s.Zone_ID == zoneId && s.IsDeleted == false) || (s.Zone_ID == zoneId && s.IsDeleted == null))
                                  .CountAsync();
         }
         [HttpGet]
         public async Task<int> GetNumberOfRunners(int zoneId)
         {
             return await _dbContext.Employee
-                                 .Where(s => s.Zone_ID == zoneId)
+                                 .Where(s => (s.Zone_ID == zoneId && s.IsDeleted == false) || (s.Zone_ID == zoneId && s.IsDeleted == null))
                                  .CountAsync();
         }
         [HttpGet]
@@ -434,7 +434,7 @@ namespace ParkIt.Controllers
                     .Select(t => new
                     {
                         Zone_Name = _dbContext.Zone
-                                    .Where(e => e.Zone_ID == t.Zone_ID)
+                                    .Where(e => (e.Zone_ID == t.Zone_ID && e.IsDeleted == false) || (e.Zone_ID == t.Zone_ID && e.IsDeleted == null))
                                     .Select(e => e.Zone_Name)
                                     .FirstOrDefault()
                     })
@@ -495,8 +495,10 @@ namespace ParkIt.Controllers
             {
                 // Asynchronously query the database
                 var coordinates = await _dbContext.Zone
-                    .Select(zone => zone.AllCoordinates)
-                    .ToListAsync();
+                  .Where(z => z.IsDeleted == false || z.IsDeleted == null)
+                  .Select(zone => zone.AllCoordinates)
+                  .ToListAsync();
+
 
                 // Check if the list is empty
                 if (!coordinates.Any())
