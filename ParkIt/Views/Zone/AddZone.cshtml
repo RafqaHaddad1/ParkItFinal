@@ -291,11 +291,11 @@
                     <input type="text" name="Area" placeholder="Area" required />
                     <input type="text" name="Street" placeholder="Street" required />
 
-                    <select name="supervisor" id="supervisor" class="supervisor form-control select2-hidden-accessible" data-placeholder="Select a Supervisor" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                    <select name="supervisor" id="supervisor" class="supervisor form-control select2-hidden-accessible" data-placeholder="Select a Supervisor" style="width: 100%;" tabindex="-1" aria-hidden="true" onchange="updateSupervisorID()">
                         <option value="" selected disabled>Select a Supervisor</option>
                     </select>
 
-                    <input type="number" id="Supervisor_ID" name="Supervisor_ID" hidden />
+                    <input type="number" id="Supervisor_ID" name="Supervisor_ID" reaonly />
 
                     <label>
                         <input type="checkbox" name="Active" value="true" id="active-checkbox">
@@ -305,6 +305,8 @@
                     <input type="text" id="subzone-name" name="Subzone_Name" placeholder="Subzone Name" />
                     <input type="number" id="subzone-capacity" name="Capacity" placeholder="Capacity" />
                     <button type="button" id="add-subzone-button" class="add-button">+ Add Subzone</button>
+                    <input type="hidden" id="coordinates-data" name="AllCoordinates" />
+
                     </br>
                     <!-- Table to show added subzones -->
                     <table id="subzone-table">
@@ -320,7 +322,7 @@
                         </tbody>
                     </table>
                     <!-- Hidden fields for coordinates and subzone data -->
-                    <input type="hidden" id="coordinates-data" name="AllCoordinates" />
+                   
                     <input type="hidden" id="subzones-data" name="subzonesData" />
                 </div>
 
@@ -332,7 +334,7 @@
                     </div>
                 </div>
             </div>
-
+            <div id="info" style="position:absolute; color: red; font-family: Arial, Helvetica, sans-serif; height: 200px; font-size: 12px"></div>
             <!-- Submit Button -->
             <div class="button-container">
                 <input type="submit" class="save-button" value="Save">
@@ -566,11 +568,12 @@
             }
         }
 
+
         document.getElementById('Zone-Form').addEventListener('submit', function (event) {
+          
             document.getElementById("subzones-data").value = JSON.stringify(subzones);
             collectCoordinatesData();
         });
-
 
 
 
@@ -609,6 +612,7 @@
                         var option = document.createElement("option");
                         option.value = supervisor.supervisor_ID;
                         option.text = supervisor.supervisor_Name;
+                        option.setAttribute("data-supervisor-id", supervisor.supervisor_ID);
                         supervisorDropdown.appendChild(option);
                     });
 
@@ -626,7 +630,14 @@
             });
         }
 
-
+        function updateSupervisorID() {
+            // Get the selected option
+            var selectedOption = document.getElementById("supervisor").selectedOptions[0];
+            // Get the Subzone_ID from the data attribute
+            var supervisorId = selectedOption.getAttribute("data-supervisor-id"); // Use correct attribute for subzone
+            // Set the Subzone_ID input field value
+            document.getElementById("Supervisor_ID").value = supervisorId;
+        }
     </script>
 </body>
 </html>

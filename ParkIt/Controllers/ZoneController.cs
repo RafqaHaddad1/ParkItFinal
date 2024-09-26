@@ -125,10 +125,12 @@ namespace ParkIt.Controllers
                 {
                     subzone.Zone_ID = zoneModel.Zone_ID;
                     subzone.AddDate = DateTime.Now;
+                    subzone.IsDeleted = false;
                     _dbContext.Subzone.Add(subzone);
 
                 }
-
+                zoneModel.IsDeleted = false;
+                
                 await _dbContext.SaveChangesAsync();
                 zoneModel.NumberOfSubzone = await GetSubzoneCountByZoneIdAsync(zoneModel.Zone_ID);
                 zoneModel.NumberOfRunner = await GetNumberOfRunners(zoneModel.Zone_ID);
@@ -275,10 +277,11 @@ namespace ParkIt.Controllers
                 {
                     return Json(new { success = false, message = "Zone not found" });
                 }
-
+                model.AddDate = existingZone.AddDate;
                 // Update the existing zone with new values
                 _dbContext.Entry(existingZone).CurrentValues.SetValues(model);
-
+                model.UpdateDate = DateTime.Now;
+                existingZone.UpdateDate = DateTime.Now;
                 // Update the NumberOfSubzone property
                 existingZone.NumberOfSubzone = await GetSubzoneCountByZoneIdAsync(existingZone.Zone_ID);
                 existingZone.NumberOfRunner = await GetNumberOfRunners(existingZone.Zone_ID);
@@ -345,10 +348,12 @@ namespace ParkIt.Controllers
                 {
                     return Json(new { success = false, message = "Subzone not found" });
                 }
-
+                subzone.IsDeleted = false;
+                existingSubzone.IsDeleted = false;
+                subzone.AddDate = existingSubzone.AddDate;
                 // Update the existing subzone with new values
                 _dbContext.Entry(existingSubzone).CurrentValues.SetValues(subzone);
-
+                subzone.UpdateDate = DateTime.Now;
                 // Save changes to the database
                 await _dbContext.SaveChangesAsync();
                 _logger.LogInformation("Subzone updated successfully");
@@ -374,6 +379,7 @@ namespace ParkIt.Controllers
                  Subzone_ID = s.Subzone_ID,
                  Subzone_Name = s.Subzone_Name,
                  capacity = s.Capacity,
+                 zone_id = s.Zone_ID,
              })
              .ToList();
 
