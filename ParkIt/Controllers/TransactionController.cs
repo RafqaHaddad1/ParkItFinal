@@ -18,6 +18,8 @@ namespace ParkIt.Controllers
             _dbContext = dbContext;
         }
         [HttpGet]
+        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
+
         public async Task<IActionResult> TransactionTable()
         {
             // Step 1: Retrieve all transactions, employees, and zones in advance

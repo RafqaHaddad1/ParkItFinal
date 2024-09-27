@@ -24,6 +24,8 @@ namespace ParkIt.Controllers
             _password = password;
         }
         [HttpGet]
+        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
+
         public async Task<IActionResult> Users()
         {
             var model = await
@@ -44,6 +46,8 @@ namespace ParkIt.Controllers
             return View();
         }
         [HttpGet]
+        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
+
         public async Task<IActionResult> AddUser()
         {
 

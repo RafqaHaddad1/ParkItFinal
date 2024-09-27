@@ -22,6 +22,8 @@ namespace ParkIt.Controllers
             _dbContext = dbContext;
         }
         [HttpGet]
+        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
+
         public async Task<IActionResult> CoveredZones()
         {
             var model = await _dbContext.Zone.Where(z => z.IsDeleted == null || z.IsDeleted == false).ToListAsync();

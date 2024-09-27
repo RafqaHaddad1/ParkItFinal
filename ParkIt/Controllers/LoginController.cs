@@ -49,7 +49,7 @@ namespace ParkIt.Controllers
                 {
                     return Json(new { success = false, message = "Incorrect password." });
                 }
-
+                HttpContext.Session.SetString("UserName", username);
                 // Generate the JWT Token
                 var token = GenerateJwtToken(employee);
 
