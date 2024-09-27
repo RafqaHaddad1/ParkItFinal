@@ -43,44 +43,33 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
-    $(document).ready(function () {
-        $('#loginForm').submit(function (e) {
-            e.preventDefault(); // Prevent the default form submission
+    $("#loginForm").submit(function (event) {
+        event.preventDefault(); // Prevent the default form submission
 
-            // Hide any previous error message
-            $('#errorMessage').hide();
+        var username = $("#username").val();
+        var password = $("#password").val();
 
-            // Serialize form data
-            var user = $('#username').val();
-            var pass = $('#password').val();
-
-            $.ajax({
-                url: '/Login/CheckUsernameAndPassword',
-                type: 'POST',
-                data: { username: user, password: pass },  // No need for Authorization here
-                success: function (response) {
-                    // On successful login, check if a redirect and token are present
-                    if (response.redirectTo && response.token) {
-                        // Store the received token in localStorage
-                        localStorage.setItem('jwtToken', response.token);
-                        console.log('Stored Token:', response.token); // Check token
-                       
-                        // Redirect to the intended page
-                        window.location.href = response.redirectTo;
-                    } else if (response.message) {
-                        // Display server-side validation messages if login fails
-                        $('#errorMessage').text(response.message).show();
-                    }
-                },
-                error: function (xhr, status, error) {
-                    // Handle error response and show error message
-                    var errorMessage = JSON.parse(xhr.responseText).message;
-                    $('#errorMessage').text(errorMessage).show();
+        $.ajax({
+            type: "POST",
+            url: "/Login/CheckUsernameAndPassword",
+            data: {
+                username: username,
+                password: password
+            },
+            success: function (response) {
+                if (response.success) {
+                    // Redirect to the dashboard if login is successful
+                    window.location.href = response.redirectTo;
+                } else {
+                    // Show error message
+                    alert(response.message);
                 }
-            });
-
+            },
+            error: function (xhr, status, error) {
+                // Handle the error if something goes wrong with the request
+                alert("An error occurred: " + error);
+            }
         });
-
-       
     });
+
 </script>

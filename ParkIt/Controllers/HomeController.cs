@@ -1,12 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 using ParkIt.Models;
 using ParkIt.Models.Data;
-
-using System.Data.Entity;
 using System.Diagnostics;
 
 namespace ParkIt.Controllers
@@ -26,7 +22,7 @@ namespace ParkIt.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-           
+
             int activeZoneCount = _dbContext.Zone.Count(z => z.Active);
             int activeRunners = _dbContext.Employee.Count(e => e.Active);
             int numberOfCars = _dbContext.Transactions.Count();
@@ -34,7 +30,7 @@ namespace ParkIt.Controllers
 
             var username = HttpContext.Session.GetString("UserName");
             var zoneRankings = _dbContext.Zone
-             .Select(zone => new 
+             .Select(zone => new
              {
                  ZoneName = zone.Zone_Name,
                  TransactionCount = _dbContext.Transactions.Count(t => t.Zone_ID == zone.Zone_ID)
@@ -85,7 +81,7 @@ namespace ParkIt.Controllers
             return View();
         }
 
-      
+
         public IActionResult Privacy()
         {
             return View();
