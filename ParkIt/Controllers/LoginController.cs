@@ -102,7 +102,24 @@ namespace ParkIt.Controllers
                 Expires = DateTime.Now.AddMinutes(60) // Set expiration time (same as token expiration)
             };
 
-            Response.Cookies.Append("JwtToken", token, cookieOptions);
+            Response.Cookies.Append("jwtToken", token, cookieOptions);
         }
+        public IActionResult Logout()
+        {
+            // Clear the JWT token cookie by setting its expiration to a past date
+            CookieOptions options = new CookieOptions
+            {
+                Expires = DateTime.Now.AddDays(-1), // Expire the cookie immediately
+                HttpOnly = true
+            };
+            Response.Cookies.Append("jwtToken", "", options); // Overwrite the cookie with an empty value
+
+            // Optionally, clear any session or authentication
+            HttpContext.Session.Clear(); // Clear session if applicable
+
+            // Redirect to the login or home page after logout
+            return RedirectToAction("Login");
+        }
+
     }
 }

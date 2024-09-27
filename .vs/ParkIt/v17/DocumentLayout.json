@@ -3,28 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\test1\\source\\repos\\ParkIt\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|c:\\users\\test1\\source\\repos\\parkit\\parkit\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|solutionrelative:parkit\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|c:\\users\\test1\\source\\repos\\parkit\\parkit\\controllers\\schedulecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|solutionrelative:parkit\\controllers\\schedulecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|c:\\users\\test1\\source\\repos\\parkit\\parkit\\controllers\\transactioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|solutionrelative:parkit\\controllers\\transactioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|c:\\users\\test1\\source\\repos\\parkit\\parkit\\controllers\\reportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|solutionrelative:parkit\\controllers\\reportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|c:\\users\\test1\\source\\repos\\parkit\\parkit\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|solutionrelative:parkit\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|c:\\users\\test1\\source\\repos\\parkit\\parkit\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|solutionrelative:parkit\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|c:\\users\\test1\\source\\repos\\parkit\\parkit\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|solutionrelative:parkit\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|c:\\users\\test1\\source\\repos\\parkit\\parkit\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|solutionrelative:parkit\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|c:\\users\\test1\\source\\repos\\parkit\\parkit\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|solutionrelative:parkit\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 273,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,78 +38,65 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "TransactionController.cs",
-              "DocumentMoniker": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Controllers\\TransactionController.cs",
-              "RelativeDocumentMoniker": "ParkIt\\Controllers\\TransactionController.cs",
-              "ToolTip": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Controllers\\TransactionController.cs",
-              "RelativeToolTip": "ParkIt\\Controllers\\TransactionController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAGAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-27T10:17:22.308Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "ScheduleController.cs",
-              "DocumentMoniker": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Controllers\\ScheduleController.cs",
-              "RelativeDocumentMoniker": "ParkIt\\Controllers\\ScheduleController.cs",
-              "ToolTip": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Controllers\\ScheduleController.cs",
-              "RelativeToolTip": "ParkIt\\Controllers\\ScheduleController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-27T10:17:20.556Z",
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "ParkIt\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "ParkIt\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AQIAAPYAAAAAAAAAAAAAAA8BAAA4AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-09-27T11:03:24.6Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ReportController.cs",
-              "DocumentMoniker": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Controllers\\ReportController.cs",
-              "RelativeDocumentMoniker": "ParkIt\\Controllers\\ReportController.cs",
-              "ToolTip": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Controllers\\ReportController.cs",
-              "RelativeToolTip": "ParkIt\\Controllers\\ReportController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAEAAAA",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Program.cs",
+              "RelativeDocumentMoniker": "ParkIt\\Program.cs",
+              "ToolTip": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Program.cs",
+              "RelativeToolTip": "ParkIt\\Program.cs",
+              "ViewState": "AQIAABUAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-27T10:17:16.682Z",
+              "WhenOpened": "2024-09-27T11:01:14.853Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "LoginController.cs",
               "DocumentMoniker": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Controllers\\LoginController.cs",
               "RelativeDocumentMoniker": "ParkIt\\Controllers\\LoginController.cs",
               "ToolTip": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Controllers\\LoginController.cs",
               "RelativeToolTip": "ParkIt\\Controllers\\LoginController.cs",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAADUAAAA3AAAA",
+              "ViewState": "AQIAAGMAAAAAAAAAAAAowG0AAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-27T09:11:45.989Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "HomeController.cs",
               "DocumentMoniker": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "ParkIt\\Controllers\\HomeController.cs",
               "ToolTip": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Controllers\\HomeController.cs",
               "RelativeToolTip": "ParkIt\\Controllers\\HomeController.cs",
-              "ViewState": "AQIAAEcAAAAAAAAAAAAYwE4AAAANAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAE4AAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-27T07:01:24.126Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 3,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "ParkIt\\Views\\Home\\Index.cshtml",
               "ToolTip": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\Home\\Index.cshtml",
               "RelativeToolTip": "ParkIt\\Views\\Home\\Index.cshtml",
-              "ViewState": "AQIAALYAAAAAAAAAAAAAAMoAAAAPAAAA",
+              "ViewState": "AQIAAB4AAAAAAAAAAAAAAF0AAAAWAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-09-27T06:56:41.072Z",
               "EditorCaption": ""
