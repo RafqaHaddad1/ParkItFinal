@@ -63,7 +63,7 @@
                     if (response.redirectTo && response.token) {
                         // Store the received token in localStorage
                         localStorage.setItem('jwtToken', response.token);
-                        console.log('Stored Token:', localStorage.getItem('jwtToken')); // Check token
+                        console.log('Stored Token:', response.token); // Check token
                        
                         // Redirect to the intended page
                         window.location.href = response.redirectTo;

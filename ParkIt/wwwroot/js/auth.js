@@ -1,22 +1,34 @@
-﻿// Global AJAX setup for adding Authorization header
+﻿
 
-console.log("entered auth.js");
-$.ajaxSetup({
-    beforeSend: function (xhr) {
-        const token = localStorage.getItem('jwtToken');  // Retrieve the JWT token
-        console.log(token);
-        if (token) {
-            // If the token exists, set the Authorization header
-            xhr.setRequestHeader('Authorization', 'Bearer ' + token);
-        }
-    },
-    error: function (xhr, status, error) {
-        if (xhr.status === 401) {
-            // Handle unauthorized access (e.g., token expired or invalid)
-            console.log('Unauthorized: Redirecting to login page');
-            window.location.href = '/Login/Login';  // Redirect to login page
-        } else {
-            console.log('Error:', error);  // Handle other errors
-        }
-    }
-});
+console.log('auth.js loaded');
+
+//(function () {
+//    const originalFetch = fetch;
+
+//    window.fetch = function (url, options = {}) {
+//        const token = localStorage.getItem('jwtToken');
+
+//        if (token) {
+//            if (!options.headers) {
+//                options.headers = {};
+//            }
+//            options.headers['Authorization'] = 'Bearer ' + token;
+//            console.log('Token added:', options.headers['Authorization']);
+//        }
+//        else {
+//            console.log('No token found in localStorage');
+//        }
+  
+//        return originalFetch(url, options);
+//    };
+//})();
+
+function getAuthHeaders() {
+    const token = localStorage.getItem('jwtToken');
+    return {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+    };
+}
+
+

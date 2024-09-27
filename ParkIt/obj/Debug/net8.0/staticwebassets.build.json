@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "2SX2DCdmp6wmTF144TsL35Z1vchbPMt+Is1JYJuSEjw=",
+  "Hash": "D/dad4kUdjJSmbajfOAE772tw8Z7Sqbt+CCQD1hvxuQ=",
   "Source": "ParkIt",
   "BasePath": "_content/ParkIt",
   "Mode": "Default",
@@ -1079,25 +1079,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\ImagesUpload\\a51d1353-5a78-4584-aa47-cc34bdc74883_Screenshot 2024-08-08 155256.png"
-    },
-    {
-      "Identity": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\js\\auth.js",
-      "SourceId": "ParkIt",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\",
-      "BasePath": "_content/ParkIt",
-      "RelativePath": "js/auth.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\auth.js"
     },
     {
       "Identity": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\js\\site.js",

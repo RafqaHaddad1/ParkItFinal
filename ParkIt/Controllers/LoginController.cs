@@ -5,8 +5,9 @@ using Microsoft.AspNetCore.Mvc;
     using ParkIt.Models.Data;
     using ParkIt.Models.Helper;
     using System.IdentityModel.Tokens.Jwt;
-    using System.Security.Claims;
-    using System.Text;
+using System.Net.Http.Headers;
+using System.Security.Claims;
+using System.Text;
 
     namespace ParkIt.Controllers
     {
@@ -49,7 +50,7 @@ using Microsoft.AspNetCore.Mvc;
                         return Json(new { success = false, message = "Incorrect password." });
                     }
                     AuthenticateUserSession(employee);
-                    var token = GenerateJWTToken(employee);
+                    var token = GenerateJSONWebToken(employee);
 
                     return Json(new { success = true, redirectTo = "/Home/Index", token });
                 }
@@ -67,27 +68,25 @@ using Microsoft.AspNetCore.Mvc;
                 HttpContext.Session.SetString("UserTitle", staff.Title);
             }
 
-            public string GenerateJWTToken(Employee user)
-            {
-                var claims = new List<Claim>
-                {
-                     new Claim(ClaimTypes.NameIdentifier, user.Employee_ID.ToString()),
-                     new Claim(ClaimTypes.Name, user.Name),
-                        
-                };
+            private string GenerateJSONWebToken(Employee userInfo)
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Secret"]));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-                var jwtToken = new JwtSecurityToken(
-                    claims: claims,
-                    notBefore: DateTime.UtcNow,
-                    expires: DateTime.UtcNow.AddDays(30),
-                    signingCredentials: new SigningCredentials(
-                        new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]) // Use _configuration
-                        ),
-                        SecurityAlgorithms.HmacSha256Signature)
-                    );
 
-                return new JwtSecurityTokenHandler().WriteToken(jwtToken);
-            }
+            var claims = new[] {
+                new Claim(JwtRegisteredClaimNames.Name, userInfo.Name),
+            };
+
+            var token = new JwtSecurityToken(_configuration["Jwt:ValidIssuer"],
+              _configuration["Jwt:ValidIssuer"],
+               claims,
+              expires: DateTime.Now.AddMinutes(120),
+              signingCredentials: credentials);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
+       
+
     }
+}

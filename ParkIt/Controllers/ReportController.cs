@@ -9,11 +9,12 @@ using System.Globalization;
 
 namespace ParkIt.Controllers
 {
-
+    [Authorize]
     public class ReportController : Controller
     {
         private readonly ILogger<ReportController> _logger;
         private readonly ParkItDbContext _dbContext;
+
 
         public ReportController(ILogger<ReportController> logger, ParkItDbContext dbContext)
         {

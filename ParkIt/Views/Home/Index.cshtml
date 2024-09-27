@@ -192,11 +192,15 @@
 </section>
 
 <script type="text/javascript">
- 
+ const token = localStorage.getItem('jwtToken'); 
     $(document).ready(function () {
+       
         $.ajax({
             url: '/Home/Index',
             type: 'GET',
+             headers: {
+                'Authorization': `Bearer ${token}`,
+             },
             success: function (response) {
                 if (response.success) {
                     // Update the HTML elements with the data

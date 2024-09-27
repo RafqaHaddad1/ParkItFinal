@@ -9,11 +9,12 @@ using Zone = ParkIt.Models.Data.Zone;
 
 namespace ParkIt.Controllers
 {
-   
+    [Authorize]
     public class ZoneController : Controller
     {
         private readonly ILogger<ZoneController> _logger;
         private readonly ParkItDbContext _dbContext;
+
 
         public ZoneController(ILogger<ZoneController> logger, ParkItDbContext dbContext)
         {

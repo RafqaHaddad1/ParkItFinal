@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,11 +11,12 @@ using System.Diagnostics;
 
 namespace ParkIt.Controllers
 {
-  
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ParkItDbContext _dbContext;
+
         public HomeController(ILogger<HomeController> logger, ParkItDbContext dbContext)
         {
             _logger = logger;
@@ -24,6 +26,7 @@ namespace ParkIt.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+           
             int activeZoneCount = _dbContext.Zone.Count(z => z.Active);
             int activeRunners = _dbContext.Employee.Count(e => e.Active);
             int numberOfCars = _dbContext.Transactions.Count();

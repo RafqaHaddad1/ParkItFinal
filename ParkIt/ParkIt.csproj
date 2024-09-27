@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\js\auth.js" />
     <Content Remove="wwwroot\User\EditUser\icons\cloud.png" />
     <Content Remove="wwwroot\User\EditUser\icons\image.png" />
     <Content Remove="wwwroot\User\EditUser\icons\pdf.png" />
@@ -19,6 +20,7 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\css\Login.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\auth.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,6 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\auth.js" />
     <None Include="wwwroot\User\EditUser\icons\cloud.png" />
     <None Include="wwwroot\User\EditUser\icons\image.png" />
     <None Include="wwwroot\User\EditUser\icons\pdf.png" />

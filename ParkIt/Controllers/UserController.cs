@@ -9,7 +9,7 @@ using ParkIt.Models.Helper;
 
 namespace ParkIt.Controllers
 {
-    
+    [Authorize]
     public class UserController : Controller
     {
         private readonly ILogger<UserController> _logger;

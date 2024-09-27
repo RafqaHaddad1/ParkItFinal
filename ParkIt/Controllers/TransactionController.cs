@@ -5,11 +5,12 @@ using ParkIt.Models.Data;
 
 namespace ParkIt.Controllers
 {
-   
+    [Authorize]
     public class TransactionController : Controller
     {
         private readonly ILogger<TransactionController> _logger;
         private readonly ParkItDbContext _dbContext;
+
 
         public TransactionController(ILogger<TransactionController> logger, ParkItDbContext dbContext)
         {

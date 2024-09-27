@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Calendar.Controllers
 {
+    [Authorize]
     [Route("Calendar")]
     public class ScheduleController : Controller
     {
         private readonly ParkItDbContext _context;
         private readonly ILogger<ScheduleController> _logger;
+
 
         public ScheduleController(ParkItDbContext context, ILogger<ScheduleController> logger)
         {

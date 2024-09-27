@@ -221,10 +221,6 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
-      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\js\\auth.js",
-      "PackagePath": "staticwebassets\\js\\auth.js"
-    },
-    {
       "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },
