@@ -642,5 +642,36 @@ namespace ParkIt.Controllers
             return Json(result);
         }
 
+        [HttpGet]
+        public JsonResult GetFilteredUsers(string employeeType, string title, bool? activeStatus)
+        {
+            var employees = _dbContext.Employee.AsQueryable();
+
+            if (!string.IsNullOrEmpty(employeeType))
+            {
+                employees = employees.Where(e => e.EmploymentType == employeeType);
+            }
+
+            if (!string.IsNullOrEmpty(title))
+            {
+                employees = employees.Where(e => e.Title == title);
+            }
+
+            if (activeStatus.HasValue)
+            {
+                employees = employees.Where(e => e.Active == activeStatus.Value);
+            }
+
+            var result = employees.Select(e => new
+            {
+                employee_ID = e.Employee_ID,
+                name = e.Name,
+                title = e.Title,
+                employmentType = e.EmploymentType,
+                active = e.Active
+            }).ToList();
+
+            return Json(new { success = true, data = result });
+        }
     }
 }
