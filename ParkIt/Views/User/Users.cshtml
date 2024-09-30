@@ -88,7 +88,11 @@
         <p class="text-right">
             <a class="btn btn-primary" id="AddUserButton" onclick="location.href='@Url.Action("AddUser", "User")'">Create New Staff Member</a>
         </p>
-
+        <p class="text-right">
+            <a onclick="location.href='@Url.Action("DownloadExcel", "User")'" class="btn btn-primary">
+                <i class="fas fa-share-square"></i> Export As Excel
+            </a>
+        </p>
         <div class="text-end mb-3">
             <button id="toggleFiltersButton" class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#filterSection" aria-expanded="false" aria-controls="filterSection">
                 Show Filters
@@ -276,9 +280,9 @@
 
 
 
-    $(document).on('click', 'td[data-user-id]', function () {
+    $(document).on('click', 'td[data-employee-id]', function () {
         console.log('Table row clicked');
-        var userId = $(this).data('user-id');
+        var userId = $(this).data('employee-id');
         fetchUserDetails(userId);
         $('#editEventModal').modal('show');
     });
@@ -337,15 +341,15 @@
             type: 'GET',
             success: function (response) {
                 if (response.success) {
-                    console.log('User Table:', response.modell);
+                  
                     var tableBody = $('#User-table tbody');
                     tableBody.empty();
 
                     $.each(response.modell, function (index, item) {
-                        console.log(item);
+                       
                         var row = `
                                    <tr>
-                                      <td data-user-id="${item.employee_ID}"><img src="../Images/UserIcon.png" style="width: 35px; height: 35px; background-color: transparent; display: block;" alt="Icon" /></td>
+                                      <td data-employee-id="${item.employee_ID}"><img src="../Images/UserIcon.png" style="width: 35px; height: 35px; background-color: transparent; display: block;" alt="Icon" /></td>
                                       <td>${item.employee_ID}</td>
                                       <td>${item.name}</td>
                                       <td>${item.title}</td>
@@ -378,6 +382,22 @@
 </script>
 
 <script>
+    $('#toggleFiltersButton').click(function () {
+        var $filterSection = $('#filterSection');
+        var $button = $(this);
+
+        if ($filterSection.is(':visible')) {
+            // Hide the filter section
+            $filterSection.hide();
+            // Update button text to indicate that the filter is hidden
+            $button.text('Show Filters');
+        } else {
+            // Show the filter section
+            $filterSection.show();
+            // Update button text to indicate that the filter is visible
+            $button.text('Hide Filters');
+        }
+    });
     $(document).ready(function () {
         var employeeTable = $('#User-table').DataTable();
 
@@ -400,12 +420,13 @@
                 },
                 success: function (response) {
                     if (response.success) {
+                        console.log(response);
                         employeeTable.clear(); // Clear the existing table data
 
                         $.each(response.data, function (index, employee) {
                             var row = `
-                                        <tr data-employee-id="${employee.employee_ID}">
-                                            <td><img src="../Images/UserIcon.png" style="width: 35px; height: 35px;" alt="Icon" /></td>
+                                        <tr>
+                                                <td data-employee-id="${employee.employee_ID}"><img src="../Images/UserIcon.png" style="width: 35px; height: 35px;" alt="Icon" /></td>
                                             <td>${employee.employee_ID}</td>
                                             <td>${employee.name}</td>
                                             <td>${employee.title}</td>

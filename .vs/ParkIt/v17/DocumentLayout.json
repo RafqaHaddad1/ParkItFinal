@@ -3,24 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\test1\\source\\repos\\ParkIt\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|c:\\users\\test1\\source\\repos\\parkit\\parkit\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|solutionrelative:parkit\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|c:\\users\\test1\\source\\repos\\parkit\\parkit\\views\\user\\users.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|solutionrelative:parkit\\views\\user\\users.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|c:\\users\\test1\\source\\repos\\parkit\\parkit\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|solutionrelative:parkit\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|c:\\users\\test1\\source\\repos\\parkit\\parkit\\views\\transaction\\transactiontable.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|solutionrelative:parkit\\views\\transaction\\transactiontable.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|c:\\users\\test1\\source\\repos\\parkit\\parkit\\views\\transaction\\addtransaction.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|solutionrelative:parkit\\views\\transaction\\addtransaction.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|c:\\users\\test1\\source\\repos\\parkit\\parkit\\views\\zone\\coveredzones.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|solutionrelative:parkit\\views\\zone\\coveredzones.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|c:\\users\\test1\\source\\repos\\parkit\\parkit\\views\\user\\users.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|solutionrelative:parkit\\views\\user\\users.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|c:\\users\\test1\\source\\repos\\parkit\\parkit\\controllers\\zonecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|solutionrelative:parkit\\controllers\\zonecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|c:\\users\\test1\\source\\repos\\parkit\\parkit\\views\\user\\adduser.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|solutionrelative:parkit\\views\\user\\adduser.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|c:\\users\\test1\\source\\repos\\parkit\\parkit\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|solutionrelative:parkit\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|c:\\users\\test1\\source\\repos\\parkit\\parkit\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|solutionrelative:parkit\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     }
   ],
   "DocumentGroupContainers": [
@@ -29,8 +37,8 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 273,
-          "SelectedChildIndex": 1,
+          "DockedWidth": 262,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,73 +46,98 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "ParkIt\\Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "ParkIt\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AQIAABQBAAAAAAAAAAAAACkBAAAdAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-09-30T10:43:59.842Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "TransactionTable.cshtml",
               "DocumentMoniker": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\Transaction\\TransactionTable.cshtml",
               "RelativeDocumentMoniker": "ParkIt\\Views\\Transaction\\TransactionTable.cshtml",
               "ToolTip": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\Transaction\\TransactionTable.cshtml",
               "RelativeToolTip": "ParkIt\\Views\\Transaction\\TransactionTable.cshtml",
-              "ViewState": "AQIAAN4AAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AQIAAGcBAAAAAAAAAAAQwIYBAAAmAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-09-30T10:43:31.851Z",
+              "WhenOpened": "2024-09-30T12:57:45.674Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AddTransaction.cshtml",
-              "DocumentMoniker": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\Transaction\\AddTransaction.cshtml",
-              "RelativeDocumentMoniker": "ParkIt\\Views\\Transaction\\AddTransaction.cshtml",
-              "ToolTip": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\Transaction\\AddTransaction.cshtml",
-              "RelativeToolTip": "ParkIt\\Views\\Transaction\\AddTransaction.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-09-30T10:43:29.71Z",
+              "DocumentIndex": 1,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "ParkIt\\Controllers\\UserController.cs",
+              "ToolTip": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Controllers\\UserController.cs",
+              "RelativeToolTip": "ParkIt\\Controllers\\UserController.cs",
+              "ViewState": "AQIAAIkCAAAAAAAAAAAmwJgCAAAWAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-30T12:45:16.565Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "CoveredZones.cshtml",
+              "DocumentMoniker": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\Zone\\CoveredZones.cshtml",
+              "RelativeDocumentMoniker": "ParkIt\\Views\\Zone\\CoveredZones.cshtml",
+              "ToolTip": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\Zone\\CoveredZones.cshtml",
+              "RelativeToolTip": "ParkIt\\Views\\Zone\\CoveredZones.cshtml",
+              "ViewState": "AQIAAIEAAAAAAAAAAAAAAIoAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-09-30T12:44:56.631Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "Users.cshtml",
               "DocumentMoniker": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\User\\Users.cshtml",
               "RelativeDocumentMoniker": "ParkIt\\Views\\User\\Users.cshtml",
               "ToolTip": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\User\\Users.cshtml",
               "RelativeToolTip": "ParkIt\\Views\\User\\Users.cshtml",
-              "ViewState": "AQIAAPgAAAAAAAAAAAAQwDwBAAAcAAAA",
+              "ViewState": "AQIAAKABAAAAAAAAAAAAAKsBAAArAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-09-30T10:05:56.785Z",
+              "WhenOpened": "2024-09-30T12:44:33.593Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "AddUser.cshtml",
-              "DocumentMoniker": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\User\\AddUser.cshtml",
-              "RelativeDocumentMoniker": "ParkIt\\Views\\User\\AddUser.cshtml",
-              "ToolTip": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\User\\AddUser.cshtml",
-              "RelativeToolTip": "ParkIt\\Views\\User\\AddUser.cshtml",
-              "ViewState": "AQIAAP4AAAAAAAAAAAAQwAIBAAANAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-09-30T09:51:23.688Z",
+              "Title": "ZoneController.cs",
+              "DocumentMoniker": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Controllers\\ZoneController.cs",
+              "RelativeDocumentMoniker": "ParkIt\\Controllers\\ZoneController.cs",
+              "ToolTip": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Controllers\\ZoneController.cs",
+              "RelativeToolTip": "ParkIt\\Controllers\\ZoneController.cs",
+              "ViewState": "AQIAABQAAAAAAAAAAAAAwBoAAAAHAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-30T12:41:26.664Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "ParkIt\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "ParkIt\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AQIAAJ8AAAAAAAAAAAAAAN4AAAAlAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-09-30T12:35:42.879Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "site.css",
+              "DocumentMoniker": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\css\\site.css",
+              "RelativeDocumentMoniker": "ParkIt\\wwwroot\\css\\site.css",
+              "ToolTip": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\css\\site.css",
+              "RelativeToolTip": "ParkIt\\wwwroot\\css\\site.css",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2024-09-30T12:34:28.691Z"
             }
           ]
         },
         {
-          "DockedWidth": 213,
+          "DockedWidth": 284,
           "SelectedChildIndex": -1,
           "Children": [
             {
