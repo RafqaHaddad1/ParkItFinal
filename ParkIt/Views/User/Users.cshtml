@@ -80,7 +80,6 @@
             cursor: pointer;
         }
 
-        
 
     </style>
 
@@ -91,7 +90,11 @@
         <p class="text-right">
             <a class="btn btn-primary" id="AddUserButton" onclick="location.href='@Url.Action("AddUser", "User")'">Create New Staff Member</a>
         </p>
- 
+        <p class="text-right">
+            <a onclick="location.href='@Url.Action("DownloadExcel", "User")'" class="btn btn-primary">
+                <i class="fas fa-share-square"></i> Export As Excel
+            </a>
+        </p>
         <table id="User-table" class="table table-hover table-striped">
             <thead class="thead-dark">
                 <tr>
@@ -324,7 +327,7 @@
                         </tr>`;
                     tableBody.append(row);
                 });
-                    var table = $('#User-table').DataTable();
+               var table = $('#User-table').DataTable();
             } else {
                 alert("Failed to fetch user data.");
             }
@@ -334,9 +337,7 @@
         }
     });
 });
-
-
-
+  
 </script>
 
 

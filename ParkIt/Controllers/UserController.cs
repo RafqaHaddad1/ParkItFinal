@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Build.Construction;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using OfficeOpenXml;
 using ParkIt.Models.Data;
 using ParkIt.Models.Helper;
 
@@ -22,6 +24,83 @@ namespace ParkIt.Controllers
             _logger = logger;
             _dbContext = dbContext;
             _password = password;
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+        }
+        [HttpGet]
+        public IActionResult DownloadExcel()
+        {
+            string _connectionString = @"Server=RAFQA;Database=ParkIt;Trusted_Connection=True;TrustServerCertificate=True";
+            string queryString = "SELECT * FROM Employee";
+            string fileName = $"Employee{DateTime.Now:yyyyMMddHHmmss}.xlsx";
+            string filePath = Path.Combine(Path.GetTempPath(), fileName);
+            string logFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Logs");
+
+            try
+            {
+                // Ensure the log folder exists
+                if (!Directory.Exists(logFolder))
+                {
+                    Directory.CreateDirectory(logFolder);
+                }
+
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(queryString, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            using (ExcelPackage package = new ExcelPackage())
+                            {
+                                ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Employee");
+                                worksheet.Cells[1, 1].LoadFromDataReader(reader, true);
+
+                                // Format headers
+                                for (int i = 1; i <= reader.FieldCount; i++)
+                                {
+                                    worksheet.Cells[1, i].Style.Font.Bold = true;
+                                    worksheet.Cells[1, i].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                                    worksheet.Cells[1, i].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
+                                    worksheet.Cells[1, i].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                                }
+                                // Set date format for specific columns
+                                for (int row = 2; row <= worksheet.Dimension.End.Row; row++) // Start from the second row
+                                {
+                                    for (int i = 1; i <= reader.FieldCount; i++)
+                                    {
+                                        string columnName = reader.GetName(i - 1); // Get the column name
+
+                                        // Apply date format if the column is one of the specified date columns
+                                        if (columnName == "DeleteDate" || columnName == "UpdateDate" || columnName == "AddDate")
+                                        {
+                                            worksheet.Cells[row, i].Style.Numberformat.Format = "MM/dd/yyyy HH:mm"; // Set the date format
+                                        }
+                                    }
+                                }
+                                worksheet.Cells.AutoFitColumns();
+                                // Save to file
+                                package.SaveAs(new FileInfo(filePath));
+                            }
+                        }
+                    }
+                }
+
+                // Return the file as a downloadable response
+                byte[] fileBytes = System.IO.File.ReadAllBytes(filePath);
+                return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+            }
+            catch (Exception exception)
+            {
+                // Log error to file
+                string errorFileName = $"ErrorLog_{DateTime.Now:yyyyMMddHHmmss}.log";
+                using (StreamWriter sw = new StreamWriter(Path.Combine(logFolder, errorFileName)))
+                {
+                    sw.WriteLine(exception.ToString());
+                }
+
+                // Return an error response (can customize this)
+                return StatusCode(500, "Internal server error");
+            }
         }
         [HttpGet]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
