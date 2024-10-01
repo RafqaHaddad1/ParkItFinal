@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "x04JZkEMWG0LvlBlR7drZgvwLb4RjpnKldW75+C+jE0=",
+  "Hash": "f3a08v0LTcvMpMTbGi8tcIRcNCYuHGG4EztyJQwKlD4=",
   "Source": "ParkIt",
   "BasePath": "_content/ParkIt",
   "Mode": "Default",
@@ -547,6 +547,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\nav_logo.png"
+    },
+    {
+      "Identity": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\Images\\nav_logo_car.png",
+      "SourceId": "ParkIt",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\",
+      "BasePath": "_content/ParkIt",
+      "RelativePath": "Images/nav_logo_car.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\nav_logo_car.png"
     },
     {
       "Identity": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\Images\\nav_logo-removebg-preview.png",

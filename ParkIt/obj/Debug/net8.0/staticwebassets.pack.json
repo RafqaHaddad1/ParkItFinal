@@ -169,6 +169,10 @@
       "PackagePath": "staticwebassets\\Images\\nav_logo.png"
     },
     {
+      "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\Images\\nav_logo_car.png",
+      "PackagePath": "staticwebassets\\Images\\nav_logo_car.png"
+    },
+    {
       "Id": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\Images\\parkit_logo_white.png",
       "PackagePath": "staticwebassets\\Images\\parkit_logo_white.png"
     },
