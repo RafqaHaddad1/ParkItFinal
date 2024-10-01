@@ -14,7 +14,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/2.1.6/js/dataTables.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <title>@ViewData["Title"]</title>
     <style>
         tbody, td, tfoot, th, thead, tr {
@@ -280,12 +280,7 @@
 
 
 
-    $(document).on('click', 'td[data-employee-id]', function () {
-        console.log('Table row clicked');
-        var userId = $(this).data('employee-id');
-        fetchUserDetails(userId);
-        $('#editEventModal').modal('show');
-    });
+
 
 
     function fetchUserDetails(userId) {
@@ -331,7 +326,7 @@
             // Hide the supervisor input
             $('#supervisor-container').hide();
         }
-
+        
     }
 
     $(document).ready(function () {
@@ -358,9 +353,13 @@
                                       <td>${item.status || 'N/A'}</td>
                                       <td>${item.lastOnline || 'N/A'}</td>
                                     <td>
-                                         <a onclick="EditUser(${item.employee_ID})" class="btn btn-primary" style="background-color: #F3BC12; border-color:#F3BC12; color:#23282B">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
+                                                <a onclick="fetchUserDetails(${item.employee_ID});" class="btn btn-primary" style="background-color: #23282B; border-color:#23282B; color:#F3BC12">
+                                                        <i class="bi bi-info-circle" style="font-size: 15px;font-weight: bold"></i>
+                                            </a>
+                                            <a onclick="EditUser(${item.employee_ID})" class="btn btn-primary" style="background-color: #F3BC12; border-color:#F3BC12; color:#23282B">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+
 
                                         <button class="btn btn-danger" onclick="deleteUser(this, ${item.employee_ID})" style="background-color: #23282B; border-color:#23282B; color:#F3BC12">
                                             <i class="fas fa-trash"></i>
@@ -436,6 +435,9 @@
                                             <td>${employee.status || 'N/A'}</td>
                                             <td>${employee.lastOnline || 'N/A'}</td>
                                             <td>
+                                               <a onclick="fetchUserDetails(${employee.employee_ID});" class="btn btn-primary" style="background-color: #23282B; border-color:#23282B; color:#F3BC12">
+                                                    <i class="bi bi-info-circle" style="font-size: 15px;font-weight: bold"></i>
+                                                </a>
                                                 <a onclick="EditUser(${employee.employee_ID})" class="btn btn-primary" style="background-color: #F3BC12; border-color:#F3BC12; color:#23282B">
                                                     <i class="fas fa-edit"></i>
                                                 </a>

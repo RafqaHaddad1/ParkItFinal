@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using OfficeOpenXml;
 using ParkIt.Models.Data;
 using ParkIt.Models.Helper;
+using System.Security.Policy;
 
 
 namespace ParkIt.Controllers
@@ -35,7 +36,7 @@ namespace ParkIt.Controllers
             string fileName = $"Employee{DateTime.Now:yyyyMMddHHmmss}.xlsx";
             string filePath = Path.Combine(Path.GetTempPath(), fileName);
             string logFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Logs");
-
+          
             try
             {
                 // Ensure the log folder exists
@@ -75,6 +76,93 @@ namespace ParkIt.Controllers
                                         if (columnName == "DeleteDate" || columnName == "UpdateDate" || columnName == "AddDate")
                                         {
                                             worksheet.Cells[row, i].Style.Numberformat.Format = "MM/dd/yyyy HH:mm"; // Set the date format
+                                        }
+                                        if (columnName == "Zone_ID")
+                                        {
+                                            // Get the Zone_ID from the worksheet, checking if the cell value is null or DBNull
+                                            var cellValue = worksheet.Cells[row, i].Value;
+
+                                            if (cellValue != null && cellValue != DBNull.Value)
+                                            {
+                                                int zoneId = Convert.ToInt32(cellValue); // Safely convert the value to an integer
+
+                                                // Await the result of the asynchronous query
+                                                var zone =  _dbContext.Zone.FirstOrDefault(z => z.Zone_ID == zoneId);
+
+                                                if (zone != null)
+                                                {
+                                                    // Set the cell to the zone name if found
+                                                    worksheet.Cells[row, i].Value = zone.Zone_Name;
+                                                }
+                                                else
+                                                {
+                                                    // Handle case where zone is not found (optional)
+                                                    worksheet.Cells[row, i].Value = "Unknown Zone";
+                                                }
+                                            }
+                                            else
+                                            {
+                                                // Handle the case where the cell is null or contains DBNull
+                                                worksheet.Cells[row, i].Value = "Zone ID is missing";
+                                            }
+                                        }
+                                        if (columnName == "Subzone_ID")
+                                        {
+                                            // Get the Zone_ID from the worksheet, checking if the cell value is null or DBNull
+                                            var cellValue = worksheet.Cells[row, i].Value;
+
+                                            if (cellValue != null && cellValue != DBNull.Value)
+                                            {
+                                                int subzoneId = Convert.ToInt32(cellValue); // Safely convert the value to an integer
+
+                                                // Await the result of the asynchronous query
+                                                var subzone = _dbContext.Subzone.FirstOrDefault(z => z.Subzone_ID == subzoneId);
+
+                                                if (subzone != null)
+                                                {
+                                                    // Set the cell to the zone name if found
+                                                    worksheet.Cells[row, i].Value = subzone.Subzone_Name;
+                                                }
+                                                else
+                                                {
+                                                    // Handle case where zone is not found (optional)
+                                                    worksheet.Cells[row, i].Value = "Unknown Subzone";
+                                                }
+                                            }
+                                            else
+                                            {
+                                                // Handle the case where the cell is null or contains DBNull
+                                                worksheet.Cells[row, i].Value = "Subzone ID is missing";
+                                            }
+                                        }
+                                        if (columnName == "Supervisor_ID")
+                                        {
+                                            // Get the Zone_ID from the worksheet, checking if the cell value is null or DBNull
+                                            var cellValue = worksheet.Cells[row, i].Value;
+
+                                            if (cellValue != null && cellValue != DBNull.Value)
+                                            {
+                                                int supervisorId = Convert.ToInt32(cellValue); // Safely convert the value to an integer
+
+                                                // Await the result of the asynchronous query
+                                                var supervisor = _dbContext.Employee.FirstOrDefault(z => z.Employee_ID == supervisorId);
+
+                                                if (supervisor != null)
+                                                {
+                                                    // Set the cell to the zone name if found
+                                                    worksheet.Cells[row, i].Value = supervisor.Name;
+                                                }
+                                                else
+                                                {
+                                                    // Handle case where zone is not found (optional)
+                                                    worksheet.Cells[row, i].Value = "Unknown Supervisor";
+                                                }
+                                            }
+                                            else
+                                            {
+                                                // Handle the case where the cell is null or contains DBNull
+                                                worksheet.Cells[row, i].Value = "";
+                                            }
                                         }
                                     }
                                 }
