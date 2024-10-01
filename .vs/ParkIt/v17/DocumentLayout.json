@@ -42,8 +42,7 @@
               "RelativeToolTip": "ParkIt\\wwwroot\\css\\site.css",
               "ViewState": "AQIAAKgAAAAAAAAAAAAAAB8BAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2024-10-01T12:01:18.992Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-01T12:01:18.992Z"
             },
             {
               "$type": "Document",
@@ -53,7 +52,7 @@
               "RelativeDocumentMoniker": "ParkIt\\Views\\Shared\\_Layout.cshtml",
               "ToolTip": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\Shared\\_Layout.cshtml",
               "RelativeToolTip": "ParkIt\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AQIAAAsBAAAAAAAAAAAmwCEBAABBAAAA",
+              "ViewState": "AQIAAAsBAAAAAAAAAAAAAP0AAAAKAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-10-01T11:40:30.775Z",
               "EditorCaption": ""
@@ -68,8 +67,7 @@
               "RelativeToolTip": "ParkIt\\Controllers\\TransactionController.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAB4AAAAsAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-01T11:17:31.829Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-01T11:17:31.829Z"
             },
             {
               "$type": "Document",
@@ -81,8 +79,7 @@
               "RelativeToolTip": "ParkIt\\Controllers\\UserController.cs",
               "ViewState": "AQIAAMsAAAAAAAAAAAAgwAsAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-01T11:05:18.156Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-01T11:05:18.156Z"
             }
           ]
         },
