@@ -369,7 +369,7 @@
                                 </tr>`;
                         tableBody.append(row);
                     });
-                    var table = $('#User-table').DataTable();
+                     $('#User-table').DataTable();
                 } else {
                     alert("Failed to fetch user data.");
                 }
@@ -399,7 +399,7 @@
         }
     });
     $(document).ready(function () {
-        var employeeTable = $('#User-table').DataTable();
+        
 
         $('#FilterButton').click(function () {
             fetchFilteredEmployees();
@@ -419,6 +419,7 @@
                     activeStatus: activeStatus ? (activeStatus === 'true') : null,
                 },
                 success: function (response) {
+                    var employeeTable = $('#User-table').DataTable();
                     if (response.success) {
                         console.log(response);
                         employeeTable.clear(); // Clear the existing table data
@@ -426,7 +427,7 @@
                         $.each(response.data, function (index, employee) {
                             var row = `
                                         <tr>
-                                                <td data-employee-id="${employee.employee_ID}"><img src="../Images/UserIcon.png" style="width: 35px; height: 35px;" alt="Icon" /></td>
+                                            <td data-employee-id="${employee.employee_ID}"><img src="../Images/UserIcon.png" style="width: 35px; height: 35px;" alt="Icon" /></td>
                                             <td>${employee.employee_ID}</td>
                                             <td>${employee.name}</td>
                                             <td>${employee.title}</td>

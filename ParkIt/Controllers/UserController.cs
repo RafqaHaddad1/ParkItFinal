@@ -17,19 +17,20 @@ namespace ParkIt.Controllers
         private readonly ILogger<UserController> _logger;
         private readonly ParkItDbContext _dbContext;
         private readonly Password _password;
+        private readonly IConfiguration _configuration;
 
-
-        public UserController(ILogger<UserController> logger, ParkItDbContext dbContext, Password password)
+        public UserController(ILogger<UserController> logger, ParkItDbContext dbContext, Password password, IConfiguration configuration)
         {
             _logger = logger;
             _dbContext = dbContext;
             _password = password;
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            _configuration = configuration;
         }
         [HttpGet]
         public IActionResult DownloadExcel()
         {
-            string _connectionString = @"Server=RAFQA;Database=ParkIt;Trusted_Connection=True;TrustServerCertificate=True";
+            string _connectionString = _configuration.GetConnectionString("DefaultConnection");
             string queryString = "SELECT * FROM Employee";
             string fileName = $"Employee{DateTime.Now:yyyyMMddHHmmss}.xlsx";
             string filePath = Path.Combine(Path.GetTempPath(), fileName);

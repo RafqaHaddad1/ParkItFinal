@@ -16,18 +16,19 @@ namespace ParkIt.Controllers
     {
         private readonly ILogger<ZoneController> _logger;
         private readonly ParkItDbContext _dbContext;
+        private readonly IConfiguration _configuration;
 
-
-        public ZoneController(ILogger<ZoneController> logger, ParkItDbContext dbContext)
+        public ZoneController(ILogger<ZoneController> logger, ParkItDbContext dbContext, IConfiguration configuration)
         {
             _logger = logger;
             _dbContext = dbContext;
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            _configuration = configuration;
         }
         [HttpGet]
         public IActionResult DownloadExcel()
         {
-            string _connectionString = @"Server=RAFQA;Database=ParkIt;Trusted_Connection=True;TrustServerCertificate=True";
+            string _connectionString = _configuration.GetConnectionString("DefaultConnection");
             string queryString = "SELECT * FROM Zone";
             string fileName = $"Zones_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
             string filePath = Path.Combine(Path.GetTempPath(), fileName);
