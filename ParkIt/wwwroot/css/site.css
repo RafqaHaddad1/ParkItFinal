@@ -334,8 +334,8 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-head
     background-color: #F3BC12;
     color: #23282B;
     border-radius: 10px;
-    width: 90%;
-    margin-left: 12px;
+    width: 100%;
+    
     border: 1px solid #F3BC12;
 }
 
