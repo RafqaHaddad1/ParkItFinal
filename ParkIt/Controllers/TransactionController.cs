@@ -76,11 +76,88 @@ namespace ParkIt.Controllers
                                         {
                                             worksheet.Cells[row, i].Style.Numberformat.Format = "MM/dd/yyyy HH:mm"; // Set the date format
                                         }
+                                        if (columnName == "Zone_ID")
+                                        {
+                                            // Get the Zone_ID from the worksheet, checking if the cell value is null or DBNull
+                                            var cellValue = worksheet.Cells[row, i].Value;
+
+                                            if (cellValue != null && cellValue != DBNull.Value)
+                                            {
+                                                int zoneId = Convert.ToInt32(cellValue); // Safely convert the value to an integer
+
+                                                // Await the result of the asynchronous query
+                                                var zone = _dbContext.Zone.FirstOrDefault(z => z.Zone_ID == zoneId);
+
+                                                if (zone != null)
+                                                {
+                                                    // Set the cell to the zone name if found
+                                                    worksheet.Cells[row, i].Value = zone.Zone_Name;
+                                                }
+                                                else
+                                                {
+                                                    // Handle case where zone is not found (optional)
+                                                    worksheet.Cells[row, i].Value = "Unknown Zone";
+                                                }
+                                            }
+                                            else
+                                            {
+                                                // Handle the case where the cell is null or contains DBNull
+                                                worksheet.Cells[row, i].Value = "Zone ID is missing";
+                                            }
+                                        }
+                                        if (columnName == "Runner_Collect_ID")
+                                        {
+                                            // Get the Zone_ID from the worksheet, checking if the cell value is null or DBNull
+                                            var cellValue = worksheet.Cells[row, i].Value;
+
+                                            if (cellValue != null && cellValue != DBNull.Value)
+                                            {
+                                                int runnerId = Convert.ToInt32(cellValue); // Safely convert the value to an integer
+
+                                                // Await the result of the asynchronous query
+                                                var runner = _dbContext.Employee.FirstOrDefault(z => z.Employee_ID == runnerId);
+
+                                                if (runner != null)
+                                                {
+                                                    // Set the cell to the zone name if found
+                                                    worksheet.Cells[row, i].Value = runner.Name;
+                                                }
+                                                else
+                                                {
+                                                    // Handle case where zone is not found (optional)
+                                                    worksheet.Cells[row, i].Value = "Unknown runner";
+                                                }
+                                            }
+                                        }
+                                        if (columnName == "Runner_Dispatch_ID")
+                                        {
+                                            // Get the Zone_ID from the worksheet, checking if the cell value is null or DBNull
+                                            var cellValue = worksheet.Cells[row, i].Value;
+
+                                            if (cellValue != null && cellValue != DBNull.Value)
+                                            {
+                                                int runnerId = Convert.ToInt32(cellValue); // Safely convert the value to an integer
+
+                                                // Await the result of the asynchronous query
+                                                var runner = _dbContext.Employee.FirstOrDefault(z => z.Employee_ID == runnerId);
+
+                                                if (runner != null)
+                                                {
+                                                    // Set the cell to the zone name if found
+                                                    worksheet.Cells[row, i].Value = runner.Name;
+                                                }
+                                                else
+                                                {
+                                                    // Handle case where zone is not found (optional)
+                                                    worksheet.Cells[row, i].Value = "Unknown runner";
+                                                }
+                                            }
+                                        }
                                     }
+                                    worksheet.Cells.AutoFitColumns();
+                                    // Save to file
+                                    package.SaveAs(new FileInfo(filePath));
                                 }
-                                worksheet.Cells.AutoFitColumns();
-                                // Save to file
-                                package.SaveAs(new FileInfo(filePath));
                             }
                         }
                     }

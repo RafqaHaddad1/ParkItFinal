@@ -74,8 +74,38 @@ namespace ParkIt.Controllers
                                         {
                                             worksheet.Cells[row, i].Style.Numberformat.Format = "MM/dd/yyyy HH:mm"; // Set the date format
                                         }
+                                        if (columnName == "Supervisor_ID")
+                                        {
+                                            // Get the Zone_ID from the worksheet, checking if the cell value is null or DBNull
+                                            var cellValue = worksheet.Cells[row, i].Value;
+
+                                            if (cellValue != null && cellValue != DBNull.Value)
+                                            {
+                                                int supervisorId = Convert.ToInt32(cellValue); // Safely convert the value to an integer
+
+                                                // Await the result of the asynchronous query
+                                                var supervisor = _dbContext.Employee.FirstOrDefault(z => z.Employee_ID == supervisorId);
+
+                                                if (supervisor != null)
+                                                {
+                                                    // Set the cell to the zone name if found
+                                                    worksheet.Cells[row, i].Value = supervisor.Name;
+                                                }
+                                                else
+                                                {
+                                                    // Handle case where zone is not found (optional)
+                                                    worksheet.Cells[row, i].Value = "Unknown Supervisor";
+                                                }
+                                            }
+                                            else
+                                            {
+                                                // Handle the case where the cell is null or contains DBNull
+                                                worksheet.Cells[row, i].Value = "";
+                                            }
+                                        }
                                     }
                                 }
+
                                 worksheet.Cells.AutoFitColumns();
                                 // Save to file
                                 package.SaveAs(new FileInfo(filePath));

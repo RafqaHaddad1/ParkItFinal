@@ -45,6 +45,26 @@
         .Search1{
             background-color: white !important;
         }
+
+        /* Add this to your <style> section or CSS file */
+       
+
+        .sidebar.closed {
+            width: 50px; /* Width when closed */
+            opacity: 0; /* Fade out */
+        }
+
+        .sidebar.open {
+            width: 250px; /* Width when open */
+            opacity: 1; /* Fully visible */
+        }
+
+        .main-sidebar:hover
+         {
+            pointer-events: none; /* Disable all pointer events */
+        }
+
+       
     </style>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -55,7 +75,7 @@
             <!-- Left navbar links -->
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button" id="toggleNav"><i class="fas fa-bars"></i></a>
                 </li>
             </ul>
 
@@ -67,17 +87,42 @@
                         <i class="fas fa-expand-arrows-alt"></i>
                     </a>
                 </li>
+              
+                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                        <i class="fas fa-th-large"></i>
+                    </a>
+                </li> *@
+                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                        <i class="fas fa-th-large"></i>
+                    </a>
+                </li> *@
+                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                        <i class="fas fa-th-large"></i>
+                    </a>
+                </li> *@
+                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                        <i class="fas fa-th-large"></i>
+                    </a>
+                </li> *@
+                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                        <i class="fas fa-th-large"></i>
+                    </a>
+                </li> *@
+                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                        <i class="fas fa-th-large"></i>
+                    </a>
+                </li> *@
             </ul>
         </nav>
 
         <!-- /.navbar -->
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:#23282B ">
+        <aside class="main-sidebar sidebar-dark-primary elevation-4" id="myNav"  style="background-color:#23282B ">
             <!-- Sidebar -->
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex justify-content-center">
-                    <img src="@Url.Content("~/Images/parkit_logo_white.png")" style="height:40px; width:180px"/>
+                    <img src="@Url.Content("~/Images/parkit_logo_white.png")" id="navImage" style="height:40px; width:180px" />
                 </div>
 
                 <!-- SidebarSearch Form -->
@@ -115,7 +160,7 @@
                             <a href="@Url.Action("Users", "User")" class="nav-link  @(currentController == "User" ? "active" : "")" >
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>
-                                    Users
+                                    Employees
                                 </p>
                             </a>
                         </li>
@@ -229,9 +274,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.js"></script>
 
     @RenderSection("scripts", required: false)
-
+  
     <script>
         $(document).ready(function () {
+            $('.main-sidebar').off('mouseenter mouseleave');
+            $('.sidebar').off('mouseenter mouseleave');
             // Attach a click event handler to nav-links
             $('.nav-link').on('click', function () {
                 // Remove the active class from all nav-links
@@ -242,8 +289,26 @@
 
 
             });
+           
+           
         });
+        document.getElementById('toggleNav').addEventListener('click', function () {
+            const nav = document.getElementById('myNav');
+            const navImage = document.getElementById('navImage');
 
+            if (nav.classList.contains('open')) {
+                // Close navigation
+                nav.classList.remove('open');
+                navImage.src = '@Url.Content("~/Images/parkit_logo_white.png")';
+                $('.main-sidebar').css('pointer-events', 'auto');
+            } else {
+                // Open navigation
+                nav.classList.add('open');
+                navImage.src = '@Url.Content("~/Images/nav_logo_car.png")';
+                $('.main-sidebar').css('pointer-events', 'none');
+            }
+        });
+       
     </script>
 
 </body>

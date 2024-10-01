@@ -232,7 +232,7 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-head
     .sidebar-mini.sidebar-collapse .content-wrapper, .sidebar-mini.sidebar-collapse .main-footer, .sidebar-mini.sidebar-collapse .main-header {
         margin-left: 6.6rem !important;
     }
-}
+  
     .btn-sidebar, .form-control-sidebar {
         border: 1px solid #56606a;
         color: #fff;
