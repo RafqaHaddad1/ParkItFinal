@@ -232,7 +232,7 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-head
     .sidebar-mini.sidebar-collapse .content-wrapper, .sidebar-mini.sidebar-collapse .main-footer, .sidebar-mini.sidebar-collapse .main-header {
         margin-left: 6.6rem !important;
     }
-  
+
     .btn-sidebar, .form-control-sidebar {
         border: 1px solid #56606a;
         color: #fff;
@@ -297,66 +297,67 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-head
         font-weight: normal;
     }
 
-.small-box > .small-box-footer {
-    background-color: rgba(0, 0, 0, .1);
-    color: rgba(255, 255, 255, .8);
-    display: block;
-    padding: 3px 0;
-    position: relative;
-    border-radius: 20px;
-    text-align: center;
-    text-decoration: none;
-    z-index: 10;
-}
-
-.bg-danger, .bg-danger > a {
-    color: #fff !important;
-    border-radius: 15px;
-}
-
-.bg-warning, .bg-warning > a {
-    color: #1f2d3d !important;
-    border-radius: 15px;
-}
-
-.bg-success, .bg-success > a {
-    color: #fff !important;
-    border-radius: 15px;
-}
-
-.bg-info, .bg-info > a {
-    color: #fff !important;
-    border-radius: 15px;
-}
-
-.loadMoreBtn {
-    margin-bottom: 12px;
-    background-color: #F3BC12;
-    color: #23282B;
-    border-radius: 10px;
-    width: 100%;
-    
-    border: 1px solid #F3BC12;
-}
-
-.cardDash {
-    box-shadow: 0 0 1px rgba(0, 0, 0, .125), 0 1px 3px rgba(0, 0, 0, .2);
-    margin-bottom: 1rem;
-    border-radius: 20px;
-    padding:5px;
-}
-
-/* Add rounded corners to the DataTable */
-table.dataTable {
-    border-radius: 17px; /* Adjust this value as needed */
-    overflow: hidden; /* Ensures the rounded corners are applied correctly */
-    brder: 0px;
-}
-    table.dataTable.no-footer {
-        border-bottom: 3px solid #e8e9ec;
+    .small-box > .small-box-footer {
+        background-color: rgba(0, 0, 0, .1);
+        color: rgba(255, 255, 255, .8);
+        display: block;
+        padding: 3px 0;
+        position: relative;
+        border-radius: 20px;
+        text-align: center;
+        text-decoration: none;
+        z-index: 10;
     }
+
+    .bg-danger, .bg-danger > a {
+        color: #fff !important;
+        border-radius: 15px;
+    }
+
+    .bg-warning, .bg-warning > a {
+        color: #1f2d3d !important;
+        border-radius: 15px;
+    }
+
+    .bg-success, .bg-success > a {
+        color: #fff !important;
+        border-radius: 15px;
+    }
+
+    .bg-info, .bg-info > a {
+        color: #fff !important;
+        border-radius: 15px;
+    }
+
+    .loadMoreBtn {
+        margin-bottom: 12px;
+        background-color: #F3BC12;
+        color: #23282B;
+        border-radius: 10px;
+        width: 100%;
+        border: 1px solid #F3BC12;
+    }
+
+    .cardDash {
+        box-shadow: 0 0 1px rgba(0, 0, 0, .125), 0 1px 3px rgba(0, 0, 0, .2);
+        margin-bottom: 1rem;
+        border-radius: 20px;
+        padding: 5px;
+    }
+
+    /* Add rounded corners to the DataTable */
+    table.dataTable {
+        border-radius: 17px; /* Adjust this value as needed */
+        overflow: hidden; /* Ensures the rounded corners are applied correctly */
+    }
+
+        table.dataTable.no-footer {
+            border-bottom: 3px solid #e8e9ec;
+        }
 
     .list-group {
         border-radius: 17px;
     }
 
+ 
+   

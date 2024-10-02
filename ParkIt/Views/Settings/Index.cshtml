@@ -1,0 +1,144 @@
+﻿@{
+    ViewData["Title"] = "Admin Settings";
+}
+
+<!-- Include jQuery from a CDN -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<div class="settings-container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+            <h3>Admin Settings</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <label><strong>Name:</strong></label>
+                    <p id="adminName">Loading...</p>
+                </div>
+                <div class="col-md-6">
+                    <label><strong>Email:</strong></label>
+                    <p id="adminEmail">Loading...</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label><strong>Phone Number:</strong></label>
+                    <p id="adminPhone">Loading...</p>
+                </div>
+                <div class="col-md-6">
+                    <label><strong>Address:</strong></label>
+                    <p id="adminAddress">Loading...</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label><strong>Access Level:</strong></label>
+                    <p id="adminAccess">Loading...</p>
+                </div>
+                <div class="col-md-6">
+                    <label><strong>Notes:</strong></label>
+                    <p id="adminNotes">Loading...</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label><strong>Added Date:</strong></label>
+                    <p id="adminAddedDate">Loading...</p>
+                </div>
+                <div class="col-md-6">
+                    <label><strong>Last Updated:</strong></label>
+                    <p id="adminUpdatedDate">Loading...</p>
+                </div>
+            </div>
+            <hr />
+            <div class="text-center">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#changePasswordModal">Change Password</button>
+                <button class="btn btn-secondary" data-toggle="modal" data-target="#deleteAccountModal">Delete Account</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Change Password Modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="ChangePassword" method="post">
+                    <div class="form-group">
+                        <label for="oldPassword">Old Password</label>
+                        <input type="password" class="form-control" id="oldPassword" name="oldPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword">New Password</label>
+                        <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-warning">Change Password</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@* 
+<!-- Delete Account Modal -->
+<div class="modal fade" id="deleteAccountModal" tabindex="-1" role="dialog" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteAccountModalLabel">Confirm Delete Account</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+                <form asp-action="DeleteAdmin" method="post">
+                    <div class="form-group">
+                        <label for="deletePassword">Enter Password to Confirm</label>
+                        <input type="password" class="form-control" id="deletePassword" name="deletePassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-danger">Delete Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+ *@
+<script>
+    $(document).ready(function () {
+        fetchAdminData();
+    });
+
+    function fetchAdminData() {
+        $.ajax({
+            url: '@Url.Action("GetAdminData", "Settings")',
+            type: 'GET',
+            success: function (data) {
+                // Populate fields with fetched data
+                $('#adminName').text(data.admin_Name);
+                $('#adminEmail').text(data.email);
+                $('#adminPhone').text(data.phoneNumber);
+                $('#adminAddress').text(data.address);
+                $('#adminAccess').text(data.access);
+                $('#adminNotes').text(data.notes);
+                $('#adminAddedDate').text(new Date(data.addDate).toLocaleDateString());
+                $('#adminUpdatedDate').text(new Date(data.updateDate).toLocaleDateString());
+            },
+            error: function (xhr) {
+                console.error('Error fetching admin data:', xhr);
+                alert('An error occurred while fetching admin data. Please try again later.');
+            }
+        });
+    }
+</script>

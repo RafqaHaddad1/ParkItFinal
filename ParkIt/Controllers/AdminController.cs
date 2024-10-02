@@ -1,4 +1,4 @@
-﻿using DocumentFormat.OpenXml.Office.CoverPageProps;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using OfficeOpenXml;
@@ -7,6 +7,7 @@ using ParkIt.Models.Helper;
 
 namespace ParkIt.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private readonly ILogger<AdminController> _logger;
@@ -191,7 +192,7 @@ namespace ParkIt.Controllers
                 // Set the model's Files property after the loop
                 var pathsString = string.Join(";", paths);
                 model.Files = pathsString;
-                
+
                 var pass = _password.HashPassword(model.Password);
                 model.Password = pass;
                 model.AddDate = DateTime.Now;

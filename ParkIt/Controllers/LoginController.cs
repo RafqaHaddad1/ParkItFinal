@@ -35,23 +35,23 @@ namespace ParkIt.Controllers
             try
             {
                 // Check if the employee exists with the given username
-                var employee = await _dbContext.Employee
-                    .FirstOrDefaultAsync(e => e.Name == username);
+                var admin = await _dbContext.Admin
+                    .FirstOrDefaultAsync(e => e.Admin_Name == username);
 
-                if (employee == null)
+                if (admin == null)
                 {
                     return Json(new { success = false, message = "Username not found." });
                 }
 
                 // Verify the password (assuming passwords are hashed)
-                var decryptedPassword = _password.UnHashPassword(employee.Password);
+                var decryptedPassword = _password.UnHashPassword(admin.Password);
                 if (password != decryptedPassword)
                 {
                     return Json(new { success = false, message = "Incorrect password." });
                 }
                 HttpContext.Session.SetString("UserName", username);
                 // Generate the JWT Token
-                var token = GenerateJwtToken(employee);
+                var token = GenerateJwtToken(admin);
 
                 // Set the token in an HTTP-only cookie (secure and cannot be accessed via JavaScript)
                 SetJwtCookie(token);
@@ -68,15 +68,15 @@ namespace ParkIt.Controllers
         }
 
 
-        private string GenerateJwtToken(Employee employee)
+        private string GenerateJwtToken(Admin admin)
         {
             var jwtSettings = _configuration.GetSection("JWT");
 
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, employee.Employee_ID.ToString()),
-                new Claim(JwtRegisteredClaimNames.UniqueName, employee.Name),
-                new Claim("role", employee.Title), // Add additional claims as needed
+                new Claim(JwtRegisteredClaimNames.Sub, admin.Admin_ID.ToString()),
+                new Claim(JwtRegisteredClaimNames.UniqueName, admin.Admin_Name),
+                new Claim("access", admin.Access), // Add additional claims as needed
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
