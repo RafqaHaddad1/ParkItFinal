@@ -368,7 +368,7 @@
                     <input type="text" name="AdditionalNotes" placeholder="Additional Notes" required></input>
                 </div>
             </div>
-            <button type="submit" class="save-button" onclick="return confirm('Are you sure you want to save these changes?');">Save</button>
+            <button type="submit" class="save-button" onclick="validateAndRedirect()">Save</button>
         </form>
     </div>
   
@@ -380,12 +380,11 @@
         $(document).ready(function () {
          
             var employeeDataJson = sessionStorage.getItem('EmployeeData');
-            console.log('Retrieved employeeData from sessionStorage:', employeeDataJson);
-
+   
             if (employeeDataJson) {
                 try {
                     var employeeData = JSON.parse(employeeDataJson);
-                    console.log('Parsed employeeData:', employeeData);
+                    
 
                     // Populate the page with the data
                     $('input[name="Employee_ID"]').val(employeeData.employee_ID);
@@ -501,15 +500,14 @@
         fileInput.onchange = () => {
             [...fileInput.files].forEach(file => {
                 if (typeValidation(file.type)) {
-                    console.log(file);
+                   
                     filenames.push(file);
                     handleFile(file);
                 }
             });
 
             filenameinput.value = filenames.join('; ');
-            console.log(filenames.join('; '));
-            console.log(filenameinput);
+          
         };
 
         // Handle drag over
@@ -688,7 +686,7 @@
                 url: '/User/AddUser',
                 type: 'GET',
                 success: function (response) {
-                    console.log(response); // Log the response object
+                 
 
                     if (response.success) {
                         var ZoneDropdown = document.getElementById("zones");
@@ -755,7 +753,7 @@
                 type: 'GET',
                 data: { zoneid: zoneId },
                 success: function (response) {
-                    console.log(response); // Log the response object
+               
 
                     if (Array.isArray(response) && response.length > 0) {
                         var supervisordropdown = document.getElementById("supervisors");
@@ -827,11 +825,9 @@
                     'X-Requested-With': 'XMLHttpRequest' // Ensure the header is set for AJAX requests
                 },
                 success: function (response) {
-                    console.log(response);
-                    console.log(response.employee);
+              
                     if (response.success) {
-                        console.log(response);
-                        console.log(response.employee);
+                     
                         $('#Employee_ID').val(response.employee.employee_ID);
                         $('input[name="Name"]').val(response.employee.name);
                         $('input[name="PhoneNumber"]').val(response.employee.phone);

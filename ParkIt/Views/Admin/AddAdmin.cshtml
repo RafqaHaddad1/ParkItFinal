@@ -197,15 +197,14 @@
         fileInput.onchange = () => {
             [...fileInput.files].forEach(file => {
                 if (typeValidation(file.type)) {
-                    console.log(file);
+                   
                     filenames.push(file);
                     handleFile(file);
                 }
             });
 
             filenameinput.value = filenames.join(', ');
-            console.log(filenames.join(', '));
-            console.log(filenameinput);
+          
         };
 
 
