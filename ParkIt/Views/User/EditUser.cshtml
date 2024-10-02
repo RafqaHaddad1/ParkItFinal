@@ -607,15 +607,21 @@
                 }
             }
 
-            // If all required fields are filled, perform AJAX call
+            // Create FormData object to handle file uploads
+            const formData = new FormData(document.getElementById('Employee-Form'));
+
+            // Perform AJAX call with FormData to include files
             $.ajax({
                 url: '/User/SavePostEdit', // URL to your action method
                 type: 'POST',
-                data: $('#Employee-Form').serialize(), // Serialize the form data
+                data: formData, // Send form data including files
+                contentType: false, // Do not set contentType as FormData sets it automatically
+                processData: false, // Prevent jQuery from processing the data
                 success: function (response) {
                     if (response.success) {
+                        filenameinput.value = filenames.join(', '); // Assuming filenames are stored in `filenames`
                         // Redirect to the URL provided in the response
-                        window.location.href = response.redirectTo;
+                        window.location.href = '@Url.Action("Users", "User")';
                     } else {
                         alert(response.message);
                     }
