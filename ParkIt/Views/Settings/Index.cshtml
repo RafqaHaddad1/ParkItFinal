@@ -71,7 +71,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form asp-action="ChangePassword" method="post">
+                <form  method="post">
                     <div class="form-group">
                         <label for="oldPassword">Old Password</label>
                         <input type="password" class="form-control" id="oldPassword" name="oldPassword" required>
@@ -84,7 +84,7 @@
                         <label for="confirmPassword">Confirm Password</label>
                         <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
                     </div>
-                    <button type="submit" class="btn btn-warning">Change Password</button>
+                    <button type="button" class="btn btn-warning" onclick="SubmitForm()">Change Password</button>
                 </form>
             </div>
         </div>
@@ -119,7 +119,7 @@
     $(document).ready(function () {
         fetchAdminData();
     });
-
+   
     function fetchAdminData() {
         $.ajax({
             url: '@Url.Action("GetAdminData", "Settings")',
@@ -141,4 +141,24 @@
             }
         });
     }
+
+    function SubmitForm() {
+        $.ajax({
+            url: '/Settings/ChangePassword',
+            type: 'POST',
+            data: {
+                oldPassword: $('#oldPassword').val(),
+                newPassword: $('#newPassword').val(),
+                confirmPassword: $('#confirmPassword').val()
+            },
+            success: function (response) {
+                alert(response);
+                
+            },
+            error: function (xhr, status, error) {
+                alert('An error occurred: ' + xhr.responseText);
+            }
+        });
+    }
+
 </script>
