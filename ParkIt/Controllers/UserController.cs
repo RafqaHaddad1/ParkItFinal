@@ -331,6 +331,7 @@ namespace ParkIt.Controllers
             return Json(new { success = true });
         }
         [HttpGet]
+        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public async Task<IActionResult> EditUser(int id)
         {
             try
@@ -386,10 +387,11 @@ namespace ParkIt.Controllers
                 }
                 // Retrieve existing file paths and initialize paths list
                 var existingPaths = existingEmployee.Files?.Split(';').ToList() ?? new List<string>();
+                model.AddDate = existingEmployee.AddDate;
                 // Update the existing employee with new values (excluding files)
                 _dbContext.Entry(existingEmployee).CurrentValues.SetValues(model);
                 // Process new files and collect their paths
-                model.AddDate = existingEmployee.AddDate;
+              
                 existingEmployee.UpdateDate = DateTime.Now;
                 var newPaths = new List<string>();
 

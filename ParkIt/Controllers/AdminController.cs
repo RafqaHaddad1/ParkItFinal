@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using OfficeOpenXml;
 using ParkIt.Models.Data;
 using ParkIt.Models.Helper;
@@ -252,6 +254,180 @@ namespace ParkIt.Controllers
             };
 
             return Json(result);
+        }
+
+
+        [HttpGet]
+        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
+        public async Task<IActionResult> EditAdmin(int id)
+        {
+            try
+            {
+                var model = _dbContext.Admin.Find(id);
+                // Store the employee data in the session
+                HttpContext.Session.SetString("AdminData", JsonConvert.SerializeObject(model));
+
+                _logger.LogInformation("Info sent Successfully");
+                if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                {
+                    return Json(new
+                    {
+                        success = true,
+                        Admin = model,
+                    });
+                }
+                // Return the view for normal (non-AJAX) requests
+                return View();
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while retrieving the employee with ID {Id}", id);
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpPost]
+       
+        public async Task<IActionResult> SavePostEdit(Admin model, IFormFileCollection Files)
+        {
+            Console.WriteLine("model add date" + model.AddDate);
+            if (!ModelState.IsValid)
+            {
+                return Json(new { success = false, message = "Invalid data" });
+            }
+
+            try
+            {
+                _logger.LogInformation($"Trying to find admin with ID: {model.Admin_ID}");
+
+                // Retrieve the existing employee from the database
+                var existingAdmin = await _dbContext.Admin.FindAsync(model.Admin_ID);
+
+                if (existingAdmin == null)
+                {
+                    return Json(new { success = false, message = "Admin not found" });
+                }
+               
+                // Retrieve existing file paths and initialize paths list
+                var existingPaths = existingAdmin.Files?.Split(';').ToList() ?? new List<string>();
+                model.AddDate = existingAdmin.AddDate;
+                // Update the existing employee with new values (excluding files)
+                _dbContext.Entry(existingAdmin).CurrentValues.SetValues(model);
+                existingAdmin.AddDate = model.AddDate ?? existingAdmin.AddDate;
+                existingAdmin.UpdateDate = DateTime.Now;
+                var newPaths = new List<string>();
+
+                foreach (var file in Files)
+                {
+                    if (file != null && file.Length > 0)
+                    {
+                        _logger.LogInformation($"Processing file: {file.FileName}");
+
+
+                        // Specify the directory path
+                        string uploadsDirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "FilesUpload");
+
+                        // Ensure directory exists
+                        if (!Directory.Exists(uploadsDirectoryPath))
+                        {
+                            Directory.CreateDirectory(uploadsDirectoryPath);
+                        }
+
+                        var fileName = Path.GetFileName(file.FileName);
+                        var uniqueFileName = $"{Guid.NewGuid()}_{fileName}";
+                        var fullPath = Path.Combine(uploadsDirectoryPath, uniqueFileName);
+
+                        using (var stream = new FileStream(fullPath, FileMode.Create))
+                        {
+                            await file.CopyToAsync(stream);
+                        }
+
+                        // Add the relative path to the new paths list
+                        var relativePath = $"/FilesUpload/{uniqueFileName}";
+                        _logger.LogInformation($"File saved at path: {relativePath}");
+                        newPaths.Add(relativePath);
+                    }
+                }
+
+                // Combine existing paths with new ones
+                existingPaths.AddRange(newPaths);
+                foreach (var file in existingPaths)
+                {
+                    Console.WriteLine(file);
+                }
+
+                // Update the employee's Files property with combined paths
+                existingAdmin.Files = string.Join(";", existingPaths);
+                Console.WriteLine(existingAdmin.Files);
+             
+                // Save changes to the database
+                await _dbContext.SaveChangesAsync();
+                _logger.LogInformation("Admin updated successfully");
+
+                return Json(new { success = true, message = "Admin updated successfully", redirectTo = "/Admin/Admins" });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error updating admin");
+                return Json(new { success = false, message = "Error updating admin", exception = ex.Message });
+            }
+        }
+
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteFiles(string filePath)
+        {
+            if (string.IsNullOrEmpty(filePath))
+            {
+                return Json(new { success = false, message = "File path is required" });
+            }
+
+            try
+            {
+                // Specify the directory path
+                string uploadsDirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+
+                // Normalize and construct the full path
+                string relativePath = filePath.TrimStart('/');
+                string fullPath = Path.GetFullPath(Path.Combine(uploadsDirectoryPath, relativePath));
+
+                // Log paths for debugging
+                _logger.LogInformation($"Uploads Directory Path: {uploadsDirectoryPath}");
+                _logger.LogInformation($"Relative Path: {relativePath}");
+                _logger.LogInformation($"Full Path: {fullPath}");
+
+                // Check if file exists
+                if (!System.IO.File.Exists(fullPath))
+                {
+                    _logger.LogWarning($"File does not exist at path: {fullPath}");
+                    return Json(new { success = false, message = "File not found" });
+                }
+
+                // Delete the file
+                System.IO.File.Delete(fullPath);
+
+                // Optionally, update the database to remove file reference
+                var admin =  _dbContext.Admin
+                    .FirstOrDefault(e => e.Files.Contains(filePath));
+
+                if (admin != null)
+                {
+                    var existingPaths = admin.Files.Split(';').Select(p => p.Trim()).ToList();
+                    existingPaths.Remove(filePath);
+                    admin.Files = string.Join(";", existingPaths);
+                    _dbContext.Entry(admin).State = EntityState.Modified;
+                    await _dbContext.SaveChangesAsync();
+                }
+
+                _logger.LogInformation($"File {filePath} deleted successfully");
+                return Json(new { success = true, message = "File deleted successfully" });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting file");
+                return Json(new { success = false, message = "Error deleting file", exception = ex.Message });
+            }
         }
 
     }
