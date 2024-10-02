@@ -246,7 +246,7 @@
             li.classList.add('file-item');
             li.innerHTML = `
                                     <div class="col">
-                                        <img src="icons/${iconSelector(file.type)}" alt="">
+                                        <img src="/icons/${iconSelector(file.type)}" alt="">
                                     </div>
                                     <div class="col">
                                         <div class="file-name">
@@ -292,9 +292,6 @@
             if (fileType.startsWith('video')) return 'video.png';
             return 'file.png';
         }
-
-
-
 
 
         function validateAndRedirect() {
