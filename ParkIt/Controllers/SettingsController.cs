@@ -73,6 +73,7 @@ namespace ParkIt.Controllers
 
 
         [HttpPost]
+       
         public IActionResult ChangePassword(string oldPassword, string newPassword, string confirmPassword)
         {
             // Extract the JWT token from the cookie
@@ -100,27 +101,28 @@ namespace ParkIt.Controllers
 
             if (admin == null)
             {
-                return NotFound("Admin not found.");
+                return Content("Admin not found.");
             }
 
             // Unhash the stored password and compare it with the provided old password
             var unhashedPassword = _password.UnHashPassword(admin.Password);
             if (unhashedPassword != oldPassword)
             {
-                return BadRequest("Old password is incorrect.");
+                return Content("Old password is incorrect.");
             }
 
             // Check if the new password and confirm password match
             if (newPassword != confirmPassword)
             {
-                return BadRequest("New password and confirm password do not match.");
+                return Content("New password and confirm password do not match.");
+
             }
 
             // Hash the new password and save it to the database
             admin.Password = _password.HashPassword(newPassword);
             _context.SaveChanges();
 
-            return Ok("Password changed successfully.");
+            return Content("Password changed successfully.");
         }
 
         //[HttpPost]
