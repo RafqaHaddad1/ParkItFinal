@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.dataTables.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- AdminLTE JS -->
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
     <!-- Dropzone CSS -->
@@ -84,15 +84,6 @@
                         <i class="fas fa-expand-arrows-alt"></i>
                     </a>
                 </li>
-              
-<<<<<<< HEAD
-                   
-=======
-                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-                        <i class="fas fa-th-large"></i>
-                    </a>
-          
->>>>>>> 1f9a5573c017d553d98aeb9e4d0f3ef95df9e303
             </ul>
         </nav>
 
@@ -137,11 +128,20 @@
                                 </p>
                             </a>
                         </li>
+                    
                         <li class="nav-item">
                             <a href="@Url.Action("Users", "User")" class="nav-link  @(currentController == "User" ? "active" : "")" >
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>
                                     Employees
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Admins", "Admin")" class="nav-link  @(currentController == "Admin" ? "active" : "")">
+                                <i class=" nav-icon fas fa-user-tie"></i>
+                                <p>
+                                    Admins
                                 </p>
                             </a>
                         </li>

@@ -13,5 +13,6 @@ namespace ParkIt.Models.Data
         public DbSet<Transactions> Transactions { get; set; } = default!;
         public DbSet<Event> Event { get; set; }
         public DbSet<Subzone> Subzone { get; set; }
+        public DbSet<Admin> Admin { get; set; }
     }
 }

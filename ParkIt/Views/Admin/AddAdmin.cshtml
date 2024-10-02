@@ -1,0 +1,326 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - YourAppName</title>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.10.2/dropzone.min.css">
+
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            max-width: 1500px; /* Adjust max width as needed */
+            margin: 0 auto;
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: row; /* Change to row direction */
+            justify-content: space-between;
+            width: 90%;
+            background-color: #e0e0e0;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            column-gap: 20px; /* Add space between columns */
+        }
+
+        .form-left, .form-right {
+            display: flex;
+            flex-direction: column;
+            width: 48%;
+        }
+
+            .form-left input, .form-right input, .form-right textarea, .form-left select {
+                margin-bottom: 10px;
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+            .form-right textarea {
+                height: 150px;
+            }
+
+            .form-left input[type="file"] {
+                padding: 3px;
+            }
+
+        .save-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #F3BC12;
+            margin-bottom: 20px;
+            color: #23282B;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .profile-pic {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #F3BC12;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            color: #23282B;
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        .radio-group label {
+            margin-right: 20px;
+        }
+
+        .drop-section {
+            border: 2px dashed #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .drag-over-effect {
+            border-color: #F3BC12;
+        }
+
+        .file-list {
+            margin-top: 20px;
+        }
+
+            .file-list ul {
+                list-style-type: none;
+                padding: 0;
+            }
+
+            .file-list li {
+                margin-bottom: 5px;
+                position: relative;
+                padding: 10px;
+                background: #f9f9f9;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                display: flex;
+                align-items: center;
+            }
+
+            .file-list img {
+                width: 50px;
+                height: 50px;
+                margin-right: 10px;
+            }
+
+            .file-list .remove-button {
+                position: absolute;
+                right: 0;
+                top: 0;
+                background: red;
+                color: white;
+                border: none;
+                border-radius: 3px;
+                cursor: pointer;
+                padding: 3px 8px;
+                font-size: 12px;
+                margin-left: 10px;
+            }
+
+      
+
+    </style>
+
+    <link rel="stylesheet" href="~/css/site.css">
+
+</head>
+<body>
+    <div class="container">
+        <h1 class="Title">Create New Admin</h1>
+
+        <form asp-action="AddNewAdmin" asp-controller="Admin" method="post" enctype="multipart/form-data" autocomplete="off" onsubmit="return validateAndRedirect()" class="container" id="Admin-Form">
+            <div class="form-container">
+                <div class="form-left">
+                    <div class="profile-pic">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <input type="text" name="Admin_Name" placeholder="Name" required  />
+                    <input type="text" name="Email" placeholder="Email" required  />
+                    <input type="password" name="Password" placeholder="Password" required/>
+                    <input type="text" name="PhoneNumber" placeholder="Phone" required />
+                    <input type="text" name="Address" placeholder="Address" required />
+                </div>
+                <div class="form-right">
+                    <!-- Dropzone for file upload -->
+                    <div class="drop-section" id="dropzone">
+                        <h3>Drag and Drop Files Here</h3>
+                        <p>or <button type="button" id="browse-files">Browse Files</button></p>
+                        <input type="file" name="Files" id="file-input" multiple style="display:none" />
+                        <div id="file-list" class="file-list">
+                            <h5>Uploaded Files</h5>
+                            <ul id="file-items"></ul>
+                        </div>
+                    </div>
+                    <br/>
+                    <input type="text" name="Access" placeholder="Access" required />
+                    <textarea name="Notes" placeholder="Additional Notes" required></textarea>
+                </div>
+            </div>
+            <input type="Submit" onclick="validateAndRedirect()" class="save-button" value="Save"></input>
+        </form>
+    </div>
+    <!-- Include jQuery before Select2 JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Include Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.10.2/dropzone.min.js"></script>
+    <script>
+        
+        //Files Upload
+        const dropzone = document.getElementById('dropzone');
+        const fileInput = document.getElementById('file-input');
+        const fileItems = document.getElementById('file-items');
+        const browseFilesBtn = document.getElementById('browse-files');
+        const filenameinput = document.getElementById('Files');
+        const filenames = [];
+        // Show file input when 'Browse Files' button is clicked
+        browseFilesBtn.onclick = () => fileInput.click();
+
+        // Handle file input change
+        fileInput.onchange = () => {
+            [...fileInput.files].forEach(file => {
+                if (typeValidation(file.type)) {
+                    console.log(file);
+                    filenames.push(file);
+                    handleFile(file);
+                }
+            });
+
+            filenameinput.value = filenames.join(', ');
+            console.log(filenames.join(', '));
+            console.log(filenameinput);
+        };
+
+
+
+        // Handle drag over
+        dropzone.ondragover = (e) => {
+            e.preventDefault();
+            dropzone.classList.add('drag-over-effect');
+        };
+
+        // Handle drag leave
+        dropzone.ondragleave = () => {
+            dropzone.classList.remove('drag-over-effect');
+        };
+
+        // Handle drop
+        dropzone.ondrop = (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('drag-over-effect');
+            if (e.dataTransfer.files) {
+                [...e.dataTransfer.files].forEach(file => {
+                    if (typeValidation(file.type)) {
+                        handleFile(file);
+                    }
+                });
+            }
+        };
+
+        // Validate file type
+        function typeValidation(type) {
+            const splitType = type.split('/')[0];
+            return type === 'application/pdf' || splitType === 'image' || splitType === 'video';
+        }
+
+        // Handle file
+        function handleFile(file) {
+            const li = document.createElement('li');
+            li.classList.add('file-item');
+            li.innerHTML = `
+                                    <div class="col">
+                                        <img src="icons/${iconSelector(file.type)}" alt="">
+                                    </div>
+                                    <div class="col">
+                                        <div class="file-name">
+                                            <div class="name">${file.name}</div>
+                                            <span>0%</span>
+                                        </div>
+                                        <div class="file-progress">
+                                            <span></span>
+                                        </div>
+                                        <div class="file-size">${(file.size / (1024 * 1024)).toFixed(2)} MB</div>
+                                    </div>
+                                    <div class="col">
+                                        <button class="remove-button">Remove</button>
+                                    </div>
+                                `;
+            fileItems.appendChild(li);
+
+            // Simulate file upload progress
+            simulateUploadProgress(file, li);
+
+            // Add event listener to remove file
+            li.querySelector('.remove-button').onclick = () => li.remove();
+        }
+
+        // Simulate upload progress
+        function simulateUploadProgress(file, li) {
+            const progressBar = li.querySelector('.file-progress span');
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 10;
+                progressBar.style.width = `${progress}%`;
+                li.querySelector('.file-name span').textContent = `${progress}%`;
+                if (progress >= 100) {
+                    clearInterval(interval);
+                }
+            }, 200);
+        }
+
+        // Determine file icon based on file type
+        function iconSelector(fileType) {
+            if (fileType === 'application/pdf') return 'pdf.png';
+            if (fileType.startsWith('image')) return 'image.png';
+            if (fileType.startsWith('video')) return 'video.png';
+            return 'file.png';
+        }
+
+
+
+
+
+        function validateAndRedirect() {
+            // Get all required fields
+            const requiredFields = document.querySelectorAll('input[required], textarea[required]');
+            let allFilled = true;
+            // Check if all required fields are filled
+            requiredFields.forEach(field => {
+                
+            });
+            if (allFilled) {
+                filenameinput.value = filenames.join(', ');
+                // Submit the form if all fields are filled
+
+                window.location.href = 'Admin/Admins';  // Redirects to a new URL
+
+                document.getElementById('Admin-Form').submit();
+            } else {
+                alert('Please fill all required fields.');
+            }
+            return false; // Prevent default form submission
+        }
+       
+
+ 
+
+    </script>
+</body>
+</html>
