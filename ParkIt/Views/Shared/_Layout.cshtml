@@ -87,12 +87,9 @@
             </ul>
         </nav>
 
-        <!-- /.navbar -->
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-dark-primary elevation-4" id="myNav"  style="background-color:#23282B ">
-            <!-- Sidebar -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4" id="myNav" style="background-color:#23282B">
             <div class="sidebar">
-                <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex justify-content-center">
                     <img src="@Url.Content("~/Images/parkit_logo_white.png")" id="navImage" style="height:40px; width:180px" />
                 </div>
@@ -100,51 +97,86 @@
                 <!-- SidebarSearch Form -->
                 <div class="form-inline searchdiv">
                     <div class="input-group" data-widget="sidebar-search">
-                        <input class="form-control form-control-sidebar Search1" type="search" placeholder="Search" aria-label="Search" >
+                        <input class="form-control form-control-sidebar Search1" type="search" placeholder="Search" aria-label="Search">
                         <div class="input-group-append">
                             <button class="btn btn-sidebar search">
-                                <i class="fas fa-search fa-fw search" ></i>
+                                <i class="fas fa-search fa-fw"></i>
                             </button>
                         </div>
                     </div>
                 </div>
+
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
-                            <a href="@Url.Action("Index", "Home")" class="nav-link @(currentController == "Home" && currentAction == "Index" ? "active" : "")" ">
+                            <a href="@Url.Action("Index", "Home")" class="nav-link @(currentController == "Home" && currentAction == "Index" ? "active" : "")">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Dashboard
-                                </p>
+                                <p>Dashboard</p>
                             </a>
                         </li>
-                    
-                        <li class="nav-item">
-                            <a href="@Url.Action("CoveredZones", "Zone")" class="nav-link  @(currentController == "Zone" ? "active" : "")">
+
+                        <!-- Collapsible Zones Menu -->
+                        <li class="nav-item" onmouseenter="showMenu('zoneMenu'); toggleArrow(this, true);" onmouseleave="hideMenu('zoneMenu'); toggleArrow(this, false);">
+                            <a href="#" class="nav-link" onclick="toggleMenu('zoneMenu', this)">
                                 <i class="nav-icon fas fa-map-marked-alt"></i>
-                                <p>
-                                    Zones
-                                </p>
+                                <p>Zones <i class="right fas fa-angle-left"></i></p>
                             </a>
+                            <ul id="zoneMenu" class="nav nav-treeview collapse-menu">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("CoveredZones", "Zone")" class="nav-link">
+                                        <p>View Zones</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="@Url.Action("AddZone", "Zone")" class="nav-link">
+                                        <p>Add Zone</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
-                    
-                        <li class="nav-item">
-                            <a href="@Url.Action("Users", "User")" class="nav-link  @(currentController == "User" ? "active" : "")" >
+
+                        <!-- Collapsible Employees Menu -->
+                        <li class="nav-item" onmouseenter="showMenu('employeeMenu'); toggleArrow(this, true);" onmouseleave="hideMenu('employeeMenu'); toggleArrow(this, false);">
+                            <a href="#" class="nav-link" onclick="toggleMenu('employeeMenu', this)">
                                 <i class="nav-icon fas fa-users"></i>
-                                <p>
-                                    Employees
-                                </p>
+                                <p>Employees <i class="right fas fa-angle-left"></i></p>
                             </a>
+                            <ul id="employeeMenu" class="nav nav-treeview collapse-menu">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Users", "User")" class="nav-link">
+                                        <p>View Employees</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="@Url.Action("AddUser", "User")" class="nav-link">
+                                        <p>Add Employee</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
-                        <li class="nav-item">
-                            <a href="@Url.Action("Admins", "Admin")" class="nav-link  @(currentController == "Admin" ? "active" : "")">
-                                <i class=" nav-icon fas fa-user-tie"></i>
-                                <p>
-                                    Admins
-                                </p>
+
+                        <!-- Collapsible Admins Menu -->
+                        <li class="nav-item" onmouseenter="showMenu('adminMenu'); toggleArrow(this, true);" onmouseleave="hideMenu('adminMenu'); toggleArrow(this, false);">
+                            <a href="#" class="nav-link" onclick="toggleMenu('adminMenu', this)">
+                                <i class="nav-icon fas fa-user-tie"></i>
+                                <p>Admins <i class="right fas fa-angle-left"></i></p>
                             </a>
+                            <ul id="adminMenu" class="nav nav-treeview collapse-menu">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Admins", "Admin")" class="nav-link">
+                                        <p>View Admins</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="@Url.Action("AddAdmin", "Admin")" class="nav-link">
+                                        <p>Add Admin</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
+
+                        <!--   Schedules Menu -->
                         <li class="nav-item">
                             <a href="@Url.Action("Calendar", "Schedule")" class="nav-link  @(currentController == "Schedule" ? "active" : "")">
                                 <i class="nav-icon fas fa-calendar-alt"></i>
@@ -153,44 +185,52 @@
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="@Url.Action("TransactionTable", "Transaction")" class="nav-link   @(currentController == "Transaction" ? "active" : "")">
+
+                        <!-- Collapsible Transactions Menu -->
+                        <li class="nav-item" onmouseenter="showMenu('transactionMenu'); toggleArrow(this, true);" onmouseleave="hideMenu('transactionMenu'); toggleArrow(this, false);">
+                            <a href="#" class="nav-link" onclick="toggleMenu('transactionMenu', this)">
                                 <i class="nav-icon fas fa-exchange-alt"></i>
-                                <p>
-                                    Transactions
-                                </p>
+                                <p>Transactions <i class="right fas fa-angle-left"></i></p>
                             </a>
+                            <ul id="transactionMenu" class="nav nav-treeview collapse-menu">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("TransactionTable", "Transaction")" class="nav-link">
+                                        <p>View Transactions</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="@Url.Action("AddTransaction", "Transaction")" class="nav-link">
+                                        <p>Add Transaction</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
+
+                        <!-- Reports -->
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-chart-line"></i>
-                                <p>
-                                    Reports
-                                </p>
+                                <p>Reports</p>
                             </a>
                         </li>
                     </ul>
+
                     <!-- Separate UL for Settings and LogOut at the bottom -->
                     <ul class="nav nav-pills nav-sidebar flex-column mt-5" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
-                            <a href="@Url.Action("Index", "Settings")" class="nav-link   @(currentController == "Settings" ? "active" : "")">
+                            <a href="@Url.Action("Index", "Settings")" class="nav-link @(currentController == "Settings" ? "active" : "")">
                                 <i class="nav-icon fas fa-cog"></i>
-                                <p>
-                                    Settings
-                                </p>
+                                <p>Settings</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="@Url.Action("Logout", "Login")" class="nav-link">
                                 <i class="nav-icon fas fa-sign-out-alt"></i>
-                                <p>
-                                    LogOut
-                                </p>
+                                <p>LogOut</p>
                             </a>
                         </li>
                     </ul>
                 </nav>
-
                 <!-- /.sidebar-menu -->
             </div>
             <!-- /.sidebar -->
@@ -288,8 +328,39 @@
                 $('.main-sidebar').css('pointer-events', 'none');
             }
         });
-       
+
     </script>
 
+    <script>
+        $(document).ready(function () {
+            $(".nav-link").click(function (e) {
+                $(".nav-link").removeClass("active");
+                $(this).addClass("active");
+            });
+        });
+
+
+        function toggleMenu(menuId, element) {
+            // Toggle the menu visibility
+            $('#' + menuId).toggle();
+
+            // Check if the menu is visible and update the arrow accordingly
+            if ($('#' + menuId).is(':visible')) {
+                $(element).find('i.right').addClass('fa-angle-down').removeClass('fa-angle-left');
+            } else {
+                $(element).find('i.right').addClass('fa-angle-left').removeClass('fa-angle-down');
+            }
+        }
+
+        function showMenu(menuId) {
+            $('#' + menuId).show();
+        }
+
+        function hideMenu(menuId) {
+            $('#' + menuId).hide();
+        }
+
+     
+    </script>
 </body>
 </html>

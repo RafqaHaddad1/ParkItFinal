@@ -372,3 +372,21 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-head
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
     }
+
+    .collapse-menu {
+        display: none;
+        transition: all 0.3s ease;
+    }
+
+        .collapse-menu.visible {
+            display: block;
+        }
+
+    [class*=sidebar-dark-] .nav-sidebar > .nav-item > .nav-treeview {
+        background-color: #3c4043 !important;
+        border-radius: 15px;
+    }
+
+    #StaySameColor {
+        background-color: #F3BC12 ;
+    }
