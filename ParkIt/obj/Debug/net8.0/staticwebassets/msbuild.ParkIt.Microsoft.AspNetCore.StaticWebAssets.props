@@ -400,6 +400,22 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\FilesUpload\85f18ede-ab73-44a6-b723-a52507e758c1_Screenshot 2024-08-09 102833.png))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\FilesUpload\95206076-8e2c-4957-8ad0-d1d48f172212_Screenshot 2024-10-02 124013.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>ParkIt</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/ParkIt</BasePath>
+      <RelativePath>FilesUpload/95206076-8e2c-4957-8ad0-d1d48f172212_Screenshot 2024-10-02 124013.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\FilesUpload\95206076-8e2c-4957-8ad0-d1d48f172212_Screenshot 2024-10-02 124013.png))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\FilesUpload\9e4fbe8d-7f19-45a4-aafa-a02a431981d7_Screenshot 2024-07-30 125258.png))">
       <SourceType>Package</SourceType>
       <SourceId>ParkIt</SourceId>
