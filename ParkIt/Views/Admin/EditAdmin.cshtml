@@ -334,12 +334,12 @@
         $(document).ready(function () {
 
             var adminDataJson = sessionStorage.getItem('AdminData');
-            console.log('Retrieved adminData from sessionStorage:', adminDataJson);
+           
 
             if (adminDataJson) {
                 try {
                     var adminData = JSON.parse(adminDataJson);
-                    console.log('Parsed employeeData:', adminDataJson);
+                 
 
                     // Populate the page with the data
                     $('input[name="Admin_ID"]').val(adminData.admin_ID);
@@ -402,7 +402,7 @@
                         success: function (response) {
                             if (response.success) {
                                 button.closest('li').remove();
-                                alert('File deleted successfully');
+                                
                             } else {
                                 alert('Failed to delete file: ' + response.message);
                             }

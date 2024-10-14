@@ -11,7 +11,7 @@ using static System.Net.Mime.MediaTypeNames;
 using Worksheet = Microsoft.Office.Interop.Excel.Worksheet;
 namespace ParkIt.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class TransactionController : Controller
     {
         private readonly ILogger<TransactionController> _logger;

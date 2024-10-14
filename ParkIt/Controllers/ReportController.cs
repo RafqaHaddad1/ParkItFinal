@@ -9,7 +9,7 @@ using System.Globalization;
 
 namespace ParkIt.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class ReportController : Controller
     {
         private readonly ILogger<ReportController> _logger;

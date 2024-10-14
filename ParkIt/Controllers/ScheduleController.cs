@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Calendar.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("Calendar")]
     public class ScheduleController : Controller
     {

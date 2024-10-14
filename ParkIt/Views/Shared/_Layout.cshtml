@@ -112,7 +112,7 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
-                            <a href="@Url.Action("Index", "Home")" class="nav-link @(currentController == "Home" && currentAction == "Index" ? "active" : "")">
+                            <a href="@Url.Action("Home", "Views")" class="nav-link @(currentController == "Home" && currentAction == "Index" ? "active" : "")">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Dashboard
@@ -131,12 +131,12 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="@Url.Action("CoveredZones", "Zone")" class="nav-link">
+                                    <a href="@Url.Action("Zones", "Views")" class="nav-link">
                                         <p>View Zones</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="@Url.Action("AddZone", "Zone")" class="nav-link">
+                                    <a href="@Url.Action("AddZone", "Views")" class="nav-link">
                                         <p>Add Zone</p>
                                     </a>
                                 </li>
@@ -154,12 +154,12 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="@Url.Action("Users", "User")" class="nav-link">
+                                    <a href="@Url.Action("Employees", "Views")" class="nav-link">
                                         <p>View Employees</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="@Url.Action("AddUser", "User")" class="nav-link">
+                                    <a href="@Url.Action("AddEmployee", "Views")" class="nav-link">
                                         <p>Add Employee</p>
                                     </a>
                                 </li>
@@ -177,12 +177,12 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="@Url.Action("Admins", "Admin")" class="nav-link">
+                                    <a href="@Url.Action("Admins", "Views")" class="nav-link">
                                         <p>View Admins</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="@Url.Action("AddAdmin", "Admin")" class="nav-link">
+                                    <a href="@Url.Action("AddAdmin", "Views")" class="nav-link">
                                         <p>Add Admin</p>
                                     </a>
                                 </li>
@@ -210,12 +210,12 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="@Url.Action("TransactionTable", "Transaction")" class="nav-link">
+                                    <a href="@Url.Action("Transactions", "Views")" class="nav-link">
                                         <p>View Transactions</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="@Url.Action("AddTransaction", "Transaction")" class="nav-link">
+                                    <a href="@Url.Action("AddTransaction", "Views")" class="nav-link">
                                         <p>Add Transaction</p>
                                     </a>
                                 </li>
@@ -233,7 +233,7 @@
                     <!-- Separate UL for Settings and LogOut at the bottom -->
                     <ul class="nav nav-pills nav-sidebar flex-column mt-5" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
-                            <a href="@Url.Action("Index", "Settings")" class="nav-link @(currentController == "Settings" ? "active" : "")">
+                            <a href="@Url.Action("Settings", "Views")" class="nav-link @(currentController == "Settings" ? "active" : "")">
                                 <i class="nav-icon fas fa-cog"></i>
                                 <p>Settings</p>
                             </a>

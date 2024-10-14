@@ -57,7 +57,7 @@ namespace ParkIt.Controllers
                 SetJwtCookie(token);
 
                 // Return success message along with a redirect URL to the dashboard
-                return Json(new { success = true, redirectTo = Url.Action("Index", "Home") });
+                return Json(new { success = true, redirectTo = Url.Action("Home", "Views") });
             }
             catch (Exception ex)
             {

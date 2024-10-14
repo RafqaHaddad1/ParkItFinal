@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "dGRE/CWyQOg7Hw5r+rSiMY+kWv7fUNGd+ixobcug0ag=",
+  "Hash": "IuL3J0UdkYYVWF2STF3nFCNJa/nXWFcSnv6z0/bmV78=",
   "Source": "ParkIt",
   "BasePath": "_content/ParkIt",
   "Mode": "Default",
@@ -243,6 +243,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\FilesUpload\\16e3ad76-2e84-471d-8434-46399c82ce00_1600w-poDQUzjtn9w.webp"
+    },
+    {
+      "Identity": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\FilesUpload\\22561255-b8f3-4a69-ae2e-fab3ccd98b11_Screenshot 2024-10-02 124108.png",
+      "SourceId": "ParkIt",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\",
+      "BasePath": "_content/ParkIt",
+      "RelativePath": "FilesUpload/22561255-b8f3-4a69-ae2e-fab3ccd98b11_Screenshot 2024-10-02 124108.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\FilesUpload\\22561255-b8f3-4a69-ae2e-fab3ccd98b11_Screenshot 2024-10-02 124108.png"
     },
     {
       "Identity": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\wwwroot\\FilesUpload\\2578ca22-db02-4ffe-ab32-60d8fa534a04_Screenshot 2024-08-08 155256.png",

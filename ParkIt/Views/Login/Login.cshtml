@@ -44,29 +44,29 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     $("#loginForm").submit(function (event) {
-        event.preventDefault(); // Prevent the default form submission
+        event.preventDefault(); 
 
         var username = $("#username").val();
         var password = $("#password").val();
 
         $.ajax({
             type: "POST",
-            url: "/Login/CheckUsernameAndPassword",
+            url: "https://api.parkit.nova4lb.com/admin/auth",
             data: {
                 username: username,
                 password: password
             },
             success: function (response) {
-                if (response.success) {
+                if (response.accessToken) {
                     // Redirect to the dashboard if login is successful
-                    window.location.href = response.redirectTo;
+                    window.location.href = "/Views/Home";
                 } else {
                     // Show error message
-                    alert(response.message);
+                    alert(response.message || "Login failed");
                 }
             },
             error: function (xhr, status, error) {
-                // Handle the error if something goes wrong with the request
+               
                 alert("An error occurred: " + error);
             }
         });

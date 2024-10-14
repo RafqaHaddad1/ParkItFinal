@@ -12,7 +12,7 @@ using System.Security.Policy;
 
 namespace ParkIt.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class UserController : Controller
     {
         private readonly ILogger<UserController> _logger;

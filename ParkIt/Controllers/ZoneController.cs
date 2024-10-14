@@ -11,7 +11,7 @@ using Zone = ParkIt.Models.Data.Zone;
 
 namespace ParkIt.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class ZoneController : Controller
     {
         private readonly ILogger<ZoneController> _logger;

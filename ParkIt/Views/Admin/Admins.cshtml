@@ -265,7 +265,7 @@
             data: { id: adminId },
             success: function (result) {
                 if (result.success) {
-                    console.log(result);
+                  
                     populateModal(result.data);
                     $('#editEventModal').modal('show');
                 } else {
@@ -301,7 +301,7 @@
                     if (response.success) {
                         // Store employee data in sessionStorage
                         sessionStorage.setItem('AdminData', JSON.stringify(response.admin));
-                        console.log("Admin data stored in sessionStorage:", response.admin);
+                 
 
                         // Now redirect to the EditUser page after storing the data
                         window.location.href = "EditAdmin/" + id;
