@@ -171,7 +171,7 @@
                                     <!-- Left Section for Form -->
                                     <div class="form-left">
                                         <label for="Zone_ID"> Zone ID</label>
-                                        <input type="number" id="Zone_ID" name="Zone_ID"  readonly />
+                                        <input type="text" id="Zone_ID" name="Zone_ID"  readonly />
                                         <label for="Zone_Name">Zone Name</label>
                                         <input type="text" name="Zone_Name" placeholder="Zone Name"  readonly />
                                         <label name="Area">Area</label>
@@ -222,42 +222,50 @@
 
 <script type="text/javascript">
     
-
+    var accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImV5SmhiR2NpT2lKSVV6STFOaUlzSW5SNWNDSTZJa3BYVkNKOS5leUpmYVdRaU9pSTJObVppWkRRd01EZGtPRFkyTXpFMk5ERXpZVGRsWlRBaUxDSjFjMlZ5Ym1GdFpTSTZJbTV2ZG1FMElpd2ljR0Z6YzNkdmNtUWlPaUlrTW1Fa01UQWtNbGN2WWtVMFlsaFFTakpKTDAxM1NuTnpZVEpaZFRScVkwZG9lbmMxY0cxT1ZtRXZRMnRJZEZaYVlUUlFValZhUXpOUmFrY2lMQ0p5YjJ4bGN5STZXMTBzSW1selFXTjBhWFpsSWpwMGNuVmxMQ0psWkdsMGIzSWlPbTUxYkd3c0ltTnlaV0YwWldSQmRDSTZJakl3TWpRdE1UQXRNREZVTVRBNk5UQTZOREF1T0RnMVdpSXNJblZ3WkdGMFpXUkJkQ0k2SWpJd01qUXRNVEF0TURGVU1UQTZOVEE2TkRBdU9EZzFXaUlzSWw5ZmRpSTZNQ3dpYVdRaU9pSTJObVppWkRRd01EZGtPRFkyTXpFMk5ERXpZVGRsWlRBaUxDSnBZWFFpT2pFM01qZzVPRFl5TVRZc0ltVjRjQ0k2TVRjek1UVTNPREl4Tm4wLnVQNDNMOUo0TWcxcDdLMVJEUkUzYUlyamdVMWNBaF8wckJsQWlkaW9DQU0iLCJpYXQiOjE3Mjg5ODYyMTYsImV4cCI6MTczMTU3ODIxNn0.72WF3Pa8Gg-fF6BOo0x5JVGtr36HQextkDURYB3UYPE"
+       
     $(document).ready(function () {
         $.ajax({
-            url: '/Zone/CoveredZones',
+            url: "https://api.parkit.nova4lb.com/admin/zones",
             type: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + accessToken
+            },
             success: function (response) {
-                if (response.success) {
-                    console.log('zone Table:', response.zonemodel);
+                if (response) {
                     var tableBody = $('#ZonesTable tbody');
                     tableBody.empty();
 
-                    $.each(response.zonemodel, function (index, item) {
+                    $.each(response, function (index, item) {
                         console.log(item);
-                        var row = `
-                          <tr>
-                               <td data-zone-id="${item.zone_ID}">${item.zone_Name}</td>
-                               <td>${item.area}</td>
-                               <td>${item.numberOfSubzone}</td>
-                               <td>${item.numberOfRunner}</td>
-                               <td>${item.active ? 'On' : 'Off'}</td>
-                                 <td>
-                                    <a onclick="fetchZoneDetails(${item.zone_ID});" class="btn btn-primary" style="background-color: #23282B; border-color:#23282B; color:#F3BC12; padding: 5px 10px; width: 35px; text-align: center;">
-                                        <i class="bi bi-info-circle" style="font-size: 15px; font-weight: bold"></i>
-                                    </a>
-                                    <a class="btn btn-primary" onclick="EditZone(${item.zone_ID})" style="background-color: #F3BC12; border-color:#F3BC12; color:#23282B; padding: 5px 10px; width: 35px; text-align: center;">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <button class="btn btn-danger" onclick="DeleteZone(${item.zone_ID})" style="background-color: #23282B; border-color:#23282B; color:#F3BC12; padding: 5px 10px; width: 35px; text-align: center;">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </td>
 
-                         </tr>`;
+                        var row = `
+                 <tr>
+                     <td data-zone-id="${item._id}">${item.name}</td>
+                     <td>${item.area ? item.area.name : 'N/A'}</td>
+                     <td>null</td>
+                     <td>null</td> 
+                     <td>${item.isActive ? 'On' : 'Off'}</td>
+                     <td>
+                         <a onclick="fetchZoneDetails('${item._id}');" class="btn btn-primary" style="background-color: #23282B; border-color:#23282B; color:#F3BC12; padding: 5px 10px; width: 35px; text-align: center;">
+                             <i class="bi bi-info-circle" style="font-size: 15px; font-weight: bold"></i>
+                         </a>
+                         <a class="btn btn-primary" onclick="EditZone('${item._id}')" style="background-color: #F3BC12; border-color:#F3BC12; color:#23282B; padding: 5px 10px; width: 35px; text-align: center;">
+                             <i class="fas fa-edit"></i>
+                         </a>
+                         <button class="btn btn-danger" onclick="DeleteZone('${item._id}')" style="background-color: #23282B; border-color:#23282B; color:#F3BC12; padding: 5px 10px; width: 35px; text-align: center;">
+                             <i class="fas fa-trash"></i>
+                         </button>
+                     </td>
+                 </tr>`;
+
                         tableBody.append(row);
                     });
-                    var table = $('#ZonesTable').DataTable();
+
+                    // Check if DataTable is already initialized, and initialize if it's not
+                    if (!$.fn.DataTable.isDataTable('#ZonesTable')) {
+                        $('#ZonesTable').DataTable();
+                    }
                 } else {
                     alert("Failed to fetch zone data.");
                 }
@@ -266,6 +274,8 @@
                 console.error("Error: " + error);
             }
         });
+
+
     });
 
     var coordinatesData = {}; // Initialize coordinatesData
@@ -486,13 +496,15 @@
     }
     function fetchZoneDetails(zoneId) {
         $.ajax({
-            url: '/Zone/GetZoneDetails', 
+            url: "https://api.parkit.nova4lb.com/admin/zones/" + zoneId,
             type: 'GET',
-            data: { id: zoneId },
-            success: function (result) {
-                if (result.success) {
-                    console.log(result);
-                    populateModal(result.data);
+            headers: {
+                'Authorization': 'Bearer ' + accessToken
+            },
+            success: function (response) {
+                if (response) {
+                    console.log(response);
+                    populateModal(response); // Adjusted to pass the whole result object
                     $('#editEventModal').modal('show');
                 } else {
                     alert('Error fetching zone details');
@@ -504,29 +516,34 @@
             }
         });
     }
+
     function populateModal(zone) {
-        $('#Zone_ID').val(zone.zone_ID);
-        $('input[name="Zone_Name"]').val(zone.zone_Name);
-        $('input[name="Area"]').val(zone.area);
-        $('input[name="Street"]').val(zone.street);
-        $('#supervisor').val(zone.supervisor);
-        $('#active-checkbox').prop('checked', zone.active);
+        // Set values in the modal using the response data
+        $('#Zone_ID').val(zone._id);
+        $('input[name="Zone_Name"]').val(zone.name);
+        $('input[name="Area"]').val(zone.area.name);
+        $('input[name="Street"]').val('N/A');
+
+        $('#supervisor').val(zone.editor ? zone.editor : 'N/A');
+        $('#active-checkbox').prop('checked', zone.isActive);
 
         $('#subzone-table tbody').empty();
-        if (Array.isArray(zone.subzones)) {
-            zone.subzones.forEach(subzone => {
-                $('#subzone-table tbody').append(`
-                    <tr>
-                        <td>${subzone.name}</td>
-                        <td>${subzone.capacity}</td>
-                    </tr>
-                `);
-            });
-            DisplayModalMap(zone.coordinate);
-        } else {
-            console.error('Subzones is not an array or is undefined');
+
+        // Check if the location coordinates exist and are valid
+        if (zone.location && zone.location.coordinates && zone.location.coordinates.length > 0) {
+            // Wrap the coordinates in the required structure
+            const latLngs = {
+                location: {
+                    coordinates: zone.location.coordinates // Assuming you want the first polygon
+                }
+            };
+
+            // Convert the coordinates to JSON string
+            const latLngsString = JSON.stringify(latLngs);
+
+            // Pass the JSON string to the DisplayModalMap function
+            DisplayModalMap(latLngsString);
         }
-     
     }
 
 
@@ -534,65 +551,69 @@
 
 
     //Modal Map
-
     function DisplayModalMap(latLngsString) {
         console.log('LatLngs received for modal map:', latLngsString); // Debugging
 
-            // Convert the comma-separated string into an array of LatLng objects
-            var latLngs = latLngsString.split(',').reduce((acc, curr, index, array) => {
-                if (index % 2 === 0) { // lat
-                    acc.push({ lat: parseFloat(curr), lng: parseFloat(array[index + 1]) });
-                }
-                return acc;
-            }, []);
+        // Assuming latLngsString is a JSON string of your coordinates
+        const coordinatesData = JSON.parse(latLngsString);
 
-            console.log('Parsed latLngs:', latLngs); // Debugging
+        // Extract the polygon coordinates
+        const coordinates = coordinatesData.location.coordinates[0];
 
-            // Ensure latLngs is an array
-            if (!Array.isArray(latLngs)) {
-                console.error('latLngs is not an array:', latLngs);
-                alert('Invalid coordinates data for the selected zone.');
-                return;
-            }
+        // Convert the coordinates into an array of LatLng objects
+        const latLngs = coordinates.map(coord => ({
+            lat: coord[1], // Latitude
+            lng: coord[0]  // Longitude
+        }));
 
-            // Initialize map options
-            var mapOptions = {
-                zoom: 15,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
+        console.log('Parsed latLngs:', latLngs); // Debugging
 
-            // Create the map
-            var map = new google.maps.Map(document.getElementById("modalMap"), mapOptions);
-
-            // Initialize an array for the coordinates
-            var pathCoordinates = latLngs.map(coord => new google.maps.LatLng(coord.lat, coord.lng));
-
-            // Create a Polygon
-            var polygon = new google.maps.Polygon({
-                paths: pathCoordinates,
-                strokeColor: "#FF0000",
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: "#FF0000",
-                fillOpacity: 0.35
-            });
-            polygon.setMap(map);
-
-            // Create a LatLngBounds object
-            var bounds = new google.maps.LatLngBounds();
-            pathCoordinates.forEach(coord => bounds.extend(coord));
-
-            // Adjust the map to fit the bounds
-            map.fitBounds(bounds);
-
-            // Add markers for each coordinate
-            pathCoordinates.forEach(coord => {
-                new google.maps.Marker({
-                    position: coord,
-                    map: map,
-                    title: 'Coordinate'
-                });
-            });
+        // Ensure latLngs is an array
+        if (!Array.isArray(latLngs) || latLngs.length === 0) {
+            console.error('latLngs is not a valid array:', latLngs);
+            alert('Invalid coordinates data for the selected zone.');
+            return;
         }
+
+        // Initialize map options
+        const mapOptions = {
+            zoom: 15,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        // Create the map
+        const map = new google.maps.Map(document.getElementById("modalMap"), mapOptions);
+
+        // Initialize an array for the coordinates
+        const pathCoordinates = latLngs.map(coord => new google.maps.LatLng(coord.lat, coord.lng));
+
+        // Create a Polygon
+        const polygon = new google.maps.Polygon({
+            paths: pathCoordinates,
+            strokeColor: "#FF0000",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#FF0000",
+            fillOpacity: 0.35
+        });
+        polygon.setMap(map);
+
+        // Create a LatLngBounds object
+        const bounds = new google.maps.LatLngBounds();
+        pathCoordinates.forEach(coord => bounds.extend(coord));
+
+        // Adjust the map to fit the bounds
+        map.fitBounds(bounds);
+
+        // Add markers for each coordinate
+        pathCoordinates.forEach(coord => {
+            new google.maps.Marker({
+                position: coord,
+                map: map,
+                title: 'Coordinate'
+            });
+        });
+    }
+
 
 </script>

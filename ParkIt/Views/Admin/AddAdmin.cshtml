@@ -145,17 +145,18 @@
     <div class="container">
         <h1 class="Title">Create New Admin</h1>
 
-        <form asp-action="AddNewAdmin" asp-controller="Admin" method="post" enctype="multipart/form-data" autocomplete="off" onsubmit="return validateAndRedirect()" class="container" id="Admin-Form">
+        <form class="container" id="Admin-Form">
             <div class="form-container">
                 <div class="form-left">
                     <div class="profile-pic">
                         <i class="fas fa-user"></i>
                     </div>
-                    <input type="text" name="Admin_Name" placeholder="Name" required  />
+                    <input type="text" name="Admin_Name" placeholder="Name" id="username" required  />
                     <input type="text" name="Email" placeholder="Email" required  />
-                    <input type="password" name="Password" placeholder="Password" required/>
+                    <input type="password" name="Password" placeholder="Password" id="password" required/>
                     <input type="text" name="PhoneNumber" placeholder="Phone" required />
                     <input type="text" name="Address" placeholder="Address" required />
+                    <input type="text" name="Roles" placeholder="Roles" id="Roles" required />
                 </div>
                 <div class="form-right">
                     <!-- Dropzone for file upload -->
@@ -173,7 +174,7 @@
                     <textarea name="Notes" placeholder="Additional Notes" required></textarea>
                 </div>
             </div>
-            <input type="Submit" onclick="validateAndRedirect()" class="save-button" value="Save"></input>
+            <input type="Submit" class="save-button" value="Save"></input>
         </form>
     </div>
     <!-- Include jQuery before Select2 JS -->
@@ -293,6 +294,9 @@
         }
 
 
+
+
+
         function validateAndRedirect() {
             // Get all required fields
             const requiredFields = document.querySelectorAll('input[required], textarea[required]');
@@ -313,10 +317,46 @@
             }
             return false; // Prevent default form submission
         }
-       
 
- 
 
+        var accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImV5SmhiR2NpT2lKSVV6STFOaUlzSW5SNWNDSTZJa3BYVkNKOS5leUpmYVdRaU9pSTJObVppWkRRd01EZGtPRFkyTXpFMk5ERXpZVGRsWlRBaUxDSjFjMlZ5Ym1GdFpTSTZJbTV2ZG1FMElpd2ljR0Z6YzNkdmNtUWlPaUlrTW1Fa01UQWtNbGN2WWtVMFlsaFFTakpKTDAxM1NuTnpZVEpaZFRScVkwZG9lbmMxY0cxT1ZtRXZRMnRJZEZaYVlUUlFValZhUXpOUmFrY2lMQ0p5YjJ4bGN5STZXMTBzSW1selFXTjBhWFpsSWpwMGNuVmxMQ0psWkdsMGIzSWlPbTUxYkd3c0ltTnlaV0YwWldSQmRDSTZJakl3TWpRdE1UQXRNREZVTVRBNk5UQTZOREF1T0RnMVdpSXNJblZ3WkdGMFpXUkJkQ0k2SWpJd01qUXRNVEF0TURGVU1UQTZOVEE2TkRBdU9EZzFXaUlzSWw5ZmRpSTZNQ3dpYVdRaU9pSTJObVppWkRRd01EZGtPRFkyTXpFMk5ERXpZVGRsWlRBaUxDSnBZWFFpT2pFM01qZzVPRFl5TVRZc0ltVjRjQ0k2TVRjek1UVTNPREl4Tm4wLnVQNDNMOUo0TWcxcDdLMVJEUkUzYUlyamdVMWNBaF8wckJsQWlkaW9DQU0iLCJpYXQiOjE3Mjg5ODYyMTYsImV4cCI6MTczMTU3ODIxNn0.72WF3Pa8Gg-fF6BOo0x5JVGtr36HQextkDURYB3UYPE"
+        
+        $("#Admin-Form").submit(function (event) {
+            event.preventDefault();
+
+            var username = $("#username").val();
+            var password = $("#password").val();
+            // var roles = $("#Roles").val().split(',') || []; 
+            // console.log(roles); // For debugging
+
+            $.ajax({
+                type: "POST",
+                url: "https://api.parkit.nova4lb.com/admin/admins",
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify({
+                    username: username,
+                    password: password,
+                    roles: []    
+                }),
+                success: function (response) {
+                    if (response) { 
+                        // Redirect to the dashboard if login is successful
+                        alert("Admin added successfully");
+                        window.location.href = "/Views/Admins";
+                    } else {
+                        // Show error message
+                        alert(response.message || "Failed to add Admin");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error details:", xhr.responseText); 
+                    alert("An error occurred: " + error + "\n" + xhr.responseText); 
+                }
+            });
+        });
     </script>
 </body>
 </html>

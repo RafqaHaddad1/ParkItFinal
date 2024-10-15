@@ -11,7 +11,8 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.datatables.net/2.1.4/js/dataTables.js"></script>
-   
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <style>
         .container {
@@ -281,16 +282,22 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="Title">Create Zone with Subzones</h1>
+        <h1 class="Title">Create Zone</h1>
 
-        <form asp-action="AddZoneWithSubzones" asp-controller="Zone" method="post" enctype="multipart/form-data" class="container" id="Zone-Form">
+        <form class="container" id="Zone-Form">
             <div class="form-container">
                 <!-- Left Column: Zone Details -->
                 <div class="form-left">
                     
-                    <input type="text" name="Zone_Name" placeholder="Zone Name" required />
-                    <input type="text" name="Area" placeholder="Area" required />
-                    <input type="text" name="Street" placeholder="Street" required />
+                    <input type="text" name="Zone_Name" placeholder="Zone Name" id="Zone_Name" required />
+              
+                    <select name="Area" id="Area" class="Area form-control select2-hidden-accessible" data-placeholder="Select an Area" style="width: 100%;" tabindex="-1" aria-hidden="true" onchange="updateAreaId()">
+                        <option value="" selected disabled>Select an Area</option>
+                    </select>
+
+                    <input type="text" name="AreaID" placeholder="Area" id="AreaID" hidden />
+                    <br/>
+                    <input type="text" name="Street" placeholder="Street"  />
 
                     <select name="supervisor" id="supervisor" class="supervisor form-control select2-hidden-accessible" data-placeholder="Select a Supervisor" style="width: 100%;" tabindex="-1" aria-hidden="true" onchange="updateSupervisorID()">
                         <option value="" selected disabled>Select a Supervisor</option>
@@ -302,11 +309,10 @@
                         <input type="checkbox" name="Active" value="true" id="active-checkbox">
                         Active
                     </label>
-                    <h2>Add Subzones</h2>
-                    <input type="text" id="subzone-name" name="Subzone_Name" placeholder="Subzone Name" />
-                    <input type="number" id="subzone-capacity" name="Capacity" placeholder="Capacity" />
-                    <button type="button" id="add-subzone-button" class="add-button">+ Add Subzone</button>
-                    <input type="hidden" id="coordinates-data" name="AllCoordinates" />
+                  
+                    <button type="button" id="add-subzone-button" class="add-button" onclick="$('#AddSubzoneModal').modal('show')">Add Subzone</button>
+      
+                    <input type="text" id="coordinates-data" name="AllCoordinates" hidden/>
 
                     </br>
                     <!-- Table to show added subzones -->
@@ -342,18 +348,61 @@
             </div>
         </form>
     </div>
-
+    <div class="modal fade" id="addEventModal" tabindex="-1" aria-labelledby="addEventModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="addEventModalLabel">Add Area</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeAddModal" onclick=" $('#addEventModal').modal('hide');"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="AddAreaForm">
+                        <label for="Name" class="control-label"> Area Name</label>
+                        <br/>
+                        <input type="text" id="AreaName" name="Name" class="form-control" required />
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="submitButton" class="btn btn-primary" style="background-color: #F3BC12; color:#23282B">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="AddSubzoneModal" tabindex="-1" aria-labelledby="addEventModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="addEventModalLabel">Add Subzone</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeAddModal" onclick=" $('#addEventModal').modal('hide');"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="AddSubzoneForm">
+                        <label for="Subzone_Name" class="control-label"> Subzone Name</label>
+                        <br />
+                        <input type="text" id="subzone-name" name="Subzone_Name" placeholder="Subzone Name" class="form-control" required /><br />
+                        <label for="Capacity" class="control-label">Capacity</label>
+                        <br />
+                        <input type="number" id="subzone-capacity" name="Capacity" placeholder="Capacity" class="form-control" required/>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="submitButtonSubzone" class="btn btn-primary" style="background-color: #F3BC12; color:#23282B">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Google Maps API -->
     <script async defer type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBiyENFIL4UsKCGGbXh3-nASJIMeJmpmYU&libraries=drawing"></script>
 
     <script type="text/javascript">
-    
+
         function DisplayGoogleMap() {
             InitMap();
         }
+        setArea();
+
         var map;
         var mapcanvas;
-
         let coordinates = [];
 
         function InitMap() {
@@ -375,7 +424,6 @@
                     ]
                 },
                 markerOptions: {},
-               
                 polygonOptions: {
                     clickable: true,
                     draggable: false,
@@ -388,12 +436,16 @@
             drawingManager.setMap(map);
 
             function getPolygonCoords(newShape) {
-                coordinates.splice(0, coordinates.length);
+                coordinates = [[]]; // Reset coordinates to the new structure
                 var len = newShape.getPath().getLength();
                 for (var i = 0; i < len; i++) {
-                    coordinates.push(newShape.getPath().getAt(i).toUrlValue(5));
+                    // Push the latitude and longitude as an array
+                    coordinates[0].push([
+                        newShape.getPath().getAt(i).lng(),
+                        newShape.getPath().getAt(i).lat()
+                    ]);
                 }
-                document.getElementById('info').innerHTML = coordinates;
+                document.getElementById('info').innerHTML = JSON.stringify(coordinates); // Display formatted coordinates
                 return coordinates;
             }
 
@@ -419,7 +471,7 @@
                 if (selectedShape) {
                     selectedShape.setMap(null);
                     drawingManager.setMap(map);
-                    coordinates.splice(0, coordinates.length);
+                    coordinates = [[]]; // Reset coordinates on delete
                     document.getElementById('info').innerHTML = "";
                 }
             }
@@ -455,32 +507,25 @@
             }
 
             google.maps.event.addListener(drawingManager, 'polygoncomplete', function (event) {
-                event.getPath().getLength();
-                google.maps.event.addListener(event, "dragend", getPolygonCoords(event));
-                google.maps.event.addListener(event.getPath(), "insert_at", function () {
-                    coordinates.splice(0, coordinates.length);
-                    var len = event.getPath().getLength();
-                    for (var i = 0; i < len; i++) {
-                        coordinates.push(event.getPath().getAt(i).toUrlValue(5));
-                    }
-                    document.getElementById('info').innerHTML = coordinates;
-                    console.log(coordinates);
+                var newShape = event;
+                getPolygonCoords(newShape);
+
+                google.maps.event.addListener(newShape.getPath(), "insert_at", function () {
+                    getPolygonCoords(newShape);
                 });
-                google.maps.event.addListener(event.getPath(), 'set_at', function () {
-                    coordinates.splice(0, coordinates.length);
-                    var len = event.getPath().getLength();
-                    for (var i = 0; i < len; i++) {
-                        coordinates.push(event.getPath().getAt(i).toUrlValue(5));
-                    }
-                    document.getElementById('info').innerHTML = coordinates;
+
+                google.maps.event.addListener(newShape.getPath(), 'set_at', function () {
+                    getPolygonCoords(newShape);
                 });
+
+                // Set selection for the new shape
+                setSelection(newShape);
             });
 
             google.maps.event.addListener(drawingManager, 'overlaycomplete', function (event) {
                 all_overlays.push(event);
                 if (event.type !== google.maps.drawing.OverlayType.MARKER) {
                     drawingManager.setDrawingMode(null);
-
                     var newShape = event.overlay;
                     newShape.type = event.type;
                     google.maps.event.addListener(newShape, 'click', function () {
@@ -492,10 +537,10 @@
 
             var centerControlDiv = document.createElement('div');
             var centerControl = new CenterControl(centerControlDiv, map);
-
             centerControlDiv.index = 1;
             map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(centerControlDiv);
         }
+
         function collectCoordinatesData() {
             const infoDiv = document.getElementById('info');
             // Assuming the data in the info div is in a specific format you can parse
@@ -503,12 +548,43 @@
             document.getElementById('coordinates-data').value = coordinatesData;
         }
 
-       
         let subzones = [];
 
-        document.getElementById("add-subzone-button").onclick = function () {
+        var accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImV5SmhiR2NpT2lKSVV6STFOaUlzSW5SNWNDSTZJa3BYVkNKOS5leUpmYVdRaU9pSTJObVppWkRRd01EZGtPRFkyTXpFMk5ERXpZVGRsWlRBaUxDSjFjMlZ5Ym1GdFpTSTZJbTV2ZG1FMElpd2ljR0Z6YzNkdmNtUWlPaUlrTW1Fa01UQWtNbGN2WWtVMFlsaFFTakpKTDAxM1NuTnpZVEpaZFRScVkwZG9lbmMxY0cxT1ZtRXZRMnRJZEZaYVlUUlFValZhUXpOUmFrY2lMQ0p5YjJ4bGN5STZXMTBzSW1selFXTjBhWFpsSWpwMGNuVmxMQ0psWkdsMGIzSWlPbTUxYkd3c0ltTnlaV0YwWldSQmRDSTZJakl3TWpRdE1UQXRNREZVTVRBNk5UQTZOREF1T0RnMVdpSXNJblZ3WkdGMFpXUkJkQ0k2SWpJd01qUXRNVEF0TURGVU1UQTZOVEE2TkRBdU9EZzFXaUlzSWw5ZmRpSTZNQ3dpYVdRaU9pSTJObVppWkRRd01EZGtPRFkyTXpFMk5ERXpZVGRsWlRBaUxDSnBZWFFpT2pFM01qZzVPRFl5TVRZc0ltVjRjQ0k2TVRjek1UVTNPREl4Tm4wLnVQNDNMOUo0TWcxcDdLMVJEUkUzYUlyamdVMWNBaF8wckJsQWlkaW9DQU0iLCJpYXQiOjE3Mjg5ODYyMTYsImV4cCI6MTczMTU3ODIxNn0.72WF3Pa8Gg-fF6BOo0x5JVGtr36HQextkDURYB3UYPE"
+
+
+        document.getElementById("submitButtonSubzone").onclick = function () {
             var subzoneName = document.getElementById("subzone-name").value;
             var capacity = document.getElementById("subzone-capacity").value;
+            console.log(subzoneName);
+            console.log(capacity);
+            const payload = {
+                zoneId: "66e496e7eb8d4e6eb9ccfc5e",  
+                name: subzoneName,                  
+                capacity: parseInt(capacity)                   
+            };
+            $.ajax({
+                type: "POST",
+                url: "https://api.parkit.nova4lb.com/admin/subzones",
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken
+
+                },
+                data: JSON.stringify(payload),
+                success: function (response) {
+                    if (response) {
+                        alert("Subzone Added Successfully");
+                        $('#AddSubzoneModal').modal('close');
+                    } else {
+                        // Show error message
+                        alert(response.message || "Failed to add Subzone");
+                    }
+                },
+                error: function (xhr, status, error) {
+
+                    alert("An error occurred: " + error);
+                }
+            });
 
             if (subzoneName && capacity) {
                 const subzone = {
@@ -587,7 +663,7 @@
             $('#subzone-table').DataTable();
         };
         $('.supervisor').select2();
-       
+        $('.Area').select2();
        
         function setSupervisors() {
             $.ajax({
@@ -639,6 +715,147 @@
             // Set the Subzone_ID input field value
             document.getElementById("Supervisor_ID").value = supervisorId;
         }
+
+
+        var accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImV5SmhiR2NpT2lKSVV6STFOaUlzSW5SNWNDSTZJa3BYVkNKOS5leUpmYVdRaU9pSTJObVppWkRRd01EZGtPRFkyTXpFMk5ERXpZVGRsWlRBaUxDSjFjMlZ5Ym1GdFpTSTZJbTV2ZG1FMElpd2ljR0Z6YzNkdmNtUWlPaUlrTW1Fa01UQWtNbGN2WWtVMFlsaFFTakpKTDAxM1NuTnpZVEpaZFRScVkwZG9lbmMxY0cxT1ZtRXZRMnRJZEZaYVlUUlFValZhUXpOUmFrY2lMQ0p5YjJ4bGN5STZXMTBzSW1selFXTjBhWFpsSWpwMGNuVmxMQ0psWkdsMGIzSWlPbTUxYkd3c0ltTnlaV0YwWldSQmRDSTZJakl3TWpRdE1UQXRNREZVTVRBNk5UQTZOREF1T0RnMVdpSXNJblZ3WkdGMFpXUkJkQ0k2SWpJd01qUXRNVEF0TURGVU1UQTZOVEE2TkRBdU9EZzFXaUlzSWw5ZmRpSTZNQ3dpYVdRaU9pSTJObVppWkRRd01EZGtPRFkyTXpFMk5ERXpZVGRsWlRBaUxDSnBZWFFpT2pFM01qZzVPRFl5TVRZc0ltVjRjQ0k2TVRjek1UVTNPREl4Tm4wLnVQNDNMOUo0TWcxcDdLMVJEUkUzYUlyamdVMWNBaF8wckJsQWlkaW9DQU0iLCJpYXQiOjE3Mjg5ODYyMTYsImV4cCI6MTczMTU3ODIxNn0.72WF3Pa8Gg-fF6BOo0x5JVGtr36HQextkDURYB3UYPE"
+
+
+        $("#Zone-Form").submit(function (event) {
+            event.preventDefault();
+
+            var name = $("#Zone_Name").val();
+            var coordinates = $("#coordinates-data").val();
+            var areaId = $("#AreaID").val();
+            console.log(coordinates);
+            var coordinatesObject = JSON.parse(coordinates);
+            $.ajax({
+                type: "POST",
+                url: "https://api.parkit.nova4lb.com/admin/zones",
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify({
+                    name: name,
+                    areaId: areaId,
+                    location: {
+                        coordinates: coordinatesObject
+                    }
+                }),
+                success: function (response) {
+                    if (response) {
+                        alert("Zone  added successfully");
+                        window.location.href = "/Views/Zones";
+                    } else {
+                        // Show error message
+                        alert(response.message || "Failed to add Zone");
+                    }
+                },
+                error: function (xhr, status, error) {
+
+                    alert("An error occurred: " + error);
+                }
+            });
+        });
+
+
+        function setArea() {
+            var accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImV5SmhiR2NpT2lKSVV6STFOaUlzSW5SNWNDSTZJa3BYVkNKOS5leUpmYVdRaU9pSTJObVppWkRRd01EZGtPRFkyTXpFMk5ERXpZVGRsWlRBaUxDSjFjMlZ5Ym1GdFpTSTZJbTV2ZG1FMElpd2ljR0Z6YzNkdmNtUWlPaUlrTW1Fa01UQWtNbGN2WWtVMFlsaFFTakpKTDAxM1NuTnpZVEpaZFRScVkwZG9lbmMxY0cxT1ZtRXZRMnRJZEZaYVlUUlFValZhUXpOUmFrY2lMQ0p5YjJ4bGN5STZXMTBzSW1selFXTjBhWFpsSWpwMGNuVmxMQ0psWkdsMGIzSWlPbTUxYkd3c0ltTnlaV0YwWldSQmRDSTZJakl3TWpRdE1UQXRNREZVTVRBNk5UQTZOREF1T0RnMVdpSXNJblZ3WkdGMFpXUkJkQ0k2SWpJd01qUXRNVEF0TURGVU1UQTZOVEE2TkRBdU9EZzFXaUlzSWw5ZmRpSTZNQ3dpYVdRaU9pSTJObVppWkRRd01EZGtPRFkyTXpFMk5ERXpZVGRsWlRBaUxDSnBZWFFpT2pFM01qZzVPRFl5TVRZc0ltVjRjQ0k2TVRjek1UVTNPREl4Tm4wLnVQNDNMOUo0TWcxcDdLMVJEUkUzYUlyamdVMWNBaF8wckJsQWlkaW9DQU0iLCJpYXQiOjE3Mjg5ODYyMTYsImV4cCI6MTczMTU3ODIxNn0.72WF3Pa8Gg-fF6BOo0x5JVGtr36HQextkDURYB3UYPE"
+
+            $.ajax({
+                url: "https://api.parkit.nova4lb.com/admin/areas",
+                type: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken,
+                },
+                success: function (response) {
+                    console.log("AJAX call succeeded, response:", response); // Log the response
+
+                    var AreaDropdown = document.getElementById("Area");
+                    AreaDropdown.innerHTML = ""; // Clear existing options
+
+                    // Add a default "Select a Supervisor" option
+                    var defaultOption = document.createElement("option");
+                    defaultOption.value = "";
+                    defaultOption.text = "Select an Area";
+                    defaultOption.disabled = true;
+                    defaultOption.selected = true;
+                    AreaDropdown.appendChild(defaultOption);
+
+
+                    var addOption = document.createElement("option");
+                    addOption.value = "add-new";  // Unique value for identifying
+                    addOption.text = "Add New Area";  // Display text
+                    AreaDropdown.appendChild(addOption);
+
+                    AreaDropdown.addEventListener('change', function () {
+                        console.log("Dropdown changed: ", this.value); // Debug log
+                        if (this.value === "add-new") {
+                            console.log("Add New Area option selected"); // Debug log
+                            $('#addEventModal').modal('show'); // Show the modal
+                        }
+                    });
+                    // Populate the supervisor dropdown with the new options
+                    response.forEach(function (area) {
+                        console.log("Adding Area:", area); // Log each supervisor
+                        var option = document.createElement("option");
+                        option.value = area._id;
+                        option.text = area.name;
+                        option.setAttribute("data-area-id", area._id);
+                        AreaDropdown.appendChild(option);
+                    });
+
+                
+                },
+                error: function (xhr, status, error) {
+                    console.log('Error:', error); // Log any error
+                    alert('Error: ' + error);
+                }
+            });
+        }
+
+        function updateAreaId() {
+            // Get the selected option
+            var selectedOption = document.getElementById("Area").selectedOptions[0];
+            if (selectedOption.value == "add-new"){
+                console.log("Add New Area option selected"); // Debug log
+                $('#addEventModal').modal('show');
+            }
+            // Get the Subzone_ID from the data attribute
+            var areaId = selectedOption.getAttribute("data-area-id"); // Use correct attribute for subzone
+            // Set the Subzone_ID input field value
+            document.getElementById("AreaID").value = areaId;
+        }
+
+        $("#submitButton").on("click", function () {
+            var name = $("#AreaName").val();
+
+            $.ajax({
+                type: "POST",
+                url: "https://api.parkit.nova4lb.com/admin/areas",
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify({
+                    name: name
+                }), // Ensure this object is closed correctly
+                success: function (response) {
+                    if (response) {
+                        alert("Area added successfully");
+                        $('#addEventModal').modal('hide'); // Close the modal after success
+                        setArea(); // Call setArea() to refresh the dropdown or perform other actions
+                    } else {
+                        // Show error message
+                        alert(response.message || "Failed to add Area");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("An error occurred: " + error);
+                }
+            });
+        });
+
     </script>
 </body>
 </html>
