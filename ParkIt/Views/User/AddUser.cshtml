@@ -273,13 +273,13 @@
         <div class="container">
             <h1 class="Title">Create New User</h1>
 
-            <form asp-action="AddEmployee" asp-controller="User" method="post" enctype="multipart/form-data" onsubmit="return validateAndRedirect()" class="container" id="Employee-Form">
-                <div class="form-container">
+        <form id="Employee-Form" enctype="multipart/form-data" class="container">
+            <div class="form-container">
                     <div class="form-left">
                         <div class="profile-pic">
                             <i class="fas fa-user"></i>
                         </div>
-                        <input type="text" name="Name" placeholder="Name" required />
+                        <input type="text" name="UserName" placeholder="Username" required />
                  
                     <input type="password" name="Password" placeholder="Password" required />
                        
@@ -290,394 +290,120 @@
 
                         <input type="text" name="PhoneNumber" placeholder="Phone" required />
                         <input type="text" name="Address" placeholder="Address" required />
-                        <input type="text" name="NfcCode" placeholder="NFC Code" />
-                    <select name="zones" id="zones" class="zones form-control select2-hidden-accessible" data-placeholder="Select a Zone" style="width: 100%;" tabindex="-1" aria-hidden="true" onchange="setSubzones()">
-                        <option value="" selected disabled>Select a zone</option>
-                 
-
-                        </select>
-
-                        <input type="number" name="Zone_ID" id="Zone_ID" placeholder="Zone_ID" hidden />
-                  
-                    <select name="subzones" id="subzones" class="subzones form-control select2-hidden-accessible" data-placeholder="Select a Subzone" style="width: 100%;" tabindex="-1" aria-hidden="true" onchange="updateSubzoneID()">
-                        <option value="" selected disabled>Select a Subzone</option>
-
-                        </select>
-                        <input type="number" name="Subzone_ID" id="Subzone_ID" placeholder="Subzone_ID" hidden />
-                    <div class="form-group radio-group">
-                        <label>Title</label>
-                        <div>
-                            <input type="radio" id="Runner" name="Title" value="Runner">
-                            <label for="Runner">Runner</label>
-                        </div>
-                        <div>
-                            <input type="radio" id="Supervisor" name="Title" value="Supervisor">
-                            <label for="Supervisor">Supervisor</label>
-                        </div>
-
-                    </div>
+             
                     <div id="additionalInputContainer" class="additionalInputContainer">
                     </div>
                     <input type="number" id="Supervisor_ID" name="Supervisor_ID" hidden />
+                </div>
+                <div class="form-right">
+                    <!-- Dropzone for file upload -->
+                    <div class="drop-section" id="dropzone">
+                        <h3>Drag and Drop Files Here</h3>
+                        <p>or <button type="button" id="browse-files">Browse Files</button></p>
+                        <input type="file" name="Files" id="file-input" multiple style="display:none" />
+                        <div id="file-list" class="file-list">
+                            <h5>Uploaded Files</h5>
+                            <ul id="file-items"></ul>
+                        </div>
                     </div>
-                    <div class="form-right">
-                        <!-- Dropzone for file upload -->
-                        <div class="drop-section" id="dropzone">
-                            <h3>Drag and Drop Files Here</h3>
-                            <p>or <button type="button" id="browse-files">Browse Files</button></p>
-                            <input type="file" name="Files" id="file-input" multiple style="display:none" />
-                            <div id="file-list" class="file-list">
-                                <h5>Uploaded Files</h5>
-                                <ul id="file-items"></ul>
-                            </div>
-                        </div>
 
-                        <div class="form-group radio-group">
+                    <input class="mt-2" type="text" name="FirstName" placeholder="First Name" required />
+                    <input type="text" name="LastName" placeholder="Last Name" required />
+
+                    <div class="form-row mt-3">
+                        <div class="form-group col-md-6">
                             <label>Employment Type:</label>
-                            <div>
-                                <input type="radio" id="partTime" name="EmploymentType" value="PartTime">
-                                <label for="partTime">Part Time</label>
+                            <div class="form-check">
+                                <input type="radio" class="form-check-input" id="partTime" name="EmploymentType" value="part-time">
+                                <label class="form-check-label" for="partTime">Part Time</label>
                             </div>
-                            <div>
-                                <input type="radio" id="fullTime" name="EmploymentType" value="FullTime">
-                                <label for="fullTime">Full Time</label>
+                            <div class="form-check">
+                                <input type="radio" class="form-check-input" id="fullTime" name="EmploymentType" value="full-time">
+                                <label class="form-check-label" for="fullTime">Full Time</label>
                             </div>
                         </div>
 
-                        <input type="text" name="Kafeel" placeholder="Kafeel" />
-                        <textarea name="AdditionalNotes" placeholder="Additional Notes" required></textarea>
+                        <div class="form-group col-md-6">
+                            <label>Title:</label>
+                            <div class="form-check">
+                                <input type="radio" class="form-check-input" id="Runner" name="Title" value="Runner">
+                                <label class="form-check-label" for="Runner">Runner</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="radio" class="form-check-input" id="Supervisor" name="Title" value="Supervisor">
+                                <label class="form-check-label" for="Supervisor">Supervisor</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <input type="Submit" onclick="validateAndRedirect()" class="save-button" value="Save"></input>
-            </form>
+
+                </div>
+            <input type="button" onclick="submitForm()" class="save-button" value="Save"></input>
+        </form>
         </div>
     <!-- Include jQuery before Select2 JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Include Select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.10.2/dropzone.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.10.2/dropzone.min.js"></script>0
+    
         <script>
-      
-        $('.zones').select2();
-        $('.subzones').select2();
-         SelectZones();
-    
-        document.addEventListener('DOMContentLoaded', () => {
-            const runnerRadio = document.getElementById('Runner');
-            const supervisorRadio = document.getElementById('Supervisor'); // Add a reference to the Supervisor radio button
-            const inputContainer = document.getElementById('additionalInputContainer');
-            // Using jQuery
-           
+        function submitForm() {
+            event.preventDefault();
 
-            // Function to show the dropdown for Runner
-            function showRunnerDropdown(zoneId) {
-                console.log(`Fetching supervisors for zone ID: ${zoneId}`);
-                $.ajax({
-                    url: '/User/GetSupervisorByZoneID',
-                    type: 'GET',
-                    data: { zoneid: zoneId },
-                    success: function (response) {
-                        console.log('AJAX request successful.');
-                        console.log(response);
-                        if (response.length > 0) {
-                            const selectElement = document.createElement('select');
-                            selectElement.classList.add('form-control');
+            // Gather form data
+            var isActive = $('#active-checkbox').is(':checked');
+            var employmentType = $('input[name="EmploymentType"]:checked').val(); // Check the correct value format
+            var title = $('input[name="Title"]:checked').val().toLowerCase(); // Check the correct value format
 
-                            const defaultOption = document.createElement('option');
-                            defaultOption.textContent = 'Select a Supervisor';
-                            defaultOption.value = '';
-                            defaultOption.disabled = true;
-                            defaultOption.selected = true;
-                            selectElement.appendChild(defaultOption);
+            // Log values to check
+            console.log("Employment Type: ", employmentType);
+            console.log("Title: ", title);
 
-                            response.forEach(option => {
-                                const optionElement = document.createElement('option');
-                                optionElement.value = option.supervisor_ID;
-                                optionElement.textContent = option.supervisor_Name  ;
-                                selectElement.appendChild(optionElement);
-                                console.log(`Added supervisor: ${option.supervisor_ID} - ${option.supervisor_Name}`);
-                            });
-
-                            inputContainer.innerHTML = '';
-                            inputContainer.appendChild(selectElement);
-
-                            selectElement.addEventListener('change', () => {
-                                document.getElementById('Supervisor_ID').value = selectElement.value;
-                                console.log(`Selected Supervisor ID: ${selectElement.value}`);
-                            });
-
-                        } else {
-                            console.error('Failed to retrieve supervisors: ' + response.message);
-                            alert('Failed to retrieve supervisors: ' + response.message);
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('AJAX request error: ' + error);
-                        alert('Error: ' + error);
-                    }
-                });
-            }
-
-
-            // Event listener for Runner radio button
-            runnerRadio.addEventListener('change', () => {
-                // Using jQuery
-                var zoneid = $('#Zone_ID').val();
-
-                if (runnerRadio.checked) {
-                showRunnerDropdown(zoneid);
-                 
-                } else {
-                    inputContainer.innerHTML = '';
-                }
-            });
-
-            // Event listener for Supervisor radio button (or any other option that should hide the dropdown)
-            supervisorRadio.addEventListener('change', () => {
-                if (supervisorRadio.checked) {
-                    inputContainer.innerHTML = '';
-                }
-            });
-        });
-    
-            const dropzone = document.getElementById('dropzone');
-            const fileInput = document.getElementById('file-input');
-            const fileItems = document.getElementById('file-items');
-            const browseFilesBtn = document.getElementById('browse-files');
-            const filenameinput = document.getElementById('Files');
-            const filenames = [];
-            // Show file input when 'Browse Files' button is clicked
-            browseFilesBtn.onclick = () => fileInput.click();
-
-            // Handle file input change
-            fileInput.onchange = () => {
-                [...fileInput.files].forEach(file => {
-                    if (typeValidation(file.type)) {
-                        console.log(file);
-                        filenames.push(file);
-                        handleFile(file);
-                    }
-                });
-           
-                filenameinput.value = filenames.join(', ');
-                console.log(filenames.join(', '));
-                console.log(filenameinput);
-            };
-      
-
-
-            // Handle drag over
-            dropzone.ondragover = (e) => {
-                e.preventDefault();
-                dropzone.classList.add('drag-over-effect');
+            // Create JSON object with form values
+            var data = {
+                username: $('input[name="UserName"]').val(),
+                password: $('input[name="Password"]').val(),
+                mobile: $('input[name="PhoneNumber"]').val(),
+                address: $('input[name="Address"]').val(),
+                firstname: $('input[name="FirstName"]').val(),
+                lastname: $('input[name="LastName"]').val(),
+                isActive: isActive,
+                employmentType: employmentType,
+                title: title
             };
 
-            // Handle drag leave
-            dropzone.ondragleave = () => {
-                dropzone.classList.remove('drag-over-effect');
-            };
-
-            // Handle drop
-            dropzone.ondrop = (e) => {
-                e.preventDefault();
-                dropzone.classList.remove('drag-over-effect');
-                if (e.dataTransfer.files) {
-                    [...e.dataTransfer.files].forEach(file => {
-                        if (typeValidation(file.type)) {
-                            handleFile(file);
-                        }
-                    });
-                }
-            };
-
-            // Validate file type
-            function typeValidation(type) {
-                const splitType = type.split('/')[0];
-                return type === 'application/pdf' || splitType === 'image' || splitType === 'video';
+            // Ensure that employment type and title are selected
+            if (!employmentType || !title) {
+                alert("Please select both Employment Type and Title.");
+                return;
             }
 
-            // Handle file
-            function handleFile(file) {
-                const li = document.createElement('li');
-                li.classList.add('file-item');
-                li.innerHTML = `
-                            <div class="col">
-                                <img src="icons/${iconSelector(file.type)}" alt="">
-                            </div>
-                            <div class="col">
-                                <div class="file-name">
-                                    <div class="name">${file.name}</div>
-                                    <span>0%</span>
-                                </div>
-                                <div class="file-progress">
-                                    <span></span>
-                                </div>
-                                <div class="file-size">${(file.size / (1024 * 1024)).toFixed(2)} MB</div>
-                            </div>
-                            <div class="col">
-                                <button class="remove-button">Remove</button>
-                            </div>
-                        `;
-                fileItems.appendChild(li);
+            // Add Authorization header
+            var accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImV5SmhiR2NpT2lKSVV6STFOaUlzSW5SNWNDSTZJa3BYVkNKOS5leUpmYVdRaU9pSTJObVppWkRRd01EZGtPRFkyTXpFMk5ERXpZVGRsWlRBaUxDSjFjMlZ5Ym1GdFpTSTZJbTV2ZG1FMElpd2ljR0Z6YzNkdmNtUWlPaUlrTW1Fa01UQWtNbGN2WWtVMFlsaFFTakpKTDAxM1NuTnpZVEpaZFRScVkwZG9lbmMxY0cxT1ZtRXZRMnRJZEZaYVlUUlFValZhUXpOUmFrY2lMQ0p5YjJ4bGN5STZXMTBzSW1selFXTjBhWFpsSWpwMGNuVmxMQ0psWkdsMGIzSWlPbTUxYkd3c0ltTnlaV0YwWldSQmRDSTZJakl3TWpRdE1UQXRNREZVTVRBNk5UQTZOREF1T0RnMVdpSXNJblZ3WkdGMFpXUkJkQ0k2SWpJd01qUXRNVEF0TURGVU1UQTZOVEE2TkRBdU9EZzFXaUlzSWw5ZmRpSTZNQ3dpYVdRaU9pSTJObVppWkRRd01EZGtPRFkyTXpFMk5ERXpZVGRsWlRBaUxDSnBZWFFpT2pFM01qZzRPVFkyTmpJc0ltVjRjQ0k2TVRjek1UUTRPRFkyTW4wLmd1UDhpel9FZWlrWEtVQjFiWi1yeG5Dd1gwU0l3Rm85ODdoRGk3Z1Znd28iLCJpYXQiOjE3Mjg4OTY2NjIsImV4cCI6MTczMTQ4ODY2Mn0.f70_V3XeYwFDB2pK4B2pbvU9-3vMGGo5fMooZCMthg8';
 
-                // Simulate file upload progress
-                simulateUploadProgress(file, li);
-
-                // Add event listener to remove file
-                li.querySelector('.remove-button').onclick = () => li.remove();
-            }
-
-            // Simulate upload progress
-            function simulateUploadProgress(file, li) {
-                const progressBar = li.querySelector('.file-progress span');
-                let progress = 0;
-                const interval = setInterval(() => {
-                    progress += 10;
-                    progressBar.style.width = `${progress}%`;
-                    li.querySelector('.file-name span').textContent = `${progress}%`;
-                    if (progress >= 100) {
-                        clearInterval(interval);
-                    }
-                }, 200);
-            }
-
-            // Determine file icon based on file type
-            function iconSelector(fileType) {
-                if (fileType === 'application/pdf') return 'pdf.png';
-                if (fileType.startsWith('image')) return 'image.png';
-                if (fileType.startsWith('video')) return 'video.png';
-                return 'file.png';
-            }
-            function validateAndRedirect() {
-                // Get all required fields
-                const requiredFields = document.querySelectorAll('input[required], textarea[required]');
-                let allFilled = true;
-                // Check if all required fields are filled
-                requiredFields.forEach(field => {
-                    if (!field.value.trim() && field.type !== 'radio' || (field.type === 'radio' && !document.querySelector('input[name="EmploymentType"]:checked'))) {
-                        allFilled = false;
-                        field.style.borderColor = 'red'; // Highlight empty fields
-                    } else {
-                        field.style.borderColor = '#ccc'; // Reset border color for filled fields
-                    }
-                });
-                if (allFilled) {
-                    filenameInput.value = filenames.join(', ');
-                    // Submit the form if all fields are filled
-
-                window.location.href = 'User/Users';  // Redirects to a new URL
-
-                    document.getElementById('Employee-Form').submit();
-                } else {
-                    alert('Please fill all required fields.');
-                }
-                return false; // Prevent default form submission
-            }
-        function updateZoneID() {
-            // Get the selected option
-            var selectedOption = document.getElementById("zones").selectedOptions[0];
-            // Get the Zone_ID from the data attribute
-            var zoneID = selectedOption.getAttribute("data-zone-id"); // Fix the attribute name
-            // Set the Zone_ID input field value
-            document.getElementById("Zone_ID").value = zoneID;
-        }
-
-        function updateSubzoneID() {
-            // Get the selected option
-            var selectedOption = document.getElementById("subzones").selectedOptions[0];
-            // Get the Subzone_ID from the data attribute
-            var subzoneID = selectedOption.getAttribute("data-subzone-id"); // Use correct attribute for subzone
-            // Set the Subzone_ID input field value
-            document.getElementById("Subzone_ID").value = subzoneID;
-        }
-
-        function setSubzones() {
-            // Get the selected zone
-            var selectElement = document.getElementById("zones");
-            var selectedOption = selectElement.options[selectElement.selectedIndex];
-
-            // Get the Zone_ID from the data attribute
-            var zoneId = selectedOption.getAttribute("data-zone-id");
-
-            // Set the Zone_ID input field value
-            document.getElementById("Zone_ID").value = zoneId;
-
-            // Fetch subzones for the selected zone
-            updateSubzones(zoneId);
-        }
-
-        function updateSubzones(zoneId) {
+            // Send the form data via AJAX
             $.ajax({
-                url: '/Zone/GetSubzonesByZoneId',
-                type: 'GET',
-                data: { zoneId: zoneId },
+                url: "https://api.parkit.nova4lb.com/admin/employees",
+                type: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify(data),
                 success: function (response) {
-                    console.log(response); // Log the response object
-
-                    if (response.success) {
-                        var subzoneDropdown = document.getElementById("subzones");
-                        subzoneDropdown.innerHTML = ""; // Clear existing options
-
-                        // Populate the subzone dropdown with the new options
-                        response.subzones.forEach(function (subzone) {
-                            var option = document.createElement("option");
-                            option.value = subzone.subzone_Name;
-                            option.text = subzone.subzone_Name;
-                            option.setAttribute("data-subzone-id", subzone.subzone_ID);
-                            subzoneDropdown.appendChild(option);
-                        });
-
-                        // Optionally, trigger the updateSubzoneID function to set the Subzone_ID
-                        updateSubzoneID();
-                    } else {
-                        alert('Failed to retrieve subzones: ' + response.message);
-                    }
+                    alert("User created successfully!");
+                    window.location.href = '/Views/Employees';
                 },
                 error: function (xhr, status, error) {
-                    alert('Error: ' + error);
+                    console.error("Error: " + xhr.responseText);
+                    alert("Failed to create user.");
                 }
             });
         }
 
-        function SelectZones() {
-            $.ajax({
-                url: '/User/AddUser',
-                type: 'GET',
-                success: function (response) {
-                    console.log(response); // Log the response object
-
-                    if (response.success) {
-                        var ZoneDropdown = document.getElementById("zones");
-                        ZoneDropdown.innerHTML = ""; // Clear existing options
-                        // Add a default "Select a Supervisor" option
-                        var defaultOption = document.createElement("option");
-                        defaultOption.value = "";
-                        defaultOption.text = "Select a Zone";
-                        defaultOption.disabled = true;
-                        defaultOption.selected = true;
-                        ZoneDropdown.appendChild(defaultOption);
-                        // Populate the zone dropdown with new options
-                        response.zones.forEach(function (zone) {
-                            var option = document.createElement("option");
-                            option.value = zone.zone_Name;
-                            option.text = zone.zone_Name;
-                            option.setAttribute("data-zone-id", zone.zone_ID);
-                            console.log("Zone ID: ", zone.zone_ID);
-                            ZoneDropdown.appendChild(option);
-                        });
-                        updateZoneID();
-                    
-                    } else {
-                        alert('Failed to retrieve zones: ' + response.message);
-                    }
-                },
-                error: function (xhr, status, error) {
-                    alert('Error: ' + error);
-                }
-            });
-        }
-
-      
-            </script>
+    </script>
+        
+     
     </body>
     </html>

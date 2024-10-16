@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Build.Construction;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using OfficeOpenXml;
 using ParkIt.Models.Data;
 using ParkIt.Models.Helper;
-using System.Security.Policy;
 
 
 namespace ParkIt.Controllers
@@ -36,7 +33,7 @@ namespace ParkIt.Controllers
             string fileName = $"Employee{DateTime.Now:yyyyMMddHHmmss}.xlsx";
             string filePath = Path.Combine(Path.GetTempPath(), fileName);
             string logFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Logs");
-          
+
             try
             {
                 // Ensure the log folder exists
@@ -87,7 +84,7 @@ namespace ParkIt.Controllers
                                                 int zoneId = Convert.ToInt32(cellValue); // Safely convert the value to an integer
 
                                                 // Await the result of the asynchronous query
-                                                var zone =  _dbContext.Zone.FirstOrDefault(z => z.Zone_ID == zoneId);
+                                                var zone = _dbContext.Zone.FirstOrDefault(z => z.Zone_ID == zoneId);
 
                                                 if (zone != null)
                                                 {
@@ -191,28 +188,28 @@ namespace ParkIt.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
-        [HttpGet]
-        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
+        //[HttpGet]
+        //[ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
 
-        public async Task<IActionResult> Users()
-        {
-            var model = await
-                 _dbContext.Employee
-                 .Where(e => e.IsDeleted == false || e.IsDeleted == null) 
-                .ToListAsync();
-            
-        
-            if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")
-            {
-                return Json(new
-                {
-                    success = true,
-                    modell = model,
-                });
-            }
-            // Return the view for normal (non-AJAX) requests
-            return View();
-        }
+        //public async Task<IActionResult> Users()
+        //{
+        //    var model = await
+        //         _dbContext.Employee
+        //         .Where(e => e.IsDeleted == false || e.IsDeleted == null) 
+        //        .ToListAsync();
+
+
+        //    if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+        //    {
+        //        return Json(new
+        //        {
+        //            success = true,
+        //            modell = model,
+        //        });
+        //    }
+        //    // Return the view for normal (non-AJAX) requests
+        //    return View();
+        //}
         [HttpGet]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
 
@@ -231,7 +228,7 @@ namespace ParkIt.Controllers
                     zones = Zones,
                     subzones = Subzones,
                     Employee = employee,
-              
+
                 });
             }
             // Return the view for normal (non-AJAX) requests
@@ -249,7 +246,7 @@ namespace ParkIt.Controllers
 
             try
             {
-             
+
                 var paths = new List<string>();
                 foreach (var file in Files)
                 {
@@ -268,7 +265,7 @@ namespace ParkIt.Controllers
                         var fileName = Path.GetFileName(file.FileName);
                         var uniqueFileName = $"{Guid.NewGuid()}_{fileName}";
                         var fullPath = Path.Combine(uploadsDirectoryPath, uniqueFileName);
-                       
+
                         using (var stream = new FileStream(fullPath, FileMode.Create))
                         {
                             await file.CopyToAsync(stream);
@@ -286,7 +283,7 @@ namespace ParkIt.Controllers
                 model.Files = pathsString;
                 if (model.Title == "Supervisor")
                 {
-                    model.Supervisor_ID =null;
+                    model.Supervisor_ID = null;
                 }
                 var pass = _password.HashPassword(model.Password);
                 model.Password = pass;
@@ -295,7 +292,7 @@ namespace ParkIt.Controllers
                 _dbContext.Employee.Add(model);
                 await _dbContext.SaveChangesAsync();
                 _logger.LogInformation("Added successfully");
-                
+
                 if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")
                 {
                     return Json(new
@@ -325,7 +322,7 @@ namespace ParkIt.Controllers
             }
 
             employee.IsDeleted = true;
-            employee.DeleteDate = DateTime.Now;  
+            employee.DeleteDate = DateTime.Now;
             _dbContext.Update(employee);
             await _dbContext.SaveChangesAsync();
             return Json(new { success = true });
@@ -357,7 +354,7 @@ namespace ParkIt.Controllers
                 }
                 // Return the view for normal (non-AJAX) requests
                 return View();
-            
+
             }
             catch (Exception ex)
             {
@@ -391,7 +388,7 @@ namespace ParkIt.Controllers
                 // Update the existing employee with new values (excluding files)
                 _dbContext.Entry(existingEmployee).CurrentValues.SetValues(model);
                 // Process new files and collect their paths
-              
+
                 existingEmployee.UpdateDate = DateTime.Now;
                 var newPaths = new List<string>();
 
@@ -437,15 +434,15 @@ namespace ParkIt.Controllers
                 // Update the employee's Files property with combined paths
                 existingEmployee.Files = string.Join(";", existingPaths);
                 Console.WriteLine(existingEmployee.Files);
-                if(existingEmployee.Title == "Supervisor")
+                if (existingEmployee.Title == "Supervisor")
                 {
                     existingEmployee.Supervisor_ID = null;
                 }
                 // Save changes to the database
                 await _dbContext.SaveChangesAsync();
                 _logger.LogInformation("Employee updated successfully");
-             
-                return Json(new { success = true, message = "Employee updated successfully", redirectTo ="/User/Users" });
+
+                return Json(new { success = true, message = "Employee updated successfully", redirectTo = "/User/Users" });
             }
             catch (Exception ex)
             {
@@ -529,7 +526,7 @@ namespace ParkIt.Controllers
             try
             {
                 var supervisors = await _dbContext.Employee
-                 .Where(e => (e.Title == "Supervisor" && e.IsDeleted == null) ||(e.Title == "Supervisor" && e.IsDeleted == false))
+                 .Where(e => (e.Title == "Supervisor" && e.IsDeleted == null) || (e.Title == "Supervisor" && e.IsDeleted == false))
                  .Select(e => new
                  {
                      Supervisor_Name = e.Name,
@@ -552,13 +549,13 @@ namespace ParkIt.Controllers
             }
 
         }
-        [HttpGet] 
+        [HttpGet]
         public async Task<IActionResult> GetSupervisorByZoneID([FromQuery] int zoneid)
         {
             try
             {
                 var supervisors = await _dbContext.Employee
-                     .Where(e => (e.Title == "Supervisor" && e.Zone_ID == zoneid && e.IsDeleted == false ) || (e.Title == "Supervisor" && e.Zone_ID == zoneid && e.IsDeleted == null))
+                     .Where(e => (e.Title == "Supervisor" && e.Zone_ID == zoneid && e.IsDeleted == false) || (e.Title == "Supervisor" && e.Zone_ID == zoneid && e.IsDeleted == null))
                      .Select(e => new
                      {
                          Supervisor_Name = e.Name,
@@ -592,7 +589,7 @@ namespace ParkIt.Controllers
             try
             {
                 var runner = await _dbContext.Employee
-                 .Where(e =>( e.Title == "Runner" && e.Zone_ID == id && e.IsDeleted == false) || (e.Title == "Runner" && e.Zone_ID == id && e.IsDeleted == null)) 
+                 .Where(e => (e.Title == "Runner" && e.Zone_ID == id && e.IsDeleted == false) || (e.Title == "Runner" && e.Zone_ID == id && e.IsDeleted == null))
                  .Select(e => new
                  {
                      Runner_Name = e.Name,
