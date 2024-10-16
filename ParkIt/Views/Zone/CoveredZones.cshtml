@@ -11,6 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/2.1.4/js/dataTables.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
     <link rel="stylesheet" href="~/css/site.css">
 </head>
 <style>
@@ -218,7 +219,32 @@
         <div id="myDiv"></div>
     </div>
 </div>
-
+<div class="modal fade" id="AddSubzoneModal" tabindex="-1" aria-labelledby="addEventModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="addEventModalLabel">Add Subzone</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeAddModal" onclick=" $('#addEventModal').modal('hide');"></button>
+            </div>
+            <div class="modal-body">
+                <form id="AddSubzoneForm">
+                    <label for="Zone_ID" class="control-label">Zone_ID</label>
+                    <br />
+                    <input type="text" id="Zone_ID2" name="Zone_ID" placeholder="Zone ID" class="form-control" readonly /><br />
+                    <label for="Subzone_Name" class="control-label"> Subzone Name</label>
+                    <br />
+                    <input type="text" id="subzone-name" name="Subzone_Name" placeholder="Subzone Name" class="form-control" required /><br />
+                    <label for="Capacity" class="control-label">Capacity</label>
+                    <br />
+                    <input type="number" id="subzone-capacity" name="Capacity" placeholder="Capacity" class="form-control" required />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="submitButtonSubzone" class="btn btn-primary" style="background-color: #F3BC12; color:#23282B">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript">
     
@@ -256,6 +282,9 @@
                          <button class="btn btn-danger" onclick="DeleteZone('${item._id}')" style="background-color: #23282B; border-color:#23282B; color:#F3BC12; padding: 5px 10px; width: 35px; text-align: center;">
                              <i class="fas fa-trash"></i>
                          </button>
+                              <button class="btn btn-primary" onclick="AddSubzone('${item._id}')" style="background-color: #F3BC12; border-color:#F3BC12; color:#23282B; padding: 5px 10px; width: 35px; text-align: center;">
+                                      <i class="fa fa-plus"></i>
+                           </button>
                      </td>
                  </tr>`;
 
@@ -277,7 +306,45 @@
 
 
     });
+    function AddSubzone(zoneId){
+      
+        $('#AddSubzoneModal').modal('show');
+        $('#Zone_ID2').val(zoneId);
+        document.getElementById("submitButtonSubzone").onclick = function () {
+            var subzoneName = document.getElementById("subzone-name").value;
+            var capacity = document.getElementById("subzone-capacity").value;
+            const payload = {
+                zoneId: zoneId,
+                name: subzoneName,
+                capacity: parseInt(capacity)
+            };
 
+
+            $.ajax({
+                type: "POST",
+                url: "https://api.parkit.nova4lb.com/admin/subzones",
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify(payload),
+                success: function (response) {
+                    if (response) {
+                        alert("Subzone Added Successfully");
+                        $('#AddSubzoneModal').modal('hide');
+
+                    } else {
+                        // Show error message
+                        alert(response.message || "Failed to add Subzone");
+                    }
+                },
+                error: function (xhr, status, error) {
+
+                    alert("An error occurred: " + error);
+                }
+            });
+        }
+    }
     var coordinatesData = {}; // Initialize coordinatesData
     
 

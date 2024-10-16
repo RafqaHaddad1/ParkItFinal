@@ -554,8 +554,10 @@
 
 
         document.getElementById("submitButtonSubzone").onclick = function () {
+
             var subzoneName = document.getElementById("subzone-name").value;
             var capacity = document.getElementById("subzone-capacity").value;
+            $('#AddSubzoneModal').modal('hide');
             console.log(subzoneName);
             console.log(capacity);
             const payload = {
@@ -567,14 +569,16 @@
                 type: "POST",
                 url: "https://api.parkit.nova4lb.com/admin/subzones",
                 headers: {
-                    'Authorization': 'Bearer ' + accessToken
-
+                    'Authorization': 'Bearer ' + accessToken,
+                    'Content-Type': 'application/json'
                 },
                 data: JSON.stringify(payload),
                 success: function (response) {
                     if (response) {
                         alert("Subzone Added Successfully");
-                        $('#AddSubzoneModal').modal('close');
+                       
+                        
+                      
                     } else {
                         // Show error message
                         alert(response.message || "Failed to add Subzone");

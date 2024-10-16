@@ -7,6 +7,10 @@
       "RelativeMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|solutionrelative:parkit\\views\\zone\\addzone.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|c:\\users\\test1\\source\\repos\\parkit\\parkit\\views\\zone\\coveredzones.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|solutionrelative:parkit\\views\\zone\\coveredzones.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|c:\\users\\test1\\source\\repos\\parkit\\parkit\\views\\schedule\\calendar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{FB4979FC-58E0-4115-AECB-55D17CF014EB}|ParkIt\\ParkIt.csproj|solutionrelative:parkit\\views\\schedule\\calendar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
@@ -18,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 262,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -27,12 +31,25 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "CoveredZones.cshtml",
+              "DocumentMoniker": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\Zone\\CoveredZones.cshtml",
+              "RelativeDocumentMoniker": "ParkIt\\Views\\Zone\\CoveredZones.cshtml",
+              "ToolTip": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\Zone\\CoveredZones.cshtml",
+              "RelativeToolTip": "ParkIt\\Views\\Zone\\CoveredZones.cshtml",
+              "ViewState": "AQIAACQBAAAAAAAAAAAAADcBAAAUAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-16T07:02:44.541Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "Calendar.cshtml",
               "DocumentMoniker": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\Schedule\\Calendar.cshtml",
               "RelativeDocumentMoniker": "ParkIt\\Views\\Schedule\\Calendar.cshtml",
               "ToolTip": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\Schedule\\Calendar.cshtml",
               "RelativeToolTip": "ParkIt\\Views\\Schedule\\Calendar.cshtml",
-              "ViewState": "AQIAABsAAAAAAAAAAAAAABoAAAAAAAAA",
+              "ViewState": "AQIAACEAAAAAAAAAAAAAADUAAAAYAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-10-15T14:18:13.634Z",
               "EditorCaption": ""
@@ -43,9 +60,9 @@
               "Title": "AddZone.cshtml",
               "DocumentMoniker": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\Zone\\AddZone.cshtml",
               "RelativeDocumentMoniker": "ParkIt\\Views\\Zone\\AddZone.cshtml",
-              "ToolTip": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\Zone\\AddZone.cshtml*",
-              "RelativeToolTip": "ParkIt\\Views\\Zone\\AddZone.cshtml*",
-              "ViewState": "AQIAABsCAAAAAAAAAAAgwDMCAAAsAAAA",
+              "ToolTip": "C:\\Users\\test1\\source\\repos\\ParkIt\\ParkIt\\Views\\Zone\\AddZone.cshtml",
+              "RelativeToolTip": "ParkIt\\Views\\Zone\\AddZone.cshtml",
+              "ViewState": "AQIAAG0CAAAAAAAAAAAUwIoCAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-10-15T14:17:26.085Z",
               "EditorCaption": ""
