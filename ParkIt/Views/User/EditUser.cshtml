@@ -303,7 +303,6 @@
                         <i class="fas fa-user"></i>
                     </div>
                     <input type="text" name="UserName" placeholder="Username" required />
-
                     <input type="password" name="Password" placeholder="Password" required />
 
                     <label>
@@ -349,11 +348,11 @@
                         <div class="form-group col-md-6">
                             <label>Title:</label>
                             <div class="form-check">
-                                <input type="radio" class="form-check-input" id="Runner" name="Title" value="Runner">
+                                <input type="radio" class="form-check-input" id="Runner" name="Title" value="runner">
                                 <label class="form-check-label" for="Runner">Runner</label>
                             </div>
                             <div class="form-check">
-                                <input type="radio" class="form-check-input" id="Supervisor" name="Title" value="Supervisor">
+                                <input type="radio" class="form-check-input" id="Supervisor" name="Title" value="supervisor">
                                 <label class="form-check-label" for="Supervisor">Supervisor</label>
                             </div>
                         </div>
@@ -364,11 +363,130 @@
             <input type="button" onclick="submitForm()" class="save-button" value="Save"></input>
         </form>
     </div>
+    <script>
+
+        $(document).ready(function () {
+            function fetchUserDetails(userId) {
+                var accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImV5SmhiR2NpT2lKSVV6STFOaUlzSW5SNWNDSTZJa3BYVkNKOS5leUpmYVdRaU9pSTJObVppWkRRd01EZGtPRFkyTXpFMk5ERXpZVGRsWlRBaUxDSjFjMlZ5Ym1GdFpTSTZJbTV2ZG1FMElpd2ljR0Z6YzNkdmNtUWlPaUlrTW1Fa01UQWtNbGN2WWtVMFlsaFFTakpKTDAxM1NuTnpZVEpaZFRScVkwZG9lbmMxY0cxT1ZtRXZRMnRJZEZaYVlUUlFValZhUXpOUmFrY2lMQ0p5YjJ4bGN5STZXMTBzSW1selFXTjBhWFpsSWpwMGNuVmxMQ0psWkdsMGIzSWlPbTUxYkd3c0ltTnlaV0YwWldSQmRDSTZJakl3TWpRdE1UQXRNREZVTVRBNk5UQTZOREF1T0RnMVdpSXNJblZ3WkdGMFpXUkJkQ0k2SWpJd01qUXRNVEF0TURGVU1UQTZOVEE2TkRBdU9EZzFXaUlzSWw5ZmRpSTZNQ3dpYVdRaU9pSTJObVppWkRRd01EZGtPRFkyTXpFMk5ERXpZVGRsWlRBaUxDSnBZWFFpT2pFM01qa3hOalEyTnpNc0ltVjRjQ0k2TVRjek1UYzFOalkzTTMwLlk4QUo5M0J0NVc1T1NvNGNqMG5fZ0lKeUUxMFVEWlhkU0VPZEM0eFdwM0EiLCJpYXQiOjE3MjkxNjQ2NzMsImV4cCI6MTczMTc1NjY3M30.OeY85DmnTb4aIaRIHUMneYVzAzIklaxbrQpuZ9P36Tg'; // Replace with your actual token
+
+                $.ajax({
+                    url: "https://api.parkit.nova4lb.com/admin/employees/" + userId,
+                    type: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + accessToken
+                    },
+                    statusCode: {
+                        200: function (response) {
+                            // Log the user ID and response for debugging purposes
+                            console.log("User ID: ", userId);
+                            console.log(response);
+                            if (response) {
+                                // Populate the HTML form with the data
+                                populateForm(response);
+                            } else {
+                                alert('Unexpected response or missing data');
+                            }
+                        },
+                        404: function () {
+                            alert('User not found (404)');
+                        },
+                        500: function () {
+                            alert('Internal server error (500)');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error: ", error);
+                        alert('Error fetching user details: ' + error);
+                    }
+                });
+            }
+
+            function populateForm(user) {
+                // Populate form fields with user data
+                $('input[name="UserName"]').val(user.username);
+                $('input[name="PhoneNumber"]').val(user.mobile);
+                $('input[name="Address"]').val(user.address);
+                $('input[name="FirstName"]').val(user.firstname);
+                $('input[name="LastName"]').val(user.lastname);
+                $('#active-checkbox').prop('checked', user.isActive);
+                $('input[name="Title"][value="' + user.title + '"]').prop('checked', true);
+                $('input[name="EmploymentType"][value="' + user.employmentType + '"]').prop('checked', true);
+               
+            }
+
+            // Example call to fetchUserDetails with userId
+            var userId = window.location.pathname.split('/').pop();
+            fetchUserDetails(userId);
+        });
+
+        function submitForm() {
+            var employeeId = window.location.pathname.split('/').pop(); // Get the employee ID from the URL
+            var formData = {
+                username: $('input[name="UserName"]').val(),
+                isActive: $('input[name="Active"]').is(':checked'),
+                mobile: $('input[name="PhoneNumber"]').val(),
+                address: $('input[name="Address"]').val(),
+                firstname: $('input[name="FirstName"]').val(),
+                lastname: $('input[name="LastName"]').val(),
+                employmentType: $('input[name="EmploymentType"]:checked').val(),
+                title: $('input[name="Title"]:checked').val(),
+            };
+
+            // Get the password value
+            var password = $('input[name="Password"]').val();
+
+            // Only add the password to formData if it's not empty
+            if (password) {
+                formData.password = password;
+            }
+
+            console.log("Form Data:", formData); // Log the data being sent
+
+            var accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImV5SmhiR2NpT2lKSVV6STFOaUlzSW5SNWNDSTZJa3BYVkNKOS5leUpmYVdRaU9pSTJObVppWkRRd01EZGtPRFkyTXpFMk5ERXpZVGRsWlRBaUxDSjFjMlZ5Ym1GdFpTSTZJbTV2ZG1FMElpd2ljR0Z6YzNkdmNtUWlPaUlrTW1Fa01UQWtNbGN2WWtVMFlsaFFTakpKTDAxM1NuTnpZVEpaZFRScVkwZG9lbmMxY0cxT1ZtRXZRMnRJZEZaYVlUUlFValZhUXpOUmFrY2lMQ0p5YjJ4bGN5STZXMTBzSW1selFXTjBhWFpsSWpwMGNuVmxMQ0psWkdsMGIzSWlPbTUxYkd3c0ltTnlaV0YwWldSQmRDSTZJakl3TWpRdE1UQXRNREZVTVRBNk5UQTZOREF1T0RnMVdpSXNJblZ3WkdGMFpXUkJkQ0k2SWpJd01qUXRNVEF0TURGVU1UQTZOVEE2TkRBdU9EZzFXaUlzSWw5ZmRpSTZNQ3dpYVdRaU9pSTJObVppWkRRd01EZGtPRFkyTXpFMk5ERXpZVGRsWlRBaUxDSnBZWFFpT2pFM01qa3hOalEyTnpNc0ltVjRjQ0k2TVRjek1UYzFOalkzTTMwLlk4QUo5M0J0NVc1T1NvNGNqMG5fZ0lKeUUxMFVEWlhkU0VPZEM0eFdwM0EiLCJpYXQiOjE3MjkxNjQ2NzMsImV4cCI6MTczMTc1NjY3M30.OeY85DmnTb4aIaRIHUMneYVzAzIklaxbrQpuZ9P36Tg'; // Replace with your actual token
+
+            $.ajax({
+                url: "https://api.parkit.nova4lb.com/admin/employees/" + employeeId,
+                type: 'PATCH',
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken
+                },
+                data: JSON.stringify(formData),
+                contentType: 'application/json',
+                statusCode: {
+                    200: function (response) {
+
+                        console.log("Updated Employee Response:", response); // Log updated data
+
+                        alert("Employee updated successfully!");
+                        window.location.href = "/Views/Employees"; // Redirect to the employees list or another page
+                    },
+                    400: function () {
+                        alert("Bad request (400). Please check the data you are sending.");
+                    },
+                    401: function () {
+                        alert("Unauthorized (401). Please check your access token.");
+                    },
+                    404: function () {
+                        alert("Employee not found (404).");
+                    },
+                    500: function () {
+                        alert("Internal server error (500).");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error details:", xhr.responseText); // Log the response
+                    alert("Error while updating employee: " + xhr.responseText);
+                }
+            });
+        }
+
+
+    </script>
+
+
   
-    <script >
-        $('.zones').select2();
-        $('.subzones').select2();
-        $('.supervisors').select2();
+   @*  <script >
+      
        
         $(document).ready(function () {
          
@@ -850,7 +968,9 @@
             });
         }
     
-    </script>
+    </script> *@
+
+
   
 </body>
 </html>

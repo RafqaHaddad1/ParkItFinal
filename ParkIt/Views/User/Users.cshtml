@@ -165,26 +165,14 @@
                 <div class="modal-body">
                     <div class="form-container">
                         <div class="form-left">
-                            <label for="Employee_ID">Employee_ID</label>
-                            <input type="number" id="Employee_ID" name="Employee_ID" readonly />
+                            <label for="Employee_ID">Employee ID</label>
+                            <input type="text" id="Employee_ID" name="Employee_ID" readonly />
                             <label for="Employee_Name">Employee Name</label>
                             <input type="text" name="Name" placeholder="Name" readonly />
-                            <div class="form-group radio-group">
-                                <label>Title</label>
-                                <div>
-                                    <input type="radio" id="Runner" name="Title" value="Runner" disabled>
-                                    <label for="Runner">Runner</label>
-                                </div>
-                                <div>
-                                    <input type="radio" id="Supervisor" name="Title" value="Supervisor" disabled>
-                                    <label for="Supervisor">Supervisor</label>
-                                </div>
-
-                            </div>
-                            <div id="supervisor-container" style="display: none;">
-                                <label for="supervisor">Supervisor Name</label>
-                                <input type="text" id="supervisor" name="supervisor" readonly />
-                            </div>
+                            <label for="CreatedDate">Created Date</label>
+                            <input type="text" name="CreatedDate" placeholder="CreatedDate" readonly />
+                            
+                           
                             <label>
                                 <input type="checkbox" name="Active" value="true" id="active-checkbox" disabled>
                                 Active
@@ -193,30 +181,36 @@
                             <input type="text" name="PhoneNumber" placeholder="Phone" readonly />
                             <label for="Address">Address</label>
                             <input type="text" name="Address" placeholder="Address" readonly />
-                            <label for="NfcCode"> NFC Code</label>
-                            <input type="text" name="NfcCode" placeholder="NFC Code" readonly />
-
+                            
                         </div>
                         <div class="form-right">
-                            <label for="Zone_Name">Zone Name</label>
-                            <input type="text" name="Zone_Name" placeholder="Zone_Name" readonly />
-                            <label for="Subzone_Name">Subzone Name</label>
-                            <input type="text" name="Subzone_Name" placeholder="Subzone_Name" readonly />
+                         
                             <div class="form-group radio-group">
                                 <label>Employment Type:</label>
                                 <div>
-                                    <input type="radio" id="partTime" name="EmploymentType" value="PartTime" disabled>
-                                    <label for="partTime">Part Time</label>
+                                    <input type="radio" id="partTime" name="EmploymentType" value="part-time" disabled>
+                                    <label for="part-time">Part Time</label>
                                 </div>
                                 <div>
-                                    <input type="radio" id="fullTime" name="EmploymentType" value="FullTime" disabled>
-                                    <label for="fullTime">Full Time</label>
+                                    <input type="radio" id="fullTime" name="EmploymentType" value="full-time" disabled>
+                                    <label for="full-time">Full Time</label>
+                                </div>
+                              
+                                <div class="form-group radio-group">
+                                    <label>Title</label>
+                                    <div>
+                                        <input type="radio" id="runner" name="Title" value="runner" disabled>
+                                        <label for="runner">Runner</label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" id="supervisor" name="Title" value="supervisor" disabled>
+                                        <label for="supervisor">Supervisor</label>
+                                    </div>
+
                                 </div>
                             </div>
-                            <label for="Kafeel">Kafeel</label>
-                            <input type="text" name="Kafeel" placeholder="Kafeel" readonly />
-                            <label for="AdditionalNotes">Additional Notes</label>
-                            <input type="text" name="AdditionalNotes" placeholder="Additional Notes" readonly />
+                           
+                          
                         </div>
                     </div>
                 </div>
@@ -254,26 +248,8 @@
 
     function EditUser(id) {
         if (confirm('Are you sure you want to edit this user?')) {
-            $.ajax({
-                url: '/Views/EditEmployee', // Your endpoint to fetch employee data
-                method: 'GET',
-                data: { id: id },
-                success: function (response) {
-                    if (response.success) {
-                        // Store employee data in sessionStorage
-                        sessionStorage.setItem('EmployeeData', JSON.stringify(response.employee));
-                        console.log("Employee data stored in sessionStorage:", response.employee);
-
-                        // Now redirect to the EditUser page after storing the data
-                        window.location.href = "EditUser/" + id;
-                    } else {
-                        alert("Failed to retrieve employee data.");
-                    }
-                },
-                error: function () {
-                    alert("An error occurred while fetching employee data.");
-                }
-            });
+            // Redirect directly to the EditUser page with the provided employee ID
+            window.location.href = "/User/EditUser/" + id;
         }
     }
 
@@ -283,55 +259,60 @@
 
 
 
-    // function fetchUserDetails(userId) {
-    //     $.ajax({
-    //         url: '/User/GetUserDetails',
-    //         type: 'GET',
-    //         data: { id: userId },
-    //         success: function (result) {
-    //             if (result.success) {
-    //                 console.log(result);
-    //                 populateModal(result.data);
-    //                 $('#editEventModal').modal('show');
-    //             } else {
-    //                 alert('Error fetching user details');
-    //             }
-    //         },
-    //         error: function (err) {
-    //             console.error(err);
-    //             alert('Error fetching user details');
-    //         }
-    //     });
-    // }
-    // function populateModal(user) {
-    //     $('#Employee_ID').val(user.employee_ID);
-    //     $('input[name="Name"]').val(user.name);
-    //     $('input[name="PhoneNumber"]').val(user.phone);
-    //     $('input[name="Address"]').val(user.address);
-    //     $('input[name="NfcCode"]').val(user.nfcCode);
-    //     $('input[name="Zone_Name"]').val(user.zone_Name);
-    //     $('input[name="Subzone_Name"]').val(user.subzone_Name);
-    //     $('input[name="Kafeel"]').val(user.kafeel);
-    //     $('input[name="AdditionalNotes"]').val(user.additionalNotes);
-    //     $('#supervisor').val(user.supervisor);
-    //     $('#active-checkbox').prop('checked', user.active);
-    //     $('input[name="Title"][value="' + user.title + '"]').prop('checked', true);
-    //     $('input[name="EmploymentType"][value="' + user.type + '"]').prop('checked', true);
 
-    //     if (user.title === "Runner") {
-    //         // Show the supervisor input and set it as readonly
-    //         $('#supervisor-container').show();
-    //         $('#supervisor').val(user.supervisor).prop('readonly', true);
-    //     } else {
-    //         // Hide the supervisor input
-    //         $('#supervisor-container').hide();
-    //     }
-        
-    // }
+    function fetchUserDetails(userId) {
+        var accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImV5SmhiR2NpT2lKSVV6STFOaUlzSW5SNWNDSTZJa3BYVkNKOS5leUpmYVdRaU9pSTJObVppWkRRd01EZGtPRFkyTXpFMk5ERXpZVGRsWlRBaUxDSjFjMlZ5Ym1GdFpTSTZJbTV2ZG1FMElpd2ljR0Z6YzNkdmNtUWlPaUlrTW1Fa01UQWtNbGN2WWtVMFlsaFFTakpKTDAxM1NuTnpZVEpaZFRScVkwZG9lbmMxY0cxT1ZtRXZRMnRJZEZaYVlUUlFValZhUXpOUmFrY2lMQ0p5YjJ4bGN5STZXMTBzSW1selFXTjBhWFpsSWpwMGNuVmxMQ0psWkdsMGIzSWlPbTUxYkd3c0ltTnlaV0YwWldSQmRDSTZJakl3TWpRdE1UQXRNREZVTVRBNk5UQTZOREF1T0RnMVdpSXNJblZ3WkdGMFpXUkJkQ0k2SWpJd01qUXRNVEF0TURGVU1UQTZOVEE2TkRBdU9EZzFXaUlzSWw5ZmRpSTZNQ3dpYVdRaU9pSTJObVppWkRRd01EZGtPRFkyTXpFMk5ERXpZVGRsWlRBaUxDSnBZWFFpT2pFM01qa3hOak13T1RJc0ltVjRjQ0k2TVRjek1UYzFOVEE1TW4wLjBWb3BQM0s4cG9qLVRqd3pjbVNVVnFNZko2cjItOHNzRXJRVnI1azJ4Q0UiLCJpYXQiOjE3MjkxNjMwOTIsImV4cCI6MTczMTc1NTA5Mn0.EPyYB2nhbJbaVf_PKLE40YmKic1jwiwL2APvr424Raw';
+
+        $.ajax({
+            url: "https://api.parkit.nova4lb.com/admin/employees/" + userId,
+            type: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + accessToken
+            },
+            statusCode: {
+                200: function (response) {
+                    // Only handle success when status is 200 OK
+                    console.log("User ID: ", userId);
+                    console.log(response);
+                    if (response) {
+                        populateModal(response);
+                        $('#editEventModal').modal('show');
+                    } else {
+                        alert('Unexpected response or missing data');
+                    }
+                },
+                404: function () {
+                    alert('User not found (404)');
+                },
+                500: function () {
+                    alert('Internal server error (500)');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error: ", error);
+                // If an error is not caught in the statusCode block
+                alert('Error fetching user details: ' + error);
+            }
+        });
+    }
+
+    function populateModal(user) {
+        $('#Employee_ID').val(user._id);
+        $('input[name="Name"]').val(user.firstname + ' ' + user.lastname);
+        $('input[name="PhoneNumber"]').val(user.mobile);
+        $('input[name="Address"]').val(user.address);
+        $('input[name="CreatedDate"]').val(new Date(user.createdAt).toLocaleString());
+        $('#active-checkbox').prop('checked', user.isActive);
+        $('input[name="Title"][value="' + user.title + '"]').prop('checked', true);
+        $('input[name="EmploymentType"][value="' + user.employmentType + '"]').prop('checked', true);
+    }
+
+
+
 
     $(document).ready(function () {
         // Replace this with your actual token
-        var accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImV5SmhiR2NpT2lKSVV6STFOaUlzSW5SNWNDSTZJa3BYVkNKOS5leUpmYVdRaU9pSTJObVppWkRRd01EZGtPRFkyTXpFMk5ERXpZVGRsWlRBaUxDSjFjMlZ5Ym1GdFpTSTZJbTV2ZG1FMElpd2ljR0Z6YzNkdmNtUWlPaUlrTW1Fa01UQWtNbGN2WWtVMFlsaFFTakpKTDAxM1NuTnpZVEpaZFRScVkwZG9lbmMxY0cxT1ZtRXZRMnRJZEZaYVlUUlFValZhUXpOUmFrY2lMQ0p5YjJ4bGN5STZXMTBzSW1selFXTjBhWFpsSWpwMGNuVmxMQ0psWkdsMGIzSWlPbTUxYkd3c0ltTnlaV0YwWldSQmRDSTZJakl3TWpRdE1UQXRNREZVTVRBNk5UQTZOREF1T0RnMVdpSXNJblZ3WkdGMFpXUkJkQ0k2SWpJd01qUXRNVEF0TURGVU1UQTZOVEE2TkRBdU9EZzFXaUlzSWw5ZmRpSTZNQ3dpYVdRaU9pSTJObVppWkRRd01EZGtPRFkyTXpFMk5ERXpZVGRsWlRBaUxDSnBZWFFpT2pFM01qZzRPVFkyTmpJc0ltVjRjQ0k2TVRjek1UUTRPRFkyTW4wLmd1UDhpel9FZWlrWEtVQjFiWi1yeG5Dd1gwU0l3Rm85ODdoRGk3Z1Znd28iLCJpYXQiOjE3Mjg4OTY2NjIsImV4cCI6MTczMTQ4ODY2Mn0.f70_V3XeYwFDB2pK4B2pbvU9-3vMGGo5fMooZCMthg8';
+        var accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImV5SmhiR2NpT2lKSVV6STFOaUlzSW5SNWNDSTZJa3BYVkNKOS5leUpmYVdRaU9pSTJObVppWkRRd01EZGtPRFkyTXpFMk5ERXpZVGRsWlRBaUxDSjFjMlZ5Ym1GdFpTSTZJbTV2ZG1FMElpd2ljR0Z6YzNkdmNtUWlPaUlrTW1Fa01UQWtNbGN2WWtVMFlsaFFTakpKTDAxM1NuTnpZVEpaZFRScVkwZG9lbmMxY0cxT1ZtRXZRMnRJZEZaYVlUUlFValZhUXpOUmFrY2lMQ0p5YjJ4bGN5STZXMTBzSW1selFXTjBhWFpsSWpwMGNuVmxMQ0psWkdsMGIzSWlPbTUxYkd3c0ltTnlaV0YwWldSQmRDSTZJakl3TWpRdE1UQXRNREZVTVRBNk5UQTZOREF1T0RnMVdpSXNJblZ3WkdGMFpXUkJkQ0k2SWpJd01qUXRNVEF0TURGVU1UQTZOVEE2TkRBdU9EZzFXaUlzSWw5ZmRpSTZNQ3dpYVdRaU9pSTJObVppWkRRd01EZGtPRFkyTXpFMk5ERXpZVGRsWlRBaUxDSnBZWFFpT2pFM01qa3hOak13T1RJc0ltVjRjQ0k2TVRjek1UYzFOVEE1TW4wLjBWb3BQM0s4cG9qLVRqd3pjbVNVVnFNZko2cjItOHNzRXJRVnI1azJ4Q0UiLCJpYXQiOjE3MjkxNjMwOTIsImV4cCI6MTczMTc1NTA5Mn0.EPyYB2nhbJbaVf_PKLE40YmKic1jwiwL2APvr424Raw';
 
         $.ajax({
             url: "https://api.parkit.nova4lb.com/admin/employees",
@@ -363,10 +344,10 @@
                                 <td>${item.status || 'N/A'}</td>
                                 <td>${item.createdAt ? new Date(item.lastOnline).toLocaleString() : 'N/A'}</td>
                                 <td>
-                                    <a onclick="fetchUserDetails(${item._id});" class="btn btn-primary" style="background-color: #23282B; border-color:#23282B; color:#F3BC12">
+                                    <a onclick="fetchUserDetails('${item._id}');" class="btn btn-primary" style="background-color: #23282B; border-color:#23282B; color:#F3BC12">
                                         <i class="bi bi-info-circle" style="font-size: 15px; font-weight: bold"></i>
                                     </a>
-                                    <a onclick="EditUser(${item._id})" class="btn btn-primary" style="background-color: #F3BC12; border-color:#F3BC12; color:#23282B">
+                                    <a onclick="EditUser('${item._id}')" class="btn btn-primary" style="background-color: #F3BC12; border-color:#F3BC12; color:#23282B">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <button class="btn btn-danger" onclick="deleteUser(this, ${item._id})" style="background-color: #23282B; border-color:#23282B; color:#F3BC12">
