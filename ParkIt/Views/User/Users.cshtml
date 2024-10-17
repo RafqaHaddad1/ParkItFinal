@@ -252,30 +252,30 @@
     //     }
     // }
 
-    // function EditUser(id) {
-    //     if (confirm('Are you sure you want to edit this user?')) {
-    //         $.ajax({
-    //             url: '/User/EditUser', // Your endpoint to fetch employee data
-    //             method: 'GET',
-    //             data: { id: id },
-    //             success: function (response) {
-    //                 if (response.success) {
-    //                     // Store employee data in sessionStorage
-    //                     sessionStorage.setItem('EmployeeData', JSON.stringify(response.employee));
-    //                     console.log("Employee data stored in sessionStorage:", response.employee);
+    function EditUser(id) {
+        if (confirm('Are you sure you want to edit this user?')) {
+            $.ajax({
+                url: '/Views/EditEmployee', // Your endpoint to fetch employee data
+                method: 'GET',
+                data: { id: id },
+                success: function (response) {
+                    if (response.success) {
+                        // Store employee data in sessionStorage
+                        sessionStorage.setItem('EmployeeData', JSON.stringify(response.employee));
+                        console.log("Employee data stored in sessionStorage:", response.employee);
 
-    //                     // Now redirect to the EditUser page after storing the data
-    //                     window.location.href = "EditUser/" + id;
-    //                 } else {
-    //                     alert("Failed to retrieve employee data.");
-    //                 }
-    //             },
-    //             error: function () {
-    //                 alert("An error occurred while fetching employee data.");
-    //             }
-    //         });
-    //     }
-    // }
+                        // Now redirect to the EditUser page after storing the data
+                        window.location.href = "EditUser/" + id;
+                    } else {
+                        alert("Failed to retrieve employee data.");
+                    }
+                },
+                error: function () {
+                    alert("An error occurred while fetching employee data.");
+                }
+            });
+        }
+    }
 
 
 
