@@ -48,7 +48,7 @@
 
         var username = $("#username").val();
         var password = $("#password").val();
-
+        sessionStorage.setItem("username", username);
         $.ajax({
             type: "POST",
             url: "https://api.parkit.nova4lb.com/admin/auth",

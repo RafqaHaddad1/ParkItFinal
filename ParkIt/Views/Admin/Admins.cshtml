@@ -293,26 +293,8 @@
 
     function EditAdmin(id) {
         if (confirm('Are you sure you want to edit this admin?')) {
-            $.ajax({
-                url: '/Admin/EditAdmin', // Your endpoint to fetch employee data
-                method: 'GET',
-                data: { id: id },
-                success: function (response) {
-                    if (response.success) {
-                        // Store employee data in sessionStorage
-                        sessionStorage.setItem('AdminData', JSON.stringify(response.admin));
-                 
-
-                        // Now redirect to the EditUser page after storing the data
-                        window.location.href = "EditAdmin/" + id;
-                    } else {
-                        alert("Failed to retrieve admin data.");
-                    }
-                },
-                error: function () {
-                    alert("An error occurred while fetching admin data.");
-                }
-            });
+            sessionStorage.setItem('AdminData', id);
+            window.location.href = @Url.Action("EditAdmin","Views");
         }
     }
 </script>

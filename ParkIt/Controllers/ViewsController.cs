@@ -56,6 +56,10 @@ namespace ParkIt.Controllers
         {
             return View("~/Views/Admin/AddAdmin.cshtml");
         }
+        public IActionResult EditAdmin()
+        {
+            return View("~/Views/Admin/EditAdmin.cshtml");
+        }
         public IActionResult Settings()
         {
             return View("~/Views/Settings/Index.cshtml");
