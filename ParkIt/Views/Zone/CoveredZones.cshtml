@@ -539,27 +539,15 @@
 
     function EditZone(id) {
         if (confirm('Are you sure you want to edit this zone?')) {
-            $.ajax({
-                url: '/Zone/EditZone', // Your endpoint to fetch employee data
-                method: 'GET',
-                data: { id: id },
-                success: function (response) {
-                    if (response.success) {
-                        // Store employee data in sessionStorage
-                        sessionStorage.setItem('ZoneData', JSON.stringify(response.zoneinfo));
-                        console.log("zone data stored in sessionStorage:", response.zoneinfo);
-                        sessionStorage.setItem('SubzoneData', JSON.stringify(response.subzoneinfo));
-                        console.log("subzone data stored in sessionStorage:", response.subzone);
-                        window.location.href = "EditZone/" + id;
-                    } else {
-                        alert("Failed to retrieve zone data.");
-                    }
-                },
-                error: function () {
-                    alert("An error occurred while fetching zone data.");
-                }
-            });
+
+            sessionStorage.setItem('ZoneData', id);
+            console.log("zone data stored in sessionStorage:", id);
+            window.location.href = '@Url.Action("EditZone", "Views")';
+           
         }
+      
+
+
     }
     function fetchZoneDetails(zoneId) {
         $.ajax({
