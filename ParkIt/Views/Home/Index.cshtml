@@ -186,9 +186,12 @@
 </section>
 
 <script type="text/javascript">
- const token = localStorage.getItem('jwtToken'); 
+ const token = localStorage.getItem('jwtToken');
+    
     $(document).ready(function () {
-       
+        var username = sessionStorage.getItem("username");
+        console.log(username);
+        $("#Username").text("Hello " + username);
         $.ajax({
             url: '/Home/Index',
             type: 'GET',
@@ -202,7 +205,7 @@
                     $('#ActiveRunners').text(response.activeRunners);
                     $('#ActiveCars').text(response.numberOfCars);
                     $('#TotalIncome').text(response.totalIncome + " $");
-                    $('#Username').text("Hello " + response.username);
+                   
 
                     // Log Zone Rankings
                     console.log('Zone Rankings:', response.zoneRanking);

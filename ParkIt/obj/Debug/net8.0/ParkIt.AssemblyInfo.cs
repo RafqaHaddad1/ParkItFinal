@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ParkIt")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6caef2c2fb252c35e4e49af2844d228aeae15702")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+119fe3655673c876c381b247a7fe6b6a8c5cdad0")]
 [assembly: System.Reflection.AssemblyProductAttribute("ParkIt")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ParkIt")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
