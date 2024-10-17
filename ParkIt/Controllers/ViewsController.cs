@@ -24,6 +24,10 @@ namespace ParkIt.Controllers
         {
             return View("~/Views/User/Users.cshtml");
         }
+        public IActionResult EditEmployee()
+        {
+            return View("~/Views/User/EditUser.cshtml");
+        }
         public IActionResult AddEmployee()
         {
             return View("~/Views/User/AddUser.cshtml");
