@@ -276,7 +276,7 @@
                 },
                 success: function (response) {
                     console.log(response); // Log the response object
-
+                   
                     if (Array.isArray(response) && response.length > 0) {
                         var EmployeeDropdown = document.getElementById("Employee_Name");
                         EmployeeDropdown.innerHTML = ""; // Clear existing options
@@ -289,8 +289,9 @@
 
                         response.forEach(function (employee) {
                             var option = document.createElement("option");
-                            option.value = employee.name;
-                            option.text = employee.name;
+                            var fullname = employee.firstname + " " + employee.lastname;
+                            option.value = employee._id;
+                            option.text = fullname;
                             option.setAttribute("data-employee-id", employee._id);
                             EmployeeDropdown.appendChild(option);
                         });
