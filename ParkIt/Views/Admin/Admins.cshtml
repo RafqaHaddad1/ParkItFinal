@@ -294,8 +294,9 @@
     function EditAdmin(id) {
         if (confirm('Are you sure you want to edit this admin?')) {
             sessionStorage.setItem('AdminData', id);
-            window.location.href = @Url.Action("EditAdmin","Views");
+            window.location.href = '@Url.Action("EditAdmin", "Views")';
         }
     }
+
 </script>
 </html>
